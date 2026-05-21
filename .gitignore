@@ -1,0 +1,18 @@
+# macOS
+.DS_Store
+.AppleDouble
+
+# Excel 원본 파일 (로컬에만 보관)
+data/*.xlsx
+data/*.pme
+data/live-data.raw.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.vendor/
+
+# 환경 설정
+.env
+*.log
