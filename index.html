@@ -1827,7 +1827,7 @@ body {
 }
 .v03-signal-row {
   display: grid;
-  grid-template-columns: 26px 128px 100px 1fr;
+  grid-template-columns: 22px 120px 96px 1fr;
   align-items: center;
   gap: 8px;
   padding: 8px 4px;
@@ -1838,14 +1838,14 @@ body {
 .v03-signal-target {
   color: var(--text);
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .v03-signal-desc {
   color: var(--text2);
-  font-size: 11px;
+  font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1854,14 +1854,20 @@ body {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
-  height: 24px;
-  padding: 0 9px;
-  border-radius: 999px;
+  justify-content: center;
+  height: 22px;
+  padding: 0 8px;
+  border-radius: 6px;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
+  letter-spacing: .02em;
   color: var(--accent2);
   background: rgba(99,102,241,.12);
   border: 1px solid rgba(99,102,241,.25);
+}
+/* 신호 행 안에서는 컬럼 너비 꽉 채워 정렬감 확보 */
+.v03-signal-row .v03-tag {
+  width: 100%;
 }
 .v03-tag.risk { color: var(--red); border-color: rgba(239,68,68,.24); background: rgba(239,68,68,.1); }
 .v03-tag.good { color: var(--green); border-color: rgba(34,197,94,.24); background: rgba(34,197,94,.1); }
@@ -1890,17 +1896,28 @@ body {
 .v03-panel.feature .v03-panel-title { color: var(--orange); }
 .v03-panel-line {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 12px;
   color: var(--text);
   font-size: 12px;
-  padding: 4px 0;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255,255,255,.04);
 }
+.v03-panel-line:last-child { border-bottom: none; }
 .v03-panel-line span:first-child {
+  flex: 0 0 80px;
   color: var(--text2);
-  font-weight: 800;
+  font-size: 11px;
+  font-weight: 700;
   display: inline-flex;
   align-items: center;
   gap: 3px;
+  white-space: nowrap;
+}
+.v03-panel-line strong {
+  color: var(--text);
+  font-weight: 600;
+  font-size: 12px;
 }
 /* Info tooltip */
 .v03-info-wrap {
@@ -5475,7 +5492,7 @@ function renderMainInsights() {
           </div>
         </div>
         <div class="v03-metric-group">
-          <div class="v03-group-title">${iconSvg('acquisition', 'ui-icon tiny')} 유입</div>
+          <div class="v03-group-title">${iconSvg('traffic', 'ui-icon tiny')} 유입</div>
           <div class="v03-metric-strip">
             ${v03MetricItem('Organic', formatNum(organic), calcChange(organic, prevOrganic))}
             ${v03MetricItem('AI Referral', formatNum(aiReferral), calcChange(aiReferral, prevAiReferral))}
@@ -5483,7 +5500,7 @@ function renderMainInsights() {
           </div>
         </div>
         <div class="v03-metric-group">
-          <div class="v03-group-title">${iconSvg('insights', 'ui-icon tiny')} 만족도</div>
+          <div class="v03-group-title">${iconSvg('notes', 'ui-icon tiny')} 만족도</div>
           <div class="v03-metric-strip">
             ${v03MetricItem('만족도', `${sat.score}%`, sat.scoreMom, true, '%p')}
             ${v03MetricItem('응답 수', formatNum(sat.responses), sat.responsesMom)}
