@@ -1913,8 +1913,10 @@ body {
   font-weight: 700;
   display: inline-flex;
   align-items: center;
-  gap: 3px;
+  justify-content: flex-start;
+  gap: 4px;
   white-space: nowrap;
+  overflow: hidden;
 }
 .v03-panel-line strong {
   color: var(--text);
@@ -1929,7 +1931,9 @@ body {
 }
 .v03-info-btn {
   width: 14px;
+  min-width: 14px;
   height: 14px;
+  aspect-ratio: 1 / 1;
   border-radius: 50%;
   background: rgba(99,102,241,.2);
   color: var(--accent2);
@@ -1941,6 +1945,7 @@ body {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  flex-grow: 0;
   user-select: none;
 }
 .v03-info-wrap .v03-tooltip-box {
