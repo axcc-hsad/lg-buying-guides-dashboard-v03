@@ -1808,6 +1808,7 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0 28px;
+  align-items: start;
 }
 .v03-panels-2 {
   display: grid;
@@ -1830,10 +1831,11 @@ body {
   grid-template-columns: 22px 120px 96px 1fr;
   align-items: center;
   gap: 8px;
-  padding: 8px 4px;
+  padding: 9px 4px;
   border-bottom: 1px solid rgba(255,255,255,.05);
 }
-.v03-signal-row:last-child { border-bottom: none; }
+/* 각 열의 마지막 행 구분선 제거 — nth-of-type으로 좌/우 모두 처리 */
+.v03-signal-row:nth-last-child(-n+2) { border-bottom: none; }
 .v03-signal-top { display: contents; }
 .v03-signal-target {
   color: var(--text);
