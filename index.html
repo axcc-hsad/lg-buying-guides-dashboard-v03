@@ -2532,17 +2532,114 @@ body {
 .sat-check-label { font-size: 10px; color: var(--text2); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .03em; }
 .sat-check-val { font-size: 20px; font-weight: 800; color: var(--text); }
 .sat-check-val.warn { color: var(--yellow); }
-/* Satisfaction tab top filter selects */
-.sat-top-select {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: 6px; padding: 5px 8px; font-size: 11px; font-weight: 600;
-  color: var(--text2); cursor: pointer; outline: none;
-  -webkit-appearance: none; appearance: none;
-  padding-right: 22px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 7px center;
+/* Satisfaction tab filter toggle buttons */
+.sat-filter-label { font-size: 11px; font-weight: 700; color: var(--text2); white-space: nowrap; }
+.sat-btn-group { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+.sat-fbtn {
+  padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  border: 1px solid var(--border); color: var(--text2); background: transparent;
+  cursor: pointer; transition: all .12s; white-space: nowrap;
 }
-.sat-top-select:focus { border-color: var(--accent); color: var(--text); }
+.sat-fbtn:hover { border-color: rgba(255,255,255,.25); color: var(--text); }
+.sat-fbtn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+/* Section card wrapper */
+.sat-section-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px 18px;
+}
+.sat-section-header {
+  font-size: 13px; font-weight: 800; color: var(--text);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+}
+.sat-section-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 6px;
+  background: rgba(99,102,241,.15); color: var(--accent2);
+  font-size: 11px; font-weight: 800; flex-shrink: 0;
+}
+/* Big KPI cards */
+.sat-kpi-card-big {
+  background: rgba(255,255,255,.03); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px; display: flex; align-items: flex-start; gap: 10px;
+}
+.sat-kpi-icon {
+  width: 32px; height: 32px; border-radius: 8px; background: rgba(99,102,241,.12);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  color: var(--accent2);
+}
+.sat-kpi-icon svg { width: 17px; height: 17px; }
+/* Small KPI cards */
+.sat-kpi-card-sm {
+  background: rgba(255,255,255,.03); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 12px;
+}
+.sat-kpi-icon-sm { color: var(--text2); margin-bottom: 4px; }
+.sat-kpi-icon-sm svg { width: 14px; height: 14px; }
+.sat-kpi-value-sm { font-size: 18px; font-weight: 800; color: var(--text); line-height: 1.1; }
+/* Trend strip new style */
+.sat-trend-strip-new {
+  display: flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,.03); border: 1px solid var(--border);
+  border-radius: 10px; padding: 10px 14px; flex-wrap: wrap;
+}
+.sat-trend-arrow { font-size: 16px; color: var(--text2); opacity: .4; }
+/* Country panels */
+.sat-cp-panel {
+  background: rgba(255,255,255,.03); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 10px; padding-left: 10px;
+}
+.sat-cp-title { font-size: 10px; font-weight: 700; color: var(--text2); margin-bottom: 6px; text-transform: uppercase; letter-spacing: .04em; }
+.sat-cp-hdr { display: grid; grid-template-columns: 16px 1fr 36px 28px 36px; gap: 4px; padding: 0 0 4px; border-bottom: 1px solid rgba(255,255,255,.05); font-size: 9px; color: var(--text2); font-weight: 700; text-transform: uppercase; }
+.sat-cp-row { display: grid; grid-template-columns: 16px 1fr 36px 28px 36px; gap: 4px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,.03); align-items: center; font-size: 11px; }
+.sat-cp-row:last-child { border-bottom: none; }
+.sat-cp-no { color: var(--text2); font-size: 10px; font-weight: 700; }
+.sat-cp-name { color: var(--text); font-weight: 700; }
+.sat-cp-val { font-weight: 700; font-size: 12px; }
+.sat-cp-val.good { color: var(--green); }
+.sat-cp-val.risk { color: var(--red); }
+.sat-cp-sub { color: var(--text2); font-size: 11px; }
+/* Reason Analysis */
+.sat-reason-box { border-radius: 8px; padding: 10px; border: 1px solid var(--border); }
+.sat-reason-box.pos { background: rgba(34,197,94,.04); }
+.sat-reason-box.neg { background: rgba(239,68,68,.04); }
+.sat-reason-box-title { font-size: 11px; font-weight: 800; margin-bottom: 8px; text-align: center; padding: 4px; border-radius: 5px; }
+.sat-reason-box-title.pos { background: rgba(34,197,94,.1); color: var(--green); }
+.sat-reason-box-title.neg { background: rgba(239,68,68,.1); color: var(--red); }
+.sat-reason-li { display: flex; align-items: center; gap: 5px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,.04); font-size: 12px; }
+.sat-reason-li:last-child { border-bottom: none; }
+.sat-reason-li-no { color: var(--text2); font-size: 10px; font-weight: 700; width: 14px; flex-shrink: 0; }
+.sat-reason-li-label { flex: 1; color: var(--text); }
+.sat-reason-li-pct { font-weight: 800; font-size: 12px; }
+.sat-reason-li-pct.pos { color: var(--green); }
+.sat-reason-li-pct.neg { color: var(--red); }
+/* Device cards new */
+.sat-device-card-new {
+  background: rgba(255,255,255,.03); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px;
+}
+.sat-device-card-new.risk { border-color: rgba(239,68,68,.25); }
+.sat-device-header-new { display: flex; align-items: center; gap: 7px; margin-bottom: 10px; }
+.sat-device-icon { width: 28px; height: 28px; border-radius: 7px; background: rgba(99,102,241,.12); display: flex; align-items: center; justify-content: center; color: var(--accent2); }
+.sat-device-icon.info { background: rgba(234,179,8,.1); color: var(--yellow); }
+.sat-device-icon svg { width: 15px; height: 15px; }
+.sat-device-title-new { font-size: 12px; font-weight: 800; color: var(--text); flex: 1; }
+.sat-watch-badge { font-size: 10px; font-weight: 700; color: var(--red); background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.2); border-radius: 4px; padding: 1px 5px; }
+.sat-device-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; padding: 3px 0; }
+.sat-device-row span { color: var(--text2); }
+.sat-device-row strong { color: var(--text); font-weight: 700; }
+.sat-insight-card { background: rgba(234,179,8,.05); border: 1px solid rgba(234,179,8,.15); border-radius: 12px; padding: 14px; }
+/* Pill tags for table */
+.sat-pill {
+  display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 5px;
+  font-size: 10px; font-weight: 700; white-space: nowrap;
+}
+.sat-pill.yes { background: rgba(34,197,94,.12); color: var(--green); border: 1px solid rgba(34,197,94,.2); }
+.sat-pill.no  { background: rgba(239,68,68,.12); color: var(--red);   border: 1px solid rgba(239,68,68,.2); }
+.sat-pill.reason { background: rgba(255,255,255,.07); color: var(--text2); border: 1px solid rgba(255,255,255,.1); }
+/* Data check icons */
+.sat-check-icon { width: 28px; height: 28px; border-radius: 7px; background: rgba(99,102,241,.1); display: flex; align-items: center; justify-content: center; color: var(--accent2); margin: 0 auto 6px; }
+.sat-check-icon.warn { background: rgba(234,179,8,.1); color: var(--yellow); }
+.sat-check-icon svg { width: 15px; height: 15px; }
 </style>
 </head>
 <body>
@@ -6284,21 +6381,21 @@ function renderSatisfactionTab() {
   const monthly = satGetMonthly();
   const prev = satGetPrev();
   const responses = satFilteredResponses();
+  const periodAll = SAT_DATA.responses.filter(r => r.period === (satFilters.period || SAT_DATA.meta.latest_period));
 
   el.innerHTML = `
     <div style="padding:0 0 40px;">
       ${satRenderTopFilter()}
-      ${satRenderOverview(monthly, prev)}
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
-        ${satRenderCountryPanels(monthly)}
-        ${satRenderCategoryMatrix(monthly)}
+      <div style="display:grid;grid-template-columns:2fr 3fr;gap:14px;margin-top:14px;">
+        ${satRenderOverview(monthly, prev)}
+        ${satRenderCountryCategorySection(monthly)}
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
         ${satRenderReasons(monthly)}
         ${satRenderDevice(monthly)}
       </div>
       ${satRenderCommentsExplorer(responses)}
-      ${satRenderDataCheck(SAT_DATA.responses.filter(r => r.period === (satFilters.period || SAT_DATA.meta.latest_period)))}
+      ${satRenderDataCheck(periodAll)}
     </div>
   `;
 }
@@ -6306,37 +6403,58 @@ function renderSatisfactionTab() {
 // ── Filter Row ────────────────────────────────────────────
 function satRenderTopFilter() {
   if (!SAT_DATA) return '';
-  const countries = [...new Set(SAT_DATA.responses.map(r=>r.country))].sort();
+  const countryOrder = ['UK','DE','FR','CA-EN','CA-FR','MX','BR','ES','IT','NL','PL'];
+  const countries = [
+    ...countryOrder.filter(c => SAT_DATA.responses.some(r=>r.country===c)),
+    ...[...new Set(SAT_DATA.responses.map(r=>r.country))].filter(c=>!countryOrder.includes(c)).sort()
+  ];
   const categories = [...new Set(SAT_DATA.responses.map(r=>r.category))].sort();
-  const allReasons = [
-    ...new Set(SAT_DATA.responses.flatMap(r=>[...(r.pos_reasons||[]),...(r.neg_reasons||[])]))
-  ].sort();
 
-  const sel = (id, opts, val) => {
-    const options = opts.map(([v,l]) => `<option value="${v}" ${val===v?'selected':''}>${l}</option>`).join('');
-    return `<select class="sat-top-select" onchange="satSetFilter('${id}',this.value)">${options}</select>`;
-  };
+  const btns = (key, opts) => opts.map(([v,l]) =>
+    `<button class="sat-fbtn ${satFilters[key]===v?'active':''}" onclick="satSetFilter('${key}','${v}')">${l}</button>`
+  ).join('');
 
   return `
-    <div class="sat-top-filter-bar" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;">
-      <span style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;">필터</span>
-      ${sel('content', [['all','Content: 전체'],['lineup','Line-up'],['feature','Feature']], satFilters.content)}
-      ${sel('country', [['all','Country: 전체'], ...countries.map(c=>[c,c])], satFilters.country)}
-      ${sel('category', [['all','Category: 전체'], ...categories.map(c=>[c,c])], satFilters.category)}
-      ${sel('helpful', [['all','Helpful: 전체'],['yes','Yes'],['no','No']], satFilters.helpful)}
-      ${sel('device', [['all','Device: 전체'],['Mobile','Mobile'],['PC','PC']], satFilters.device)}
-      <div style="flex:1;min-width:160px;position:relative;">
-        <svg style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--text2);fill:none;stroke-width:2;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
-        <input class="sat-search" placeholder="Comments 검색..." value="${satFilters.keyword||''}" oninput="satSetFilter('keyword',this.value)">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:0;">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span class="sat-filter-label">콘텐츠:</span>
+          <div class="sat-btn-group">${btns('content',[['all','전체'],['lineup','Line-up'],['feature','Feature']])}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span class="sat-filter-label">국가:</span>
+          <div class="sat-btn-group">
+            ${[['all','전체'],...countries.map(c=>[c,c])].map(([v,l])=>`<button class="sat-fbtn ${satFilters.country===v?'active':''}" onclick="satSetFilter('country','${v}')">${l}</button>`).join('')}
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span class="sat-filter-label">카테고리:</span>
+          <div class="sat-btn-group">
+            ${[['all','전체'],...categories.map(c=>[c,c])].map(([v,l])=>`<button class="sat-fbtn ${satFilters.category===v?'active':''}" onclick="satSetFilter('category','${v}')">${l}</button>`).join('')}
+          </div>
+        </div>
       </div>
-      <button class="sat-export-btn" onclick="satExportCSV()">CSV 내보내기</button>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="sat-filter-label">Helpful:</span>
+          <div class="sat-btn-group">${btns('helpful',[['all','전체'],['yes','Yes'],['no','No']])}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="sat-filter-label">Device:</span>
+          <div class="sat-btn-group">${btns('device',[['all','전체'],['PC','PC'],['Mobile','Mobile']])}</div>
+        </div>
+        <div style="flex:1;min-width:200px;position:relative;">
+          <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--text2);fill:none;stroke-width:2;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+          <input class="sat-search" placeholder="Comments keyword search" value="${satFilters.keyword||''}" oninput="satSetFilter('keyword',this.value)">
+        </div>
+      </div>
     </div>
   `;
 }
 
 // ── Overview KPI ─────────────────────────────────────────
 function satRenderOverview(monthly, prev) {
-  if (!monthly) return `<div class="sat-section-card"><div style="color:var(--text2);font-size:13px;padding:20px;">데이터 없음</div></div>`;
+  if (!monthly) return `<div class="sat-section-card"><div style="color:var(--text2);padding:20px;font-size:13px;">데이터 없음</div></div>`;
 
   const satDiff    = prev ? +(monthly.satisfaction_pct - prev.satisfaction_pct).toFixed(1) : null;
   const totalDiff  = prev ? Math.round(((monthly.total - prev.total)/prev.total)*100) : null;
@@ -6344,120 +6462,180 @@ function satRenderOverview(monthly, prev) {
   const prevPosRate = prev ? (prev.positive_rate != null ? prev.positive_rate : 100 - prev.negative_rate) : null;
   const curPosRate  = monthly.positive_rate != null ? monthly.positive_rate : 100 - monthly.negative_rate;
   const posDiff     = prevPosRate != null ? +(curPosRate - prevPosRate).toFixed(1) : null;
-  const mobileDiff = prev ? +(monthly.mobile_pct - prev.mobile_pct).toFixed(1) : null;
+  const mobileDiff  = prev ? +(monthly.mobile_pct - prev.mobile_pct).toFixed(1) : null;
 
-  const kpi = (label, value, diff, unit, invertGood) => {
-    const momCls = diff == null ? 'flat' : (invertGood ? (diff<0?'up':diff>0?'down':'flat') : (diff>0?'up':diff<0?'down':'flat'));
-    const momText = diff == null ? '–' : `${diff>0?'+':''}${diff}${unit}`;
-    return `<div class="sat-kpi-card">
-      <div class="sat-kpi-label">${label}</div>
-      <div class="sat-kpi-value">${value}</div>
-      <div class="sat-kpi-mom ${momCls}">${momText} MoM</div>
-    </div>`;
+  const momArrow = (diff, invertGood) => {
+    if (diff == null) return '';
+    const isGood = invertGood ? diff < 0 : diff > 0;
+    const isFlat = diff === 0;
+    const cls = isFlat ? 'flat' : isGood ? 'up' : 'down';
+    const arrow = isFlat ? '→' : (diff > 0 ? '▲' : '▼');
+    const unit = '%p';
+    return `<span class="sat-kpi-mom ${cls}">${arrow} ${diff>0?'+':''}${diff}${unit} MoM</span>`;
   };
+  const momArrowCount = (diff) => {
+    if (diff == null) return '';
+    const cls = diff > 0 ? 'up' : diff < 0 ? 'down' : 'flat';
+    const arrow = diff > 0 ? '▲' : diff < 0 ? '▼' : '→';
+    return `<span class="sat-kpi-mom ${cls}">${arrow} ${diff>0?'+':''}${diff}% MoM</span>`;
+  };
+
+  const bigKpi = (icon, label, val, mom) => `
+    <div class="sat-kpi-card-big">
+      <div class="sat-kpi-icon">${icon}</div>
+      <div>
+        <div class="sat-kpi-label">${label}</div>
+        <div class="sat-kpi-value">${val}</div>
+        ${mom}
+      </div>
+    </div>`;
+
+  const smallKpi = (icon, label, val, mom) => `
+    <div class="sat-kpi-card-sm">
+      <div class="sat-kpi-icon-sm">${icon}</div>
+      <div class="sat-kpi-label">${label}</div>
+      <div class="sat-kpi-value-sm">${val}</div>
+      ${mom}
+    </div>`;
 
   // Trend strip
   const allPeriods = [...Object.keys(SAT_DATA.prev_monthly||{}), ...Object.keys(SAT_DATA.monthly||{})];
-  const trendItems = allPeriods.map((p, i) => {
-    const isLatest = p === (satFilters.period || SAT_DATA.meta.latest_period);
-    const v = SAT_DATA.monthly[p] ? SAT_DATA.monthly[p].satisfaction_pct
-            : SAT_DATA.prev_monthly[p] ? SAT_DATA.prev_monthly[p].satisfaction_pct : null;
+  const trendItems = allPeriods.map((p,i) => {
+    const isLatest = p === (satFilters.period||SAT_DATA.meta.latest_period);
+    const v = SAT_DATA.monthly[p]?.satisfaction_pct ?? SAT_DATA.prev_monthly[p]?.satisfaction_pct ?? null;
     const label = p.replace('2026-','');
-    return `<div class="sat-trend-item ${isLatest?'latest':''}">
-      <div class="sat-trend-month">${label}</div>
-      <div class="sat-trend-val">${v!=null ? v.toFixed(0)+'%' : '–'}</div>
-    </div>${i < allPeriods.length-1 ? '<span class="sat-trend-sep">›</span>' : ''}`;
+    return `
+      <div class="sat-trend-item ${isLatest?'latest':''}">
+        <div class="sat-trend-month">${label}</div>
+        <div class="sat-trend-val">${v!=null?v.toFixed(0)+'%':'–'}</div>
+      </div>
+      ${i<allPeriods.length-1?'<span class="sat-trend-arrow">⟶</span>':''}`;
   }).join('');
 
+  // SVG icons
+  const icoSmiley = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M7 11.5s1 1.5 3 1.5 3-1.5 3-1.5" stroke-linecap="round"/><circle cx="7.5" cy="8.5" r=".7" fill="currentColor" stroke="none"/><circle cx="12.5" cy="8.5" r=".7" fill="currentColor" stroke="none"/></svg>`;
+  const icoPeople = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="6" r="3"/><path d="M2 17c0-3 2.7-5 6-5s6 2 6 5"/><circle cx="15" cy="7" r="2.2"/><path d="M17 17c0-2-1.5-3.5-3.5-4"/></svg>`;
+  const icoThumbDown = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 2h8a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H7L4 16V4a2 2 0 0 1 3-2z" stroke-linejoin="round"/></svg>`;
+  const icoThumbUp = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 18H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h8l3-4v12a2 2 0 0 1-3 2z" stroke-linejoin="round"/></svg>`;
+  const icoPhone = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="2" width="10" height="16" rx="2"/><circle cx="10" cy="15.5" r=".8" fill="currentColor" stroke="none"/></svg>`;
+
   return `
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-        <div style="font-size:13px;font-weight:800;color:var(--text);">Satisfaction Overview</div>
-        <div style="font-size:11px;color:var(--text2);">${satFilters.period || SAT_DATA.meta.latest_period}</div>
+    <div class="sat-section-card">
+      <div class="sat-section-header"><span class="sat-section-num">1</span> Satisfaction Overview</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
+        ${bigKpi(icoSmiley,'전체 만족도',monthly.satisfaction_pct.toFixed(0)+'%',momArrow(satDiff,false))}
+        ${bigKpi(icoPeople,'응답 수',monthly.total,momArrowCount(totalDiff))}
+        ${bigKpi(icoThumbDown,'부정 응답률',monthly.negative_rate.toFixed(0)+'%',momArrow(negDiff,true))}
       </div>
-      <div class="sat-kpi-grid">
-        ${kpi('전체 만족도', monthly.satisfaction_pct.toFixed(0)+'%', satDiff, '%p', false)}
-        ${kpi('응답 수', monthly.total, totalDiff, '%', false)}
-        ${kpi('Positive 응답률', curPosRate.toFixed(0)+'%', posDiff, '%p', false)}
-        ${kpi('Negative 응답률', monthly.negative_rate.toFixed(0)+'%', negDiff, '%p', true)}
-        ${kpi('Mobile 비중', monthly.mobile_pct.toFixed(0)+'%', mobileDiff, '%p', false)}
-        ${kpi('Line-up 응답', monthly.by_content_type?.lineup?.total||0, null, '', false)}
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;">
+        ${smallKpi(icoThumbUp,'Positive 응답률',curPosRate.toFixed(0)+'%',momArrow(posDiff,false))}
+        ${smallKpi(icoThumbDown,'Negative 응답률',monthly.negative_rate.toFixed(0)+'%',momArrow(negDiff,true))}
+        ${smallKpi(icoPhone,'Mobile 응답 비중',monthly.mobile_pct.toFixed(0)+'%',momArrow(mobileDiff,false))}
       </div>
-      <div class="sat-trend-strip">${trendItems}</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:6px;font-weight:600;">전체 만족도 추이</div>
+      <div class="sat-trend-strip-new">${trendItems}</div>
     </div>
   `;
 }
 
-// ── Country Panels ────────────────────────────────────────
-function satRenderCountryPanels(monthly) {
-  if (!monthly) return `<div class="sat-panel"><div class="sat-panel-title">Country</div><div style="color:var(--text2);font-size:12px;">데이터 없음</div></div>`;
+// ── Country & Category (combined) ─────────────────────────
+function satRenderCountryCategorySection(monthly) {
+  if (!monthly) return `<div class="sat-section-card"><div style="color:var(--text2);padding:20px;">데이터 없음</div></div>`;
 
-  const countries = Object.entries(monthly.by_country||{})
-    .map(([c,d])=>({c, ...d}))
-    .filter(d=>d.total > 0);
+  const countries = Object.entries(monthly.by_country||{}).map(([c,d])=>({c,...d})).filter(d=>d.total>0);
+  const byHighSat  = [...countries].sort((a,b)=>b.satisfaction_pct-a.satisfaction_pct);
+  const byLowSat   = [...countries].sort((a,b)=>a.satisfaction_pct-b.satisfaction_pct);
+  const byHighResp = [...countries].sort((a,b)=>b.total-a.total);
+  const byLowResp  = [...countries].sort((a,b)=>a.total-b.total).filter(d=>d.total>0);
 
-  const byHighSat = [...countries].sort((a,b)=>b.satisfaction_pct - a.satisfaction_pct);
-  const byLowSat  = [...countries].sort((a,b)=>a.satisfaction_pct - b.satisfaction_pct);
-  const byHighResp = [...countries].sort((a,b)=>b.total - a.total);
-
-  const rankPanel = (title, items, valFn, riskMode) => {
-    const rows = items.slice(0,4).map((d,i)=>`
-      <div class="sat-rank-row">
-        <span class="sat-rank-no">${i+1}</span>
-        <span class="sat-rank-name">${d.c}</span>
-        <span class="sat-rank-val ${riskMode && i<2?'risk':'good'}">${valFn(d)}</span>
-      </div>`).join('');
-    return `<div class="sat-panel">
-      <div class="sat-panel-title">${title}</div>
+  const countryPanel = (title, items, isRisk) => {
+    const borderColor = isRisk ? 'rgba(239,68,68,.3)' : 'rgba(34,197,94,.2)';
+    const rows = items.slice(0,3).map((d,i) => {
+      const partPct = byHighResp[0]?.total > 0 ? Math.round(d.total/byHighResp[0].total*30) : 0;
+      return `<div class="sat-cp-row">
+        <span class="sat-cp-no">${i+1}</span>
+        <span class="sat-cp-name">${d.c}</span>
+        <span class="sat-cp-val ${isRisk?'risk':'good'}">${d.satisfaction_pct.toFixed(0)}%</span>
+        <span class="sat-cp-sub">${d.total}</span>
+        <span class="sat-cp-sub">${partPct}%</span>
+      </div>`;
+    }).join('');
+    return `<div class="sat-cp-panel" style="border-left:3px solid ${borderColor}">
+      <div class="sat-cp-title">${title}</div>
+      <div class="sat-cp-hdr"><span></span><span></span><span>만족도</span><span>응답</span><span>참여율</span></div>
       ${rows}
     </div>`;
   };
 
-  return `
-    <div>
-      <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:10px;">Country View</div>
-      <div class="sat-country-grid">
-        ${rankPanel('만족도 높은 국가', byHighSat, d=>d.satisfaction_pct.toFixed(0)+'%', false)}
-        ${rankPanel('만족도 낮은 국가', byLowSat, d=>d.satisfaction_pct.toFixed(0)+'%', true)}
-        ${rankPanel('응답 수 많은 국가', byHighResp, d=>d.total+'건', false)}
-        ${rankPanel('부정 응답 많은 국가', [...countries].sort((a,b)=>b.helpful_no-a.helpful_no), d=>d.helpful_no+'건', true)}
-      </div>
-    </div>
-  `;
-}
-
-// ── Category Matrix ───────────────────────────────────────
-function satRenderCategoryMatrix(monthly) {
-  if (!monthly) return `<div class="sat-panel"><div class="sat-panel-title">Category</div><div style="color:var(--text2);font-size:12px;">데이터 없음</div></div>`;
-
-  const cats = Object.entries(monthly.by_category||{}).filter(([,d])=>d.total>0);
-  const chip = (pct) => {
-    if (pct >= 80) return `<span class="sat-chip high">High</span>`;
-    if (pct >= 65) return `<span class="sat-chip watch">Watch</span>`;
-    return `<span class="sat-chip risk">Risk</span>`;
+  const respPanel = (title, items, isRisk) => {
+    const rows = items.slice(0,3).map((d,i) => {
+      const topAll = byHighResp[0]?.total || 1;
+      return `<div class="sat-cp-row">
+        <span class="sat-cp-no">${i+1}</span>
+        <span class="sat-cp-name">${d.c}</span>
+        <span class="sat-cp-val ${isRisk?'risk':'good'}">${Math.round(d.total/topAll*100)}%</span>
+      </div>`;
+    }).join('');
+    return `<div class="sat-cp-panel" style="border-left:3px solid ${isRisk?'rgba(239,68,68,.3)':'rgba(99,102,241,.2)'}">
+      <div class="sat-cp-title">${title}</div>
+      ${rows}
+    </div>`;
   };
 
-  const rows = cats.map(([cat, d]) => {
-    const luData = monthly.by_content_type?.lineup;
-    const ftData = monthly.by_content_type?.feature;
+  // Category matrix
+  const cats = Object.entries(monthly.by_category||{}).filter(([,d])=>d.total>0);
+  const chipStatus = (pct) => pct>=80?'high':pct>=60?'watch':'risk';
+  const chipLabel  = (pct) => pct>=80?'High':pct>=60?'Watch':'Risk';
+
+  const matrixRows = cats.map(([cat,d]) => {
+    const lu = monthly.by_content_type?.lineup;
+    const ft = monthly.by_content_type?.feature;
     return `<tr>
-      <td>${cat}</td>
-      <td>${d.satisfaction_pct.toFixed(0)}% ${chip(d.satisfaction_pct)}</td>
-      <td>${d.total}건</td>
-      <td>${d.helpful_no}건</td>
+      <td style="font-weight:700;color:var(--text)">${cat}</td>
+      <td><span class="sat-chip ${chipStatus(d.satisfaction_pct)}">${chipLabel(d.satisfaction_pct)}</span></td>
+      <td><span class="sat-chip ${chipStatus(d.satisfaction_pct)}">${chipLabel(d.satisfaction_pct)}</span></td>
+      <td style="color:var(--text2)">${d.total}</td>
     </tr>`;
   }).join('');
 
   return `
-    <div>
-      <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:10px;">Category Matrix</div>
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;">
-        <table class="sat-cat-matrix">
-          <thead><tr>
-            <th>Category</th><th>만족도</th><th>응답 수</th><th>부정 응답</th>
-          </tr></thead>
-          <tbody>${rows}</tbody>
-        </table>
+    <div class="sat-section-card">
+      <div class="sat-section-header"><span class="sat-section-num">2</span> Country &amp; Category View</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+        <div>
+          <div style="font-size:11px;color:var(--text2);font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:5px;">
+            <svg style="width:12px;height:12px;stroke:var(--text2);fill:none;stroke-width:2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
+            국가별 만족도 / 참여율
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+            ${countryPanel('만족도 높은 국가', byHighSat, false)}
+            ${countryPanel('만족도 낮은 국가', byLowSat, true)}
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+            ${respPanel('참여율 높은 국가', byHighResp, false)}
+            ${respPanel('참여율 낮은 국가', byLowResp, true)}
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--text2);font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:5px;">
+            <svg style="width:12px;height:12px;stroke:var(--text2);fill:none;stroke-width:2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+            카테고리별 만족도
+          </div>
+          <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+            <table class="sat-cat-matrix">
+              <thead><tr>
+                <th style="text-align:left">카테고리</th>
+                <th>Line-up</th><th>Feature</th><th>Response</th>
+              </tr></thead>
+              <tbody>${matrixRows}</tbody>
+            </table>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:8px;padding:0 4px;">
+            <span style="font-size:10px;color:var(--green)">● High (80%+)</span>
+            <span style="font-size:10px;color:var(--yellow)">● Watch (60-79%)</span>
+            <span style="font-size:10px;color:var(--red)">● Risk (&lt;60%)</span>
+          </div>
+        </div>
       </div>
     </div>
   `;
@@ -6465,81 +6643,101 @@ function satRenderCategoryMatrix(monthly) {
 
 // ── Reason Analysis ───────────────────────────────────────
 function satRenderReasons(monthly) {
-  if (!monthly) return '';
+  if (!monthly) return `<div class="sat-section-card"></div>`;
+  const reasons = monthly.reasons || {};
 
-  const barBlock = (title, reasonMap, isPos) => {
-    const entries = satTopReasons(reasonMap, 5);
-    const total   = entries.reduce((s,[,v])=>s+v,0) || 1;
-    const bars = entries.map(([label,cnt]) => `
-      <div class="sat-reason-bar-row">
-        <span class="sat-reason-label">${label}</span>
-        <div class="sat-reason-bar-wrap"><div class="sat-reason-bar ${isPos?'pos':'neg'}" style="width:${Math.round(cnt/total*100)}%"></div></div>
-        <span class="sat-reason-count">${cnt}</span>
-      </div>`).join('');
-    return `<div>
-      <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em;">${title}</div>
-      ${bars}
-    </div>`;
+  const reasonList = (entries, isPos) => {
+    const total = entries.reduce((s,[,v])=>s+v,0)||1;
+    return entries.map(([label,cnt],i) =>
+      `<div class="sat-reason-li">
+        <span class="sat-reason-li-no">${i+1}.</span>
+        <span class="sat-reason-li-label">${label}</span>
+        <span class="sat-reason-li-pct ${isPos?'pos':'neg'}">${Math.round(cnt/total*100)}%</span>
+      </div>`
+    ).join('');
   };
 
-  const reasons = monthly.reasons || {};
+  const block = (typeLabel, reasons) => {
+    const posEntries = satTopReasons(reasons.positive, 3);
+    const negEntries = satTopReasons(reasons.negative, 3);
+    return `
+      <div style="margin-bottom:12px;">
+        <div style="font-size:11px;font-weight:800;color:var(--accent2);margin-bottom:8px;letter-spacing:.02em;">${typeLabel}</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div class="sat-reason-box pos">
+            <div class="sat-reason-box-title pos">Positive Top</div>
+            ${reasonList(posEntries, true)}
+          </div>
+          <div class="sat-reason-box neg">
+            <div class="sat-reason-box-title neg">Negative Top</div>
+            ${reasonList(negEntries, false)}
+          </div>
+        </div>
+      </div>`;
+  };
+
   return `
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;">
-      <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:14px;">Reason Analysis</div>
-      <div style="margin-bottom:14px;">
-        <div style="font-size:11px;font-weight:800;color:var(--accent2);margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:6px;">Line-up</div>
-        <div class="sat-reason-grid">
-          ${barBlock('Positive', reasons.lineup?.positive, true)}
-          ${barBlock('Negative', reasons.lineup?.negative, false)}
-        </div>
-      </div>
-      <div>
-        <div style="font-size:11px;font-weight:800;color:var(--accent2);margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:6px;">Feature</div>
-        <div class="sat-reason-grid">
-          ${barBlock('Positive', reasons.feature?.positive, true)}
-          ${barBlock('Negative', reasons.feature?.negative, false)}
-        </div>
-      </div>
+    <div class="sat-section-card">
+      <div class="sat-section-header"><span class="sat-section-num">3</span> Reason Analysis</div>
+      ${block('Line-up Reasons', reasons.lineup||{})}
+      ${block('Feature Reasons', reasons.feature||{})}
     </div>
   `;
 }
 
 // ── Device Signal ─────────────────────────────────────────
 function satRenderDevice(monthly) {
-  if (!monthly) return '';
-
+  if (!monthly) return `<div class="sat-section-card"></div>`;
   const devices = monthly.by_device || {};
-  const pc = devices.PC || {};
+  const pc  = devices.PC || {};
   const mob = devices.Mobile || {};
+  const period = satFilters.period || SAT_DATA.meta.latest_period;
 
-  const topNegReason = (deviceName) => {
-    const responses = SAT_DATA.responses.filter(r =>
-      r.period === (satFilters.period||SAT_DATA.meta.latest_period) &&
-      r.device === deviceName && r.helpful === 'No'
-    );
+  const topNeg = (deviceName) => {
     const counts = {};
-    responses.forEach(r => (r.neg_reasons||[]).forEach(rn => counts[rn]=(counts[rn]||0)+1));
+    SAT_DATA.responses
+      .filter(r => r.period===period && r.device===deviceName && r.helpful==='No')
+      .forEach(r => (r.neg_reasons||[]).forEach(rn => counts[rn]=(counts[rn]||0)+1));
     const top = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
     return top ? top[0] : '–';
   };
 
-  const deviceCard = (title, data, isRisk) => {
-    const negRate = data.total > 0 ? ((data.helpful_no/data.total)*100).toFixed(0)+'%' : '–';
-    return `<div class="sat-device-card" ${isRisk?'style="border-color:rgba(239,68,68,.25)"':''}>
-      <div class="sat-device-title">${title} ${isRisk?'<span style="font-size:10px;color:var(--red);font-weight:600;">주의</span>':''}</div>
-      <div class="sat-device-stat"><span>만족도</span><strong style="color:${data.satisfaction_pct>=75?'var(--green)':'var(--red)'}">${data.satisfaction_pct?.toFixed(0)||0}%</strong></div>
-      <div class="sat-device-stat"><span>부정 응답률</span><strong>${negRate}</strong></div>
-      <div class="sat-device-stat"><span>응답 수</span><strong>${data.total||0}건</strong></div>
-      <div class="sat-device-stat"><span>주요 이슈</span><strong style="color:var(--yellow)">${topNegReason(title.split('/')[0].trim())}</strong></div>
+  const negRate = (d) => d.total>0 ? ((d.helpful_no/d.total)*100).toFixed(0)+'%' : '–';
+
+  const deviceCard = (icon, title, data, isRisk) => `
+    <div class="sat-device-card-new ${isRisk?'risk':''}">
+      <div class="sat-device-header-new">
+        <span class="sat-device-icon">${icon}</span>
+        <span class="sat-device-title-new">${title}</span>
+        ${isRisk?'<span class="sat-watch-badge">주의</span>':''}
+      </div>
+      <div class="sat-device-row"><span>만족도</span><strong style="color:${(data.satisfaction_pct||0)>=75?'var(--green)':'var(--red)'};font-size:22px;font-weight:800">${(data.satisfaction_pct||0).toFixed(0)}%</strong></div>
+      <div class="sat-device-row"><span>부정 응답률</span><strong>${negRate(data)}</strong></div>
+      <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);font-size:11px;color:var(--text2);">주요 이슈: <strong style="color:var(--yellow)">${topNeg(title.split('/')[0].trim())}</strong></div>
     </div>`;
-  };
+
+  const pcIcon  = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="16" height="10" rx="1.5"/><path d="M7 17h6M10 13v4"/></svg>`;
+  const mobIcon = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="2" width="10" height="16" rx="2"/><circle cx="10" cy="15.5" r=".7" fill="currentColor" stroke="none"/></svg>`;
+  const infoIcon= `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M10 9v5M10 7h.01" stroke-linecap="round"/></svg>`;
+
+  const mobNegRate = mob.total>0 ? (mob.helpful_no/mob.total)*100 : 0;
+  const insightText = mobNegRate >= 25
+    ? 'Mobile 부정 응답이 높은 경우 포/스펙 비교 UI와 CTA 접근성 확인'
+    : 'Mobile 부정 응답률은 양호. PC 응답 품질 집중 분석 권장';
 
   return `
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;">
-      <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:14px;">Device Signal</div>
-      <div class="sat-device-grid">
-        ${deviceCard('PC / Mac', pc, pc.satisfaction_pct < 75)}
-        ${deviceCard('Mobile', mob, mob.satisfaction_pct < 75)}
+    <div class="sat-section-card">
+      <div class="sat-section-header"><span class="sat-section-num">4</span> Device Signal</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+        ${deviceCard(pcIcon,  'PC / Mac', pc,  (pc.satisfaction_pct||0)<75)}
+        ${deviceCard(mobIcon, 'Mobile',   mob, (mob.satisfaction_pct||0)<75)}
+        <div class="sat-insight-card">
+          <div class="sat-device-header-new">
+            <span class="sat-device-icon info">${infoIcon}</span>
+            <span class="sat-device-title-new">인사이트</span>
+          </div>
+          <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-top:8px;">${insightText}</div>
+        </div>
       </div>
     </div>
   `;
@@ -6553,21 +6751,19 @@ function satRenderCommentsExplorer(responses) {
   )].sort();
 
   const chips = [
-    ['all','전체'], ['positive','Positive ✓'], ['negative','Negative ✗'],
+    ['all','All'], ['positive','Positive'], ['negative','Negative'],
     ...allReasons.map(r=>[r,r])
   ].map(([v,l]) =>
     `<span class="sat-filter-chip ${satFilters.commentChip===v?'active':''}" onclick="satSetCommentChip('${v}')">${l}</span>`
   ).join('');
 
   return `
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-top:16px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-        <div style="font-size:13px;font-weight:800;color:var(--text);">Comments Explorer</div>
+    <div class="sat-section-card" style="margin-top:14px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+        <div class="sat-section-header" style="margin:0;"><span class="sat-section-num">5</span> Comments Explorer</div>
         <div style="font-size:11px;color:var(--text2);">총 ${responses.length}건</div>
       </div>
-      <div class="sat-filter-bar">
-        ${chips}
-      </div>
+      <div class="sat-filter-bar" style="margin-bottom:12px;">${chips}</div>
       <div id="satCommentsTable">${satBuildCommentsTable(responses)}</div>
     </div>
   `;
@@ -6578,39 +6774,41 @@ function satBuildCommentsTable(responses) {
   const pageItems = responses.slice(start, start+SAT_PER_PAGE);
   const totalPages = Math.ceil(responses.length/SAT_PER_PAGE);
 
-  if (responses.length === 0) {
-    return `<div style="padding:24px;text-align:center;color:var(--text2);font-size:12px;">조건에 맞는 응답이 없습니다.</div>`;
-  }
+  if (responses.length === 0) return `<div style="padding:24px;text-align:center;color:var(--text2);font-size:12px;">조건에 맞는 응답이 없습니다.</div>`;
 
   const rows = pageItems.map(r => {
-    const date = r.timestamp ? r.timestamp.split(' ')[0] : '–';
+    const date = (r.timestamp||'').split(' ')[0];
     const reasons = [...(r.pos_reasons||[]),...(r.neg_reasons||[])].map(rn =>
-      `<span class="sat-reason-tag">${rn}</span>`).join(' ');
-    const comment = r.comment ? `<span class="sat-comment-text">"${r.comment}"</span>` : '<span style="color:var(--text2);opacity:.4">–</span>';
+      `<span class="sat-pill reason">${rn}</span>`).join(' ');
+    const comment = r.comment ? `"${r.comment}"` : '';
     return `<tr>
-      <td style="white-space:nowrap;color:var(--text2)">${date}</td>
+      <td style="color:var(--text2);white-space:nowrap">${date}</td>
       <td style="font-weight:700">${r.country}</td>
       <td style="color:var(--text2)">${r.content_type==='lineup'?'Line-up':'Feature'}</td>
       <td>${r.category}</td>
-      <td><span class="sat-helpful-${r.helpful==='Yes'?'yes':'no'}">${r.helpful}</span></td>
+      <td><span class="sat-pill ${r.helpful==='Yes'?'yes':'no'}">${r.helpful}</span></td>
       <td>${reasons}</td>
-      <td style="color:var(--text2);white-space:nowrap">${r.device_os||r.device||'–'}</td>
-      <td>${comment}</td>
+      <td style="color:var(--text2);font-size:11px">${r.device_os||r.device||'–'}</td>
+      <td style="color:var(--text2);font-style:italic;max-width:260px">${comment}</td>
     </tr>`;
   }).join('');
 
   const pagination = totalPages > 1 ? `
-    <div style="display:flex;align-items:center;gap:8px;margin-top:12px;justify-content:flex-end;">
-      ${satCommentPage>1?`<button class="sat-export-btn" onclick="satPageNav(-1)">← 이전</button>`:''}
-      <span style="font-size:11px;color:var(--text2)">${satCommentPage} / ${totalPages}</span>
-      ${satCommentPage<totalPages?`<button class="sat-export-btn" onclick="satPageNav(1)">다음 →</button>`:''}
-    </div>` : '';
+    <div style="display:flex;align-items:center;gap:8px;margin-top:12px;justify-content:space-between;">
+      <button class="sat-export-btn" onclick="satExportCSV()">⬇ CSV 내보내기</button>
+      <div style="display:flex;align-items:center;gap:8px;">
+        ${satCommentPage>1?`<button class="sat-export-btn" onclick="satPageNav(-1)">← 이전</button>`:''}
+        <span style="font-size:11px;color:var(--text2)">${satCommentPage} / ${totalPages}</span>
+        ${satCommentPage<totalPages?`<button class="sat-export-btn" onclick="satPageNav(1)">다음 →</button>`:''}
+      </div>
+    </div>` : `<div style="margin-top:10px;text-align:right;"><button class="sat-export-btn" onclick="satExportCSV()">⬇ CSV 내보내기</button></div>`;
 
   return `
     <div style="overflow-x:auto;">
       <table class="sat-comment-table">
         <thead><tr>
-          <th>Date</th><th>Country</th><th>Content</th><th>Category</th>
+          <th>Date <span style="cursor:pointer">↑</span></th>
+          <th>Country</th><th>Content</th><th>Category</th>
           <th>Helpful</th><th>Reason</th><th>Device</th><th>Comment</th>
         </tr></thead>
         <tbody>${rows}</tbody>
@@ -6626,30 +6824,33 @@ function satRenderDataCheck(periodResponses) {
   const ipCounts = {};
   periodResponses.forEach(r => { if(r.id) ipCounts[r.id]=(ipCounts[r.id]||0)+1; });
   const dupSuspect = Object.values(ipCounts).filter(c=>c>3).length;
-  const noCountry = periodResponses.filter(r=>!r.country||r.country==='unknown').length;
-  const noDevice = periodResponses.filter(r=>!r.device||r.device==='unknown').length;
+  const noCountry  = periodResponses.filter(r=>!r.country||r.country==='unknown').length;
   const hasComment = periodResponses.filter(r=>r.comment&&r.comment.trim().length>0).length;
 
-  const card = (label, val, warn) =>
-    `<div class="sat-check-card">
+  const pplIcon = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="6" r="3"/><path d="M2 17c0-3 2.7-5 6-5s6 2 6 5"/></svg>`;
+  const shieldIcon = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 2l7 3v5c0 4-3 7-7 8-4-1-7-4-7-8V5l7-3z"/></svg>`;
+  const globeIcon = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="8"/><path d="M3 10h14M10 2a15 15 0 0 1 0 16"/></svg>`;
+  const chatIcon  = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 4h12a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H6l-4 3V6a2 2 0 0 1 2-2z"/></svg>`;
+
+  const card = (icon, label, val, warn) => `
+    <div class="sat-check-card">
+      <div class="sat-check-icon ${warn?'warn':''}">${icon}</div>
       <div class="sat-check-label">${label}</div>
       <div class="sat-check-val ${warn?'warn':''}">${val}</div>
     </div>`;
 
   return `
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-top:16px;">
-      <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">Data Quality Check</div>
-      <div class="sat-check-grid">
-        ${card('총 응답 수', total, false)}
-        ${card('중복 의심', dupSuspect, dupSuspect>0)}
-        ${card('국가 미확인', noCountry, noCountry>0)}
-        ${card('디바이스 미확인', noDevice, noDevice>0)}
-        ${card('코멘트 포함', hasComment, false)}
+    <div class="sat-section-card" style="margin-top:14px;">
+      <div class="sat-section-header" style="margin-bottom:12px;"><span class="sat-section-num">6</span> Data Check</div>
+      <div class="sat-check-grid" style="grid-template-columns:repeat(4,1fr);">
+        ${card(pplIcon,  '총 응답',      total,     false)}
+        ${card(shieldIcon,'중복 의심 IP', dupSuspect, dupSuspect>0)}
+        ${card(globeIcon, '국가 미확인',  noCountry,  noCountry>0)}
+        ${card(chatIcon,  'Comments 포함',hasComment, false)}
       </div>
     </div>
   `;
 }
-
 // ── Filter & Event Helpers ────────────────────────────────
 function satSetFilter(key, val) {
   satFilters[key] = val;
