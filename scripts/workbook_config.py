@@ -25,9 +25,10 @@ COUNTRY_COUNT_GROUP_MAP = {
 }
 
 METRIC_ALIASES = {
-    "session": ["lineup_session", "line_up_session", "session"],
+    "session": ["lineup_session", "line_up_session", "refrigerator_lineup_session", "laundry_lineup_session", "session"],
     "organic_session": ["organic"],
     "external_entrance": ["external_entrance"],
+    "ai_referral_traffic": ["ai_referral_traffic"],
     "avg_session_duration_sec": ["avg_session_duration_sec", "avg_session_duration"],
     "contents_click": ["contents_click"],
     "plp_conversion": ["plp_conversion"],

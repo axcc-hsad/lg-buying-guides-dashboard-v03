@@ -3630,7 +3630,7 @@ function renderFilters() {
       <div class="filter-row">
         <button class="btn btn-outline ${selectedCategory === 'ALL' ? 'active' : ''}" data-filter="category" data-val="ALL"><span class="filter-btn-inner">${iconSvg('sessions')}${t('all_categories')}</span></button>`;
     DATA.meta.categories.forEach(c => {
-      html += `<button class="btn btn-outline ${selectedCategory === c ? 'active' : ''}" data-filter="category" data-val="${c}"><span class="filter-btn-inner">${iconSvg('sessions')}${c}</span></button>`;
+      html += `<button class="btn btn-outline ${selectedCategory === c ? 'active' : ''}" data-filter="category" data-val="${c}"><span class="filter-btn-inner">${iconSvg(categoryIcon(c))}${categoryLabel(c)}</span></button>`;
     });
     html += `</div></div>`;
   }
@@ -3745,6 +3745,21 @@ function formatNum(n, decimals = 0) {
 function formatDurationSeconds(seconds) {
   if (seconds == null) return '—';
   return `${Math.floor(seconds)}s`;
+}
+
+const CATEGORY_LABELS = {
+  TV:      { ko: 'TV',    en: 'TV',         icon: 'sessions' },
+  Monitor: { ko: '모니터', en: 'Monitor',    icon: 'overview' },
+  Fridge:  { ko: '냉장고', en: 'Refrigerator', icon: 'notes'   },
+  Laundry: { ko: '세탁기', en: 'Laundry',    icon: 'behavior' },
+};
+function categoryLabel(cat) {
+  const entry = CATEGORY_LABELS[cat];
+  if (!entry) return cat;
+  return currentLang === 'ko' ? entry.ko : entry.en;
+}
+function categoryIcon(cat) {
+  return (CATEGORY_LABELS[cat] || {}).icon || 'sessions';
 }
 
 function getTopCategoryName(perProduct = {}) {
@@ -5347,6 +5362,8 @@ function v03Session(item, month) {
   return v03MetricValue(item, month, 'lineup', 'session')
     || v03MetricValue(item, month, 'tv_lineup', 'session')
     || v03MetricValue(item, month, 'monitor_lineup', 'session')
+    || v03MetricValue(item, month, 'refrigerator_lineup', 'session')
+    || v03MetricValue(item, month, 'laundry_lineup', 'session')
     || v03MetricValue(item, month, 'spec_library', 'session')
     || v03MetricValue(item, month, 'session')
     || 0;
