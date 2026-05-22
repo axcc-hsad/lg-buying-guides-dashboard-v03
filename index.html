@@ -2375,6 +2375,174 @@ body {
     border-radius: 14px;
   }
 }
+
+/* ============================================================
+   SATISFACTION TAB
+   ============================================================ */
+.sat-section { margin-bottom: 24px; }
+.sat-section-title {
+  font-size: 13px; font-weight: 800; color: var(--accent2);
+  display: flex; align-items: center; gap: 6px; margin-bottom: 14px;
+}
+/* Overview KPIs */
+.sat-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0,1fr));
+  gap: 10px;
+}
+.sat-kpi-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px;
+}
+.sat-kpi-label { font-size: 10px; font-weight: 700; color: var(--text2); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+.sat-kpi-value { font-size: 22px; font-weight: 800; color: var(--text); line-height: 1; margin-bottom: 4px; }
+.sat-kpi-mom { font-size: 11px; font-weight: 600; }
+.sat-kpi-mom.up   { color: var(--green); }
+.sat-kpi-mom.down { color: var(--red); }
+.sat-kpi-mom.flat { color: var(--text2); }
+/* Monthly trend strip */
+.sat-trend-strip {
+  display: flex; gap: 6px; align-items: center;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 16px; margin-top: 10px;
+  flex-wrap: wrap;
+}
+.sat-trend-item { display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 52px; }
+.sat-trend-month { font-size: 10px; color: var(--text2); font-weight: 600; }
+.sat-trend-val { font-size: 13px; font-weight: 800; color: var(--text); }
+.sat-trend-item.latest .sat-trend-val { color: var(--accent2); }
+.sat-trend-sep { color: var(--border); font-size: 16px; flex-shrink: 0; }
+/* Country/Category grid */
+.sat-country-grid {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 10px;
+}
+.sat-panel {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px;
+}
+.sat-panel-title { font-size: 11px; font-weight: 700; color: var(--text2); margin-bottom: 10px; text-transform: uppercase; letter-spacing: .04em; }
+.sat-rank-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,.04);
+  font-size: 12px;
+}
+.sat-rank-row:last-child { border-bottom: none; }
+.sat-rank-no { font-size: 10px; font-weight: 700; color: var(--text2); width: 16px; flex-shrink: 0; }
+.sat-rank-name { flex: 1; font-weight: 600; color: var(--text); }
+.sat-rank-val { font-weight: 700; white-space: nowrap; }
+.sat-rank-val.good { color: var(--green); }
+.sat-rank-val.risk { color: var(--red); }
+/* Category matrix */
+.sat-cat-matrix {
+  width: 100%; border-collapse: collapse; font-size: 12px;
+}
+.sat-cat-matrix th {
+  padding: 7px 12px; text-align: center; font-size: 10px; font-weight: 700;
+  color: var(--text2); text-transform: uppercase; letter-spacing: .04em;
+  border-bottom: 1px solid var(--border);
+}
+.sat-cat-matrix th:first-child { text-align: left; }
+.sat-cat-matrix td {
+  padding: 8px 12px; text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,.04);
+}
+.sat-cat-matrix td:first-child { text-align: left; font-weight: 700; color: var(--text); }
+.sat-cat-matrix tr:last-child td { border-bottom: none; }
+.sat-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700;
+}
+.sat-chip.high { background: rgba(34,197,94,.12); color: var(--green); border: 1px solid rgba(34,197,94,.2); }
+.sat-chip.watch { background: rgba(234,179,8,.12); color: var(--yellow); border: 1px solid rgba(234,179,8,.2); }
+.sat-chip.risk { background: rgba(239,68,68,.12); color: var(--red); border: 1px solid rgba(239,68,68,.2); }
+/* Reason analysis */
+.sat-reason-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sat-reason-bar-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 4px 0; font-size: 12px;
+}
+.sat-reason-label { flex: 1; color: var(--text); }
+.sat-reason-bar-wrap { flex: 0 0 100px; height: 6px; background: rgba(255,255,255,.08); border-radius: 99px; overflow: hidden; }
+.sat-reason-bar { height: 100%; border-radius: 99px; }
+.sat-reason-bar.pos { background: var(--green); }
+.sat-reason-bar.neg { background: var(--red); }
+.sat-reason-count { font-size: 11px; font-weight: 700; color: var(--text2); width: 28px; text-align: right; }
+/* Device signal */
+.sat-device-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sat-device-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 16px;
+}
+.sat-device-title { font-size: 12px; font-weight: 800; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.sat-device-stat { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,.04); }
+.sat-device-stat:last-child { border-bottom: none; }
+.sat-device-stat span { color: var(--text2); }
+.sat-device-stat strong { color: var(--text); font-weight: 700; }
+/* Comments Explorer */
+.sat-filter-bar {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; align-items: center;
+}
+.sat-filter-chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
+  border: 1px solid var(--border); color: var(--text2);
+  background: var(--surface); cursor: pointer; transition: all .15s;
+}
+.sat-filter-chip.active { border-color: var(--accent); color: var(--accent2); background: rgba(99,102,241,.1); }
+.sat-filter-chip:hover:not(.active) { border-color: rgba(255,255,255,.2); color: var(--text); }
+.sat-search-wrap { flex: 1; min-width: 180px; position: relative; }
+.sat-search {
+  width: 100%; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 5px 10px 5px 28px; font-size: 12px; color: var(--text);
+  outline: none;
+}
+.sat-search:focus { border-color: var(--accent); }
+.sat-search-icon { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); color: var(--text2); }
+.sat-export-btn {
+  padding: 5px 12px; border-radius: 6px; font-size: 11px; font-weight: 700;
+  border: 1px solid var(--border); color: var(--text2); background: var(--surface);
+  cursor: pointer; white-space: nowrap;
+}
+.sat-export-btn:hover { border-color: var(--accent); color: var(--accent2); }
+.sat-comment-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.sat-comment-table th {
+  padding: 8px 10px; text-align: left; font-size: 10px; font-weight: 700;
+  color: var(--text2); text-transform: uppercase; letter-spacing: .04em;
+  border-bottom: 1px solid var(--border); white-space: nowrap;
+}
+.sat-comment-table td {
+  padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,.04); vertical-align: top;
+}
+.sat-comment-table tr:last-child td { border-bottom: none; }
+.sat-comment-table tr:hover td { background: rgba(255,255,255,.02); }
+.sat-helpful-yes { color: var(--green); font-weight: 700; }
+.sat-helpful-no  { color: var(--red);   font-weight: 700; }
+.sat-comment-text { color: var(--text2); font-style: italic; max-width: 280px; }
+.sat-reason-tag {
+  display: inline-flex; padding: 1px 6px; border-radius: 4px;
+  font-size: 10px; font-weight: 600; background: rgba(255,255,255,.06); color: var(--text2);
+}
+.sat-page-info { font-size: 11px; color: var(--text2); margin-top: 10px; text-align: right; }
+/* Data Check */
+.sat-check-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 10px; }
+.sat-check-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px 14px; text-align: center;
+}
+.sat-check-label { font-size: 10px; color: var(--text2); font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: .03em; }
+.sat-check-val { font-size: 20px; font-weight: 800; color: var(--text); }
+.sat-check-val.warn { color: var(--yellow); }
+/* Satisfaction tab top filter selects */
+.sat-top-select {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 5px 8px; font-size: 11px; font-weight: 600;
+  color: var(--text2); cursor: pointer; outline: none;
+  -webkit-appearance: none; appearance: none;
+  padding-right: 22px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 7px center;
+}
+.sat-top-select:focus { border-color: var(--accent); color: var(--text); }
 </style>
 </head>
 <body>
@@ -2411,6 +2579,7 @@ body {
       <button class="primary-tab" data-ptab="countries"><span class="tab-icon-wrap"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3a15 15 0 0 1 0 18"></path><path d="M12 3a15 15 0 0 0 0 18"></path></svg></span><span data-i18n="ptab_countries">Country Cards</span></button>
       <button class="primary-tab" data-ptab="categories"><span class="tab-icon-wrap"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19h16"></path><path d="M7 16V8"></path><path d="M12 16V5"></path><path d="M17 16v-6"></path></svg></span><span data-i18n="ptab_categories">Category Compare</span></button>
       <button class="primary-tab" data-ptab="rawdata"><span class="tab-icon-wrap"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16l-6 7v5l-4 2v-7L4 5z"></path></svg></span><span data-i18n="ptab_rawdata">Raw Data</span></button>
+      <button class="primary-tab" data-ptab="satisfaction"><span class="tab-icon-wrap"><svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6L12 3z"></path><path d="M5 17l.8 2.2L8 20l-2.2.8L5 23l-.8-2.2L2 20l2.2-.8L5 17z"></path></svg></span><span data-i18n="ptab_satisfaction">만족도 분석</span></button>
     </div>
   </div>
 
@@ -2432,6 +2601,11 @@ body {
   <!-- Tab: Categories -->
   <div class="ptab-content" id="ptab-categories" style="display:none">
     <div id="categoryPanel"></div>
+  </div>
+
+  <!-- Tab: Satisfaction -->
+  <div class="ptab-content" id="ptab-satisfaction" style="display:none">
+    <div id="satisfactionPanel"></div>
   </div>
 
   <!-- Tab: Raw Data -->
@@ -2675,6 +2849,7 @@ const I18N = {
     ptab_countries: 'Country Cards',
     ptab_categories: 'Category Compare',
     ptab_rawdata: 'Raw Data',
+    ptab_satisfaction: 'Satisfaction',
 
     // Intelligence Brief
     brief_title: 'Key Insights',
@@ -2880,6 +3055,7 @@ const I18N = {
     ptab_countries: '국가별 카드',
     ptab_categories: '카테고리 비교',
     ptab_rawdata: '상세 데이터',
+    ptab_satisfaction: '만족도 분석',
 
     brief_title: '주요 현황',
     brief_signal_alert: '경고',
@@ -3582,6 +3758,8 @@ function render() {
     renderAcquisition();
     renderBehavior();
     renderConversion();
+  } else if (activePrimaryTab === 'satisfaction') {
+    renderSatisfactionTab();
   }
 
   renderPageLinksDrawer();
@@ -5871,7 +6049,7 @@ function v03ActionItems() {
         { owner: 'D2C 컨텐츠팀', status: '진행 전', text: '만족도 응답과 PLP/Purchase 지표 교차 확인' },
         { owner: '법인', status: '진행 전', text: '현지 모델/스펙 정보 누락 여부 확인' },
       ],
-      links: [{ label: 'Comments 확인', onclick: '' }],
+      links: [{ label: 'Comments 확인', onclick: "switchToSatisfaction({country:'all',category:'all',helpful:'no',commentChip:'Info missing'})" }],
     },
     {
       id: 'seo_weak',
@@ -6016,9 +6194,510 @@ function renderContentDirectionNew() {
       <div class="v03-list-row" style="border-bottom:1px solid rgba(255,255,255,.05);padding:6px 0;"><span>"스펙 비교가 어렵고 어떤 제품이 내게 맞는지 모르겠다"</span></div>
       <div class="v03-list-row" style="border-bottom:1px solid rgba(255,255,255,.05);padding:6px 0;"><span>"OLED 관련 정보가 더 필요하다"</span></div>
       <div class="v03-list-row" style="padding:6px 0 0;"><span>"가격 대비 차이를 명확히 알고 싶다"</span></div>
-      <div style="margin-top:10px;"><button class="v03-mini-btn">Comments 전체 보기</button></div>
+      <div style="margin-top:10px;"><button class="v03-mini-btn" onclick="switchToSatisfaction({commentChip:'all'})">Comments 전체 보기 →</button></div>
     </div>
   </div>`;
+}
+
+// ============================================================
+// SATISFACTION TAB
+// ============================================================
+let SAT_DATA = null;
+let satFilters = {
+  period: null, content: 'all', country: 'all', category: 'all',
+  helpful: 'all', reason: 'all', device: 'all', keyword: '', commentChip: 'all'
+};
+let satCommentPage = 1;
+const SAT_PER_PAGE = 20;
+
+async function loadSatisfactionData() {
+  const el = document.getElementById('satisfactionPanel');
+  if (!el) return;
+  try {
+    const r = await fetch('data/satisfaction_data.json');
+    SAT_DATA = await r.json();
+    if (!satFilters.period) satFilters.period = SAT_DATA.meta.latest_period;
+    renderSatisfactionTab();
+  } catch(e) {
+    el.innerHTML = `<div style="padding:60px;text-align:center;color:var(--text2);font-size:14px;">만족도 데이터를 불러올 수 없습니다.<br><span style="font-size:11px;opacity:.6">${e.message}</span></div>`;
+  }
+}
+
+function satGetMonthly() {
+  if (!SAT_DATA) return null;
+  const p = satFilters.period || SAT_DATA.meta.latest_period;
+  return SAT_DATA.monthly[p] || null;
+}
+
+function satGetPrev() {
+  if (!SAT_DATA || !SAT_DATA.prev_monthly) return null;
+  return Object.values(SAT_DATA.prev_monthly)[0] || null;
+}
+
+function satMoMClass(diff) {
+  if (diff == null) return 'flat';
+  return diff > 0 ? 'up' : diff < 0 ? 'down' : 'flat';
+}
+
+function satMoMText(diff, unit) {
+  if (diff == null) return '–';
+  const prefix = diff > 0 ? '+' : '';
+  return `${prefix}${diff.toFixed(1)}${unit}`;
+}
+
+function satTopReasons(reasonObj, n) {
+  if (!reasonObj) return [];
+  return Object.entries(reasonObj).sort((a,b)=>b[1]-a[1]).slice(0,n);
+}
+
+function satFilteredResponses() {
+  if (!SAT_DATA) return [];
+  const p = satFilters.period || SAT_DATA.meta.latest_period;
+  return SAT_DATA.responses.filter(r => {
+    if (r.period !== p) return false;
+    if (satFilters.content !== 'all' && r.content_type !== satFilters.content) return false;
+    if (satFilters.country !== 'all' && r.country !== satFilters.country) return false;
+    if (satFilters.category !== 'all' && r.category !== satFilters.category) return false;
+    if (satFilters.helpful !== 'all' && r.helpful.toLowerCase() !== satFilters.helpful) return false;
+    if (satFilters.device !== 'all' && r.device !== satFilters.device) return false;
+    if (satFilters.keyword) {
+      const kw = satFilters.keyword.toLowerCase();
+      if (!(r.comment||'').toLowerCase().includes(kw)) return false;
+    }
+    if (satFilters.commentChip !== 'all') {
+      if (satFilters.commentChip === 'positive' && r.helpful !== 'Yes') return false;
+      if (satFilters.commentChip === 'negative' && r.helpful !== 'No') return false;
+      if (!['all','positive','negative'].includes(satFilters.commentChip)) {
+        const allReasons = [...(r.pos_reasons||[]), ...(r.neg_reasons||[])];
+        if (!allReasons.includes(satFilters.commentChip)) return false;
+      }
+    }
+    return true;
+  });
+}
+
+function renderSatisfactionTab() {
+  const el = document.getElementById('satisfactionPanel');
+  if (!el) return;
+  if (!SAT_DATA) { loadSatisfactionData(); return; }
+
+  const monthly = satGetMonthly();
+  const prev = satGetPrev();
+  const responses = satFilteredResponses();
+
+  el.innerHTML = `
+    <div style="padding:0 0 40px;">
+      ${satRenderTopFilter()}
+      ${satRenderOverview(monthly, prev)}
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+        ${satRenderCountryPanels(monthly)}
+        ${satRenderCategoryMatrix(monthly)}
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;">
+        ${satRenderReasons(monthly)}
+        ${satRenderDevice(monthly)}
+      </div>
+      ${satRenderCommentsExplorer(responses)}
+      ${satRenderDataCheck(SAT_DATA.responses.filter(r => r.period === (satFilters.period || SAT_DATA.meta.latest_period)))}
+    </div>
+  `;
+}
+
+// ── Filter Row ────────────────────────────────────────────
+function satRenderTopFilter() {
+  if (!SAT_DATA) return '';
+  const countries = [...new Set(SAT_DATA.responses.map(r=>r.country))].sort();
+  const categories = [...new Set(SAT_DATA.responses.map(r=>r.category))].sort();
+  const allReasons = [
+    ...new Set(SAT_DATA.responses.flatMap(r=>[...(r.pos_reasons||[]),...(r.neg_reasons||[])]))
+  ].sort();
+
+  const sel = (id, opts, val) => {
+    const options = opts.map(([v,l]) => `<option value="${v}" ${val===v?'selected':''}>${l}</option>`).join('');
+    return `<select class="sat-top-select" onchange="satSetFilter('${id}',this.value)">${options}</select>`;
+  };
+
+  return `
+    <div class="sat-top-filter-bar" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:14px 16px;background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;">
+      <span style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-right:4px;">필터</span>
+      ${sel('content', [['all','Content: 전체'],['lineup','Line-up'],['feature','Feature']], satFilters.content)}
+      ${sel('country', [['all','Country: 전체'], ...countries.map(c=>[c,c])], satFilters.country)}
+      ${sel('category', [['all','Category: 전체'], ...categories.map(c=>[c,c])], satFilters.category)}
+      ${sel('helpful', [['all','Helpful: 전체'],['yes','Yes'],['no','No']], satFilters.helpful)}
+      ${sel('device', [['all','Device: 전체'],['Mobile','Mobile'],['PC','PC']], satFilters.device)}
+      <div style="flex:1;min-width:160px;position:relative;">
+        <svg style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--text2);fill:none;stroke-width:2;" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="sat-search" placeholder="Comments 검색..." value="${satFilters.keyword||''}" oninput="satSetFilter('keyword',this.value)">
+      </div>
+      <button class="sat-export-btn" onclick="satExportCSV()">CSV 내보내기</button>
+    </div>
+  `;
+}
+
+// ── Overview KPI ─────────────────────────────────────────
+function satRenderOverview(monthly, prev) {
+  if (!monthly) return `<div class="sat-section-card"><div style="color:var(--text2);font-size:13px;padding:20px;">데이터 없음</div></div>`;
+
+  const satDiff    = prev ? +(monthly.satisfaction_pct - prev.satisfaction_pct).toFixed(1) : null;
+  const totalDiff  = prev ? Math.round(((monthly.total - prev.total)/prev.total)*100) : null;
+  const negDiff    = prev ? +(monthly.negative_rate - prev.negative_rate).toFixed(1) : null;
+  const prevPosRate = prev ? (prev.positive_rate != null ? prev.positive_rate : 100 - prev.negative_rate) : null;
+  const curPosRate  = monthly.positive_rate != null ? monthly.positive_rate : 100 - monthly.negative_rate;
+  const posDiff     = prevPosRate != null ? +(curPosRate - prevPosRate).toFixed(1) : null;
+  const mobileDiff = prev ? +(monthly.mobile_pct - prev.mobile_pct).toFixed(1) : null;
+
+  const kpi = (label, value, diff, unit, invertGood) => {
+    const momCls = diff == null ? 'flat' : (invertGood ? (diff<0?'up':diff>0?'down':'flat') : (diff>0?'up':diff<0?'down':'flat'));
+    const momText = diff == null ? '–' : `${diff>0?'+':''}${diff}${unit}`;
+    return `<div class="sat-kpi-card">
+      <div class="sat-kpi-label">${label}</div>
+      <div class="sat-kpi-value">${value}</div>
+      <div class="sat-kpi-mom ${momCls}">${momText} MoM</div>
+    </div>`;
+  };
+
+  // Trend strip
+  const allPeriods = [...Object.keys(SAT_DATA.prev_monthly||{}), ...Object.keys(SAT_DATA.monthly||{})];
+  const trendItems = allPeriods.map((p, i) => {
+    const isLatest = p === (satFilters.period || SAT_DATA.meta.latest_period);
+    const v = SAT_DATA.monthly[p] ? SAT_DATA.monthly[p].satisfaction_pct
+            : SAT_DATA.prev_monthly[p] ? SAT_DATA.prev_monthly[p].satisfaction_pct : null;
+    const label = p.replace('2026-','');
+    return `<div class="sat-trend-item ${isLatest?'latest':''}">
+      <div class="sat-trend-month">${label}</div>
+      <div class="sat-trend-val">${v!=null ? v.toFixed(0)+'%' : '–'}</div>
+    </div>${i < allPeriods.length-1 ? '<span class="sat-trend-sep">›</span>' : ''}`;
+  }).join('');
+
+  return `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div style="font-size:13px;font-weight:800;color:var(--text);">Satisfaction Overview</div>
+        <div style="font-size:11px;color:var(--text2);">${satFilters.period || SAT_DATA.meta.latest_period}</div>
+      </div>
+      <div class="sat-kpi-grid">
+        ${kpi('전체 만족도', monthly.satisfaction_pct.toFixed(0)+'%', satDiff, '%p', false)}
+        ${kpi('응답 수', monthly.total, totalDiff, '%', false)}
+        ${kpi('Positive 응답률', curPosRate.toFixed(0)+'%', posDiff, '%p', false)}
+        ${kpi('Negative 응답률', monthly.negative_rate.toFixed(0)+'%', negDiff, '%p', true)}
+        ${kpi('Mobile 비중', monthly.mobile_pct.toFixed(0)+'%', mobileDiff, '%p', false)}
+        ${kpi('Line-up 응답', monthly.by_content_type?.lineup?.total||0, null, '', false)}
+      </div>
+      <div class="sat-trend-strip">${trendItems}</div>
+    </div>
+  `;
+}
+
+// ── Country Panels ────────────────────────────────────────
+function satRenderCountryPanels(monthly) {
+  if (!monthly) return `<div class="sat-panel"><div class="sat-panel-title">Country</div><div style="color:var(--text2);font-size:12px;">데이터 없음</div></div>`;
+
+  const countries = Object.entries(monthly.by_country||{})
+    .map(([c,d])=>({c, ...d}))
+    .filter(d=>d.total > 0);
+
+  const byHighSat = [...countries].sort((a,b)=>b.satisfaction_pct - a.satisfaction_pct);
+  const byLowSat  = [...countries].sort((a,b)=>a.satisfaction_pct - b.satisfaction_pct);
+  const byHighResp = [...countries].sort((a,b)=>b.total - a.total);
+
+  const rankPanel = (title, items, valFn, riskMode) => {
+    const rows = items.slice(0,4).map((d,i)=>`
+      <div class="sat-rank-row">
+        <span class="sat-rank-no">${i+1}</span>
+        <span class="sat-rank-name">${d.c}</span>
+        <span class="sat-rank-val ${riskMode && i<2?'risk':'good'}">${valFn(d)}</span>
+      </div>`).join('');
+    return `<div class="sat-panel">
+      <div class="sat-panel-title">${title}</div>
+      ${rows}
+    </div>`;
+  };
+
+  return `
+    <div>
+      <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:10px;">Country View</div>
+      <div class="sat-country-grid">
+        ${rankPanel('만족도 높은 국가', byHighSat, d=>d.satisfaction_pct.toFixed(0)+'%', false)}
+        ${rankPanel('만족도 낮은 국가', byLowSat, d=>d.satisfaction_pct.toFixed(0)+'%', true)}
+        ${rankPanel('응답 수 많은 국가', byHighResp, d=>d.total+'건', false)}
+        ${rankPanel('부정 응답 많은 국가', [...countries].sort((a,b)=>b.helpful_no-a.helpful_no), d=>d.helpful_no+'건', true)}
+      </div>
+    </div>
+  `;
+}
+
+// ── Category Matrix ───────────────────────────────────────
+function satRenderCategoryMatrix(monthly) {
+  if (!monthly) return `<div class="sat-panel"><div class="sat-panel-title">Category</div><div style="color:var(--text2);font-size:12px;">데이터 없음</div></div>`;
+
+  const cats = Object.entries(monthly.by_category||{}).filter(([,d])=>d.total>0);
+  const chip = (pct) => {
+    if (pct >= 80) return `<span class="sat-chip high">High</span>`;
+    if (pct >= 65) return `<span class="sat-chip watch">Watch</span>`;
+    return `<span class="sat-chip risk">Risk</span>`;
+  };
+
+  const rows = cats.map(([cat, d]) => {
+    const luData = monthly.by_content_type?.lineup;
+    const ftData = monthly.by_content_type?.feature;
+    return `<tr>
+      <td>${cat}</td>
+      <td>${d.satisfaction_pct.toFixed(0)}% ${chip(d.satisfaction_pct)}</td>
+      <td>${d.total}건</td>
+      <td>${d.helpful_no}건</td>
+    </tr>`;
+  }).join('');
+
+  return `
+    <div>
+      <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:10px;">Category Matrix</div>
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;">
+        <table class="sat-cat-matrix">
+          <thead><tr>
+            <th>Category</th><th>만족도</th><th>응답 수</th><th>부정 응답</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </div>
+  `;
+}
+
+// ── Reason Analysis ───────────────────────────────────────
+function satRenderReasons(monthly) {
+  if (!monthly) return '';
+
+  const barBlock = (title, reasonMap, isPos) => {
+    const entries = satTopReasons(reasonMap, 5);
+    const total   = entries.reduce((s,[,v])=>s+v,0) || 1;
+    const bars = entries.map(([label,cnt]) => `
+      <div class="sat-reason-bar-row">
+        <span class="sat-reason-label">${label}</span>
+        <div class="sat-reason-bar-wrap"><div class="sat-reason-bar ${isPos?'pos':'neg'}" style="width:${Math.round(cnt/total*100)}%"></div></div>
+        <span class="sat-reason-count">${cnt}</span>
+      </div>`).join('');
+    return `<div>
+      <div style="font-size:11px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.04em;">${title}</div>
+      ${bars}
+    </div>`;
+  };
+
+  const reasons = monthly.reasons || {};
+  return `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;">
+      <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:14px;">Reason Analysis</div>
+      <div style="margin-bottom:14px;">
+        <div style="font-size:11px;font-weight:800;color:var(--accent2);margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:6px;">Line-up</div>
+        <div class="sat-reason-grid">
+          ${barBlock('Positive', reasons.lineup?.positive, true)}
+          ${barBlock('Negative', reasons.lineup?.negative, false)}
+        </div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:800;color:var(--accent2);margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:6px;">Feature</div>
+        <div class="sat-reason-grid">
+          ${barBlock('Positive', reasons.feature?.positive, true)}
+          ${barBlock('Negative', reasons.feature?.negative, false)}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── Device Signal ─────────────────────────────────────────
+function satRenderDevice(monthly) {
+  if (!monthly) return '';
+
+  const devices = monthly.by_device || {};
+  const pc = devices.PC || {};
+  const mob = devices.Mobile || {};
+
+  const topNegReason = (deviceName) => {
+    const responses = SAT_DATA.responses.filter(r =>
+      r.period === (satFilters.period||SAT_DATA.meta.latest_period) &&
+      r.device === deviceName && r.helpful === 'No'
+    );
+    const counts = {};
+    responses.forEach(r => (r.neg_reasons||[]).forEach(rn => counts[rn]=(counts[rn]||0)+1));
+    const top = Object.entries(counts).sort((a,b)=>b[1]-a[1])[0];
+    return top ? top[0] : '–';
+  };
+
+  const deviceCard = (title, data, isRisk) => {
+    const negRate = data.total > 0 ? ((data.helpful_no/data.total)*100).toFixed(0)+'%' : '–';
+    return `<div class="sat-device-card" ${isRisk?'style="border-color:rgba(239,68,68,.25)"':''}>
+      <div class="sat-device-title">${title} ${isRisk?'<span style="font-size:10px;color:var(--red);font-weight:600;">주의</span>':''}</div>
+      <div class="sat-device-stat"><span>만족도</span><strong style="color:${data.satisfaction_pct>=75?'var(--green)':'var(--red)'}">${data.satisfaction_pct?.toFixed(0)||0}%</strong></div>
+      <div class="sat-device-stat"><span>부정 응답률</span><strong>${negRate}</strong></div>
+      <div class="sat-device-stat"><span>응답 수</span><strong>${data.total||0}건</strong></div>
+      <div class="sat-device-stat"><span>주요 이슈</span><strong style="color:var(--yellow)">${topNegReason(title.split('/')[0].trim())}</strong></div>
+    </div>`;
+  };
+
+  return `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 18px;">
+      <div style="font-size:12px;font-weight:800;color:var(--text);margin-bottom:14px;">Device Signal</div>
+      <div class="sat-device-grid">
+        ${deviceCard('PC / Mac', pc, pc.satisfaction_pct < 75)}
+        ${deviceCard('Mobile', mob, mob.satisfaction_pct < 75)}
+      </div>
+    </div>
+  `;
+}
+
+// ── Comments Explorer ─────────────────────────────────────
+function satRenderCommentsExplorer(responses) {
+  satCommentPage = 1;
+  const allReasons = [...new Set(
+    SAT_DATA.responses.flatMap(r=>[...(r.pos_reasons||[]),...(r.neg_reasons||[])])
+  )].sort();
+
+  const chips = [
+    ['all','전체'], ['positive','Positive ✓'], ['negative','Negative ✗'],
+    ...allReasons.map(r=>[r,r])
+  ].map(([v,l]) =>
+    `<span class="sat-filter-chip ${satFilters.commentChip===v?'active':''}" onclick="satSetCommentChip('${v}')">${l}</span>`
+  ).join('');
+
+  return `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;margin-top:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div style="font-size:13px;font-weight:800;color:var(--text);">Comments Explorer</div>
+        <div style="font-size:11px;color:var(--text2);">총 ${responses.length}건</div>
+      </div>
+      <div class="sat-filter-bar">
+        ${chips}
+      </div>
+      <div id="satCommentsTable">${satBuildCommentsTable(responses)}</div>
+    </div>
+  `;
+}
+
+function satBuildCommentsTable(responses) {
+  const start = (satCommentPage-1)*SAT_PER_PAGE;
+  const pageItems = responses.slice(start, start+SAT_PER_PAGE);
+  const totalPages = Math.ceil(responses.length/SAT_PER_PAGE);
+
+  if (responses.length === 0) {
+    return `<div style="padding:24px;text-align:center;color:var(--text2);font-size:12px;">조건에 맞는 응답이 없습니다.</div>`;
+  }
+
+  const rows = pageItems.map(r => {
+    const date = r.timestamp ? r.timestamp.split(' ')[0] : '–';
+    const reasons = [...(r.pos_reasons||[]),...(r.neg_reasons||[])].map(rn =>
+      `<span class="sat-reason-tag">${rn}</span>`).join(' ');
+    const comment = r.comment ? `<span class="sat-comment-text">"${r.comment}"</span>` : '<span style="color:var(--text2);opacity:.4">–</span>';
+    return `<tr>
+      <td style="white-space:nowrap;color:var(--text2)">${date}</td>
+      <td style="font-weight:700">${r.country}</td>
+      <td style="color:var(--text2)">${r.content_type==='lineup'?'Line-up':'Feature'}</td>
+      <td>${r.category}</td>
+      <td><span class="sat-helpful-${r.helpful==='Yes'?'yes':'no'}">${r.helpful}</span></td>
+      <td>${reasons}</td>
+      <td style="color:var(--text2);white-space:nowrap">${r.device_os||r.device||'–'}</td>
+      <td>${comment}</td>
+    </tr>`;
+  }).join('');
+
+  const pagination = totalPages > 1 ? `
+    <div style="display:flex;align-items:center;gap:8px;margin-top:12px;justify-content:flex-end;">
+      ${satCommentPage>1?`<button class="sat-export-btn" onclick="satPageNav(-1)">← 이전</button>`:''}
+      <span style="font-size:11px;color:var(--text2)">${satCommentPage} / ${totalPages}</span>
+      ${satCommentPage<totalPages?`<button class="sat-export-btn" onclick="satPageNav(1)">다음 →</button>`:''}
+    </div>` : '';
+
+  return `
+    <div style="overflow-x:auto;">
+      <table class="sat-comment-table">
+        <thead><tr>
+          <th>Date</th><th>Country</th><th>Content</th><th>Category</th>
+          <th>Helpful</th><th>Reason</th><th>Device</th><th>Comment</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    ${pagination}
+  `;
+}
+
+// ── Data Check ────────────────────────────────────────────
+function satRenderDataCheck(periodResponses) {
+  const total = periodResponses.length;
+  const ipCounts = {};
+  periodResponses.forEach(r => { if(r.id) ipCounts[r.id]=(ipCounts[r.id]||0)+1; });
+  const dupSuspect = Object.values(ipCounts).filter(c=>c>3).length;
+  const noCountry = periodResponses.filter(r=>!r.country||r.country==='unknown').length;
+  const noDevice = periodResponses.filter(r=>!r.device||r.device==='unknown').length;
+  const hasComment = periodResponses.filter(r=>r.comment&&r.comment.trim().length>0).length;
+
+  const card = (label, val, warn) =>
+    `<div class="sat-check-card">
+      <div class="sat-check-label">${label}</div>
+      <div class="sat-check-val ${warn?'warn':''}">${val}</div>
+    </div>`;
+
+  return `
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;margin-top:16px;">
+      <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">Data Quality Check</div>
+      <div class="sat-check-grid">
+        ${card('총 응답 수', total, false)}
+        ${card('중복 의심', dupSuspect, dupSuspect>0)}
+        ${card('국가 미확인', noCountry, noCountry>0)}
+        ${card('디바이스 미확인', noDevice, noDevice>0)}
+        ${card('코멘트 포함', hasComment, false)}
+      </div>
+    </div>
+  `;
+}
+
+// ── Filter & Event Helpers ────────────────────────────────
+function satSetFilter(key, val) {
+  satFilters[key] = val;
+  satCommentPage = 1;
+  renderSatisfactionTab();
+}
+
+function satSetCommentChip(val) {
+  satFilters.commentChip = val;
+  satCommentPage = 1;
+  const responses = satFilteredResponses();
+  const tableEl = document.getElementById('satCommentsTable');
+  if (tableEl) { tableEl.innerHTML = satBuildCommentsTable(responses); }
+  // update chip active state
+  document.querySelectorAll('.sat-filter-chip').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('onclick').includes(`'${val}'`));
+  });
+}
+
+function satPageNav(dir) {
+  satCommentPage = Math.max(1, satCommentPage + dir);
+  const responses = satFilteredResponses();
+  const tableEl = document.getElementById('satCommentsTable');
+  if (tableEl) { tableEl.innerHTML = satBuildCommentsTable(responses); }
+}
+
+function satExportCSV() {
+  const responses = satFilteredResponses();
+  const headers = ['No','Period','Date','Country','Content','Category','Helpful','Reasons','Device','Comment'];
+  const rows = responses.map(r => [
+    r.no, r.period,
+    (r.timestamp||'').split(' ')[0],
+    r.country, r.content_type, r.category, r.helpful,
+    [...(r.pos_reasons||[]),...(r.neg_reasons||[])].join('|'),
+    r.device_os||r.device, `"${(r.comment||'').replace(/"/g,'""')}"`
+  ]);
+  const csv = [headers, ...rows].map(r=>r.join(',')).join('\n');
+  const blob = new Blob(['﻿'+csv], {type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `satisfaction_${satFilters.period||'export'}.csv`;
+  a.click();
+}
+
+function switchToSatisfaction(filters) {
+  if (filters) Object.assign(satFilters, filters);
+  satCommentPage = 1;
+  switchToPrimaryTab('satisfaction');
 }
 
 function showToast(msg){

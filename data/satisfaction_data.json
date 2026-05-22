@@ -1,0 +1,2382 @@
+{
+  "meta": {
+    "last_updated": "2026-05-22",
+    "periods_available": [
+      "2026-Apr"
+    ],
+    "latest_period": "2026-Apr",
+    "total_responses": 126
+  },
+  "responses": [
+    {
+      "no": 1,
+      "id": "3585650756",
+      "timestamp": "2026-04-01 02:13:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "FR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Benefit clear"
+      ],
+      "neg_reasons": [],
+      "comment": "I found the spec comparison very clear and useful.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 2,
+      "id": "8574149614",
+      "timestamp": "2026-04-11 08:09:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "NL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range",
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": "Unclear difference between OLED and QNED models.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 3,
+      "id": "7665963761",
+      "timestamp": "2026-04-04 12:05:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 4,
+      "id": "5728765136",
+      "timestamp": "2026-04-03 07:55:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "MX",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "Tailored recommendation was spot on for my needs.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 5,
+      "id": "5996775663",
+      "timestamp": "2026-04-18 23:15:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range",
+        "Jargon Guide"
+      ],
+      "neg_reasons": [],
+      "comment": "I still cannot decide which product is right for me.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 6,
+      "id": "2149938334",
+      "timestamp": "2026-04-26 10:25:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "NL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "I found the spec comparison very clear and useful.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 7,
+      "id": "7805745017",
+      "timestamp": "2026-04-05 07:47:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "MX",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec",
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "Could not find information about my specific use case.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 8,
+      "id": "5567816720",
+      "timestamp": "2026-04-05 20:10:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "FR",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Too technical"
+      ],
+      "comment": "Hard to decide between the two top models.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 9,
+      "id": "8047877267",
+      "timestamp": "2026-04-25 08:49:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "ES",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Hard to decide"
+      ],
+      "comment": null,
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 10,
+      "id": "1854316681",
+      "timestamp": "2026-04-28 20:19:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "ES",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Unclear diff",
+        "Technical terms"
+      ],
+      "comment": "Hard to decide between the two top models.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 11,
+      "id": "8760038701",
+      "timestamp": "2026-04-30 11:56:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "CA",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Info missing",
+        "Hard to decide"
+      ],
+      "comment": "Hard to decide between the two top models.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 12,
+      "id": "6004182187",
+      "timestamp": "2026-04-22 15:35:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "IT",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "The jargon guide tooltip was a great addition.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 13,
+      "id": "7517938612",
+      "timestamp": "2026-04-22 20:23:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "CA",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Technical terms"
+      ],
+      "comment": "The benefit summary cards are excellent.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 14,
+      "id": "1983297492",
+      "timestamp": "2026-04-23 20:03:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "FR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "Would love more detail on energy efficiency.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 15,
+      "id": "8664882079",
+      "timestamp": "2026-04-19 15:15:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Fridge",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 16,
+      "id": "4700855390",
+      "timestamp": "2026-04-02 12:46:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain",
+        "Easy language"
+      ],
+      "neg_reasons": [],
+      "comment": "Hard to decide between the two top models.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 17,
+      "id": "9807209816",
+      "timestamp": "2026-04-26 17:06:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "I want more information about OLED technology.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 18,
+      "id": "1251837136",
+      "timestamp": "2026-04-16 06:55:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Fridge",
+      "country": "CA",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Layout confusing"
+      ],
+      "comment": "Great guide overall, very comprehensive.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 19,
+      "id": "3328710672",
+      "timestamp": "2026-04-10 06:03:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "FR",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Info missing",
+        "Hard to decide"
+      ],
+      "comment": "Too much technical information without context.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 20,
+      "id": "3555656321",
+      "timestamp": "2026-04-03 05:04:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "IT",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 21,
+      "id": "7540301973",
+      "timestamp": "2026-04-22 18:36:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Too technical"
+      ],
+      "comment": "Unclear difference between OLED and QNED models.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 22,
+      "id": "5278201677",
+      "timestamp": "2026-04-01 14:39:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "PL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Benefit clear",
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "Would love more detail on energy efficiency.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 23,
+      "id": "3271782991",
+      "timestamp": "2026-04-06 14:53:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "FR",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Technical terms"
+      ],
+      "comment": "Tailored recommendation was spot on for my needs.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 24,
+      "id": "3597724331",
+      "timestamp": "2026-04-05 08:18:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "CA",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain",
+        "Benefit clear"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 25,
+      "id": "5310195918",
+      "timestamp": "2026-04-27 08:02:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "NL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain"
+      ],
+      "neg_reasons": [],
+      "comment": "Unclear difference between OLED and QNED models.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 26,
+      "id": "3373077218",
+      "timestamp": "2026-04-29 22:57:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "FR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain",
+        "Benefit clear"
+      ],
+      "neg_reasons": [],
+      "comment": "Would love more detail on energy efficiency.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 27,
+      "id": "5736462531",
+      "timestamp": "2026-04-22 07:42:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Technical terms"
+      ],
+      "comment": "Too much technical information without context.",
+      "device": "Tablet",
+      "device_os": "Tablet"
+    },
+    {
+      "no": 28,
+      "id": "9265609985",
+      "timestamp": "2026-04-29 13:01:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Fridge",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "I still cannot decide which product is right for me.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 29,
+      "id": "3021598245",
+      "timestamp": "2026-04-28 01:54:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "NL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain"
+      ],
+      "neg_reasons": [],
+      "comment": "The benefit summary cards are excellent.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 30,
+      "id": "4712367625",
+      "timestamp": "2026-04-13 10:17:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "FR",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Hard to decide"
+      ],
+      "comment": "Too much technical information without context.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 31,
+      "id": "1164313410",
+      "timestamp": "2026-04-06 18:16:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "NL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain",
+        "Benefit clear"
+      ],
+      "neg_reasons": [],
+      "comment": "Could not find information about my specific use case.",
+      "device": "Tablet",
+      "device_os": "Tablet"
+    },
+    {
+      "no": 32,
+      "id": "8339176912",
+      "timestamp": "2026-04-07 08:02:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "PL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "Tablet",
+      "device_os": "Tablet"
+    },
+    {
+      "no": 33,
+      "id": "4642197907",
+      "timestamp": "2026-04-03 21:58:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "ES",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Jargon Guide"
+      ],
+      "neg_reasons": [],
+      "comment": "Unclear difference between OLED and QNED models.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 34,
+      "id": "7739255769",
+      "timestamp": "2026-04-22 12:43:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "FR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Visuals",
+        "Clear explain"
+      ],
+      "neg_reasons": [],
+      "comment": "Unclear difference between OLED and QNED models.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 35,
+      "id": "5659161352",
+      "timestamp": "2026-04-22 06:32:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Fridge",
+      "country": "FR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec",
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "I want more information about OLED technology.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 36,
+      "id": "9520940324",
+      "timestamp": "2026-04-01 01:15:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "FR",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Unclear diff",
+        "Hard to decide"
+      ],
+      "comment": "The jargon guide tooltip was a great addition.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 37,
+      "id": "2825989011",
+      "timestamp": "2026-04-05 20:44:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Fridge",
+      "country": "ES",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Layout confusing",
+        "Need detail"
+      ],
+      "comment": "The visuals made it easy to understand features.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 38,
+      "id": "8995059760",
+      "timestamp": "2026-04-26 14:42:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "ES",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": "The jargon guide tooltip was a great addition.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 39,
+      "id": "6302109556",
+      "timestamp": "2026-04-03 22:18:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Fridge",
+      "country": "BR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs",
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": "I want more information about OLED technology.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 40,
+      "id": "7625464411",
+      "timestamp": "2026-04-14 13:21:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Fridge",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "Would love more detail on energy efficiency.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 41,
+      "id": "8531118333",
+      "timestamp": "2026-04-01 11:19:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Info missing"
+      ],
+      "comment": "Great guide overall, very comprehensive.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 42,
+      "id": "5419627962",
+      "timestamp": "2026-04-09 13:31:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Laundry",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Benefit clear"
+      ],
+      "neg_reasons": [],
+      "comment": "The visuals made it easy to understand features.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 43,
+      "id": "1116402431",
+      "timestamp": "2026-04-19 18:42:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "The benefit summary cards are excellent.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 44,
+      "id": "8868054898",
+      "timestamp": "2026-04-11 12:17:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "ES",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Benefit clear"
+      ],
+      "neg_reasons": [],
+      "comment": "Layout on mobile is a bit confusing.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 45,
+      "id": "4239406957",
+      "timestamp": "2026-04-25 20:02:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs",
+        "Jargon Guide"
+      ],
+      "neg_reasons": [],
+      "comment": "Would love more detail on energy efficiency.",
+      "device": "Tablet",
+      "device_os": "Tablet"
+    },
+    {
+      "no": 46,
+      "id": "2584392711",
+      "timestamp": "2026-04-23 08:49:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "I want more information about OLED technology.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 47,
+      "id": "9410288290",
+      "timestamp": "2026-04-30 09:36:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Laundry",
+      "country": "PL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain",
+        "Easy language"
+      ],
+      "neg_reasons": [],
+      "comment": "The guide was very helpful for comparing models.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 48,
+      "id": "5471357886",
+      "timestamp": "2026-04-26 18:50:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Jargon Guide"
+      ],
+      "neg_reasons": [],
+      "comment": "Hard to decide between the two top models.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 49,
+      "id": "8854238082",
+      "timestamp": "2026-04-12 20:57:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec",
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "Unclear difference between OLED and QNED models.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 50,
+      "id": "5014170428",
+      "timestamp": "2026-04-09 10:54:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "PL",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Layout confusing",
+        "Need detail"
+      ],
+      "comment": null,
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 51,
+      "id": "6404582459",
+      "timestamp": "2026-04-06 15:13:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "PL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range",
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "Layout on mobile is a bit confusing.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 52,
+      "id": "8352307139",
+      "timestamp": "2026-04-24 13:31:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "MX",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "The visuals made it easy to understand features.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 53,
+      "id": "7658867789",
+      "timestamp": "2026-04-12 13:47:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "FR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec",
+        "Jargon Guide"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 54,
+      "id": "1822662216",
+      "timestamp": "2026-04-25 22:11:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "FR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range",
+        "Jargon Guide"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 55,
+      "id": "2298229437",
+      "timestamp": "2026-04-08 11:11:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "IT",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "Tailored recommendation was spot on for my needs.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 56,
+      "id": "6516195409",
+      "timestamp": "2026-04-28 00:36:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Benefit clear"
+      ],
+      "neg_reasons": [],
+      "comment": "Hard to decide between the two top models.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 57,
+      "id": "1230249217",
+      "timestamp": "2026-04-16 02:36:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "CA",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "The benefit summary cards are excellent.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 58,
+      "id": "9547119184",
+      "timestamp": "2026-04-15 14:19:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "FR",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Unclear diff",
+        "Technical terms"
+      ],
+      "comment": "The benefit summary cards are excellent.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 59,
+      "id": "2030213097",
+      "timestamp": "2026-04-22 02:10:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "IT",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "Could not find information about my specific use case.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 60,
+      "id": "8986950095",
+      "timestamp": "2026-04-23 09:44:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "Tailored recommendation was spot on for my needs.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 61,
+      "id": "1610900200",
+      "timestamp": "2026-04-18 07:41:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "FR",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Info missing"
+      ],
+      "comment": "Hard to decide between the two top models.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 62,
+      "id": "7415801613",
+      "timestamp": "2026-04-23 12:17:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Fridge",
+      "country": "IT",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Hard to decide",
+        "Unclear diff"
+      ],
+      "comment": "Tailored recommendation was spot on for my needs.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 63,
+      "id": "4248149900",
+      "timestamp": "2026-04-19 00:48:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 64,
+      "id": "3878201524",
+      "timestamp": "2026-04-14 10:20:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "MX",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range",
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "Easy language, very approachable for non-tech users.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 65,
+      "id": "8613035386",
+      "timestamp": "2026-04-11 08:20:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "NL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Benefit clear"
+      ],
+      "neg_reasons": [],
+      "comment": "Would love more detail on energy efficiency.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 66,
+      "id": "1221670908",
+      "timestamp": "2026-04-12 19:48:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Fridge",
+      "country": "UK",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Need detail"
+      ],
+      "comment": null,
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 67,
+      "id": "7666869046",
+      "timestamp": "2026-04-10 17:00:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "FR",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Unclear diff"
+      ],
+      "comment": "I still cannot decide which product is right for me.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 68,
+      "id": "3028168523",
+      "timestamp": "2026-04-17 22:17:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "MX",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": "Tailored recommendation was spot on for my needs.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 69,
+      "id": "7475684019",
+      "timestamp": "2026-04-25 13:21:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "Could not find information about my specific use case.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 70,
+      "id": "7628981661",
+      "timestamp": "2026-04-16 11:21:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "FR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Visuals",
+        "Benefit clear"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "Tablet",
+      "device_os": "Tablet"
+    },
+    {
+      "no": 71,
+      "id": "8779941999",
+      "timestamp": "2026-04-11 23:30:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": "I found the spec comparison very clear and useful.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 72,
+      "id": "8924383984",
+      "timestamp": "2026-04-19 10:55:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "BR",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Unclear diff"
+      ],
+      "comment": null,
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 73,
+      "id": "7586857685",
+      "timestamp": "2026-04-26 08:21:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "Great guide overall, very comprehensive.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 74,
+      "id": "4747699292",
+      "timestamp": "2026-04-08 23:05:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "MX",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "Tailored recommendation was spot on for my needs.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 75,
+      "id": "1773338452",
+      "timestamp": "2026-04-05 07:33:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "MX",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Jargon Guide",
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "Unclear difference between OLED and QNED models.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 76,
+      "id": "8750840032",
+      "timestamp": "2026-04-21 08:29:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "I want more information about OLED technology.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 77,
+      "id": "9587244082",
+      "timestamp": "2026-04-15 09:12:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Benefit clear",
+        "Easy language"
+      ],
+      "neg_reasons": [],
+      "comment": "Could not find information about my specific use case.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 78,
+      "id": "5181592277",
+      "timestamp": "2026-04-09 00:36:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain",
+        "Easy language"
+      ],
+      "neg_reasons": [],
+      "comment": "The benefit summary cards are excellent.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 79,
+      "id": "5464285982",
+      "timestamp": "2026-04-21 06:39:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "BR",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "No benefit"
+      ],
+      "comment": "The visuals made it easy to understand features.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 80,
+      "id": "9467483275",
+      "timestamp": "2026-04-05 17:56:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Benefit clear",
+        "Clear explain"
+      ],
+      "neg_reasons": [],
+      "comment": "Too much technical information without context.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 81,
+      "id": "5135595227",
+      "timestamp": "2026-04-26 03:29:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "BR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Jargon Guide",
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": "Layout on mobile is a bit confusing.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 82,
+      "id": "7248258423",
+      "timestamp": "2026-04-09 17:07:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "MX",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range",
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "The guide was very helpful for comparing models.",
+      "device": "Tablet",
+      "device_os": "Tablet"
+    },
+    {
+      "no": 83,
+      "id": "3620283102",
+      "timestamp": "2026-04-01 19:56:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "IT",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Need detail"
+      ],
+      "comment": "Great guide overall, very comprehensive.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 84,
+      "id": "1498733671",
+      "timestamp": "2026-04-02 09:31:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "ES",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "I found the spec comparison very clear and useful.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 85,
+      "id": "9381721143",
+      "timestamp": "2026-04-27 15:39:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs",
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": "Hard to decide between the two top models.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 86,
+      "id": "5555027957",
+      "timestamp": "2026-04-29 20:22:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Technical terms"
+      ],
+      "comment": null,
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 87,
+      "id": "5246953455",
+      "timestamp": "2026-04-26 10:15:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "CA",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Hard to decide"
+      ],
+      "comment": "I found the spec comparison very clear and useful.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 88,
+      "id": "5226368665",
+      "timestamp": "2026-04-26 19:00:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "BR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy language"
+      ],
+      "neg_reasons": [],
+      "comment": "The jargon guide tooltip was a great addition.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 89,
+      "id": "2390587865",
+      "timestamp": "2026-04-26 07:37:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "BR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain"
+      ],
+      "neg_reasons": [],
+      "comment": "Easy language, very approachable for non-tech users.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 90,
+      "id": "3163970710",
+      "timestamp": "2026-04-19 03:28:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "PL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec",
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 91,
+      "id": "3946766309",
+      "timestamp": "2026-04-28 12:27:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "PL",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Too technical",
+        "Layout confusing"
+      ],
+      "comment": "Great guide overall, very comprehensive.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 92,
+      "id": "6691628146",
+      "timestamp": "2026-04-20 20:37:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "Could not find information about my specific use case.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 93,
+      "id": "7242730249",
+      "timestamp": "2026-04-15 07:26:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "ES",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "Unclear difference between OLED and QNED models.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 94,
+      "id": "2854895521",
+      "timestamp": "2026-04-03 02:05:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": "Would love more detail on energy efficiency.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 95,
+      "id": "6636925105",
+      "timestamp": "2026-04-28 21:48:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain",
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "Easy language, very approachable for non-tech users.",
+      "device": "Tablet",
+      "device_os": "Tablet"
+    },
+    {
+      "no": 96,
+      "id": "3391179068",
+      "timestamp": "2026-04-19 07:51:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Jargon Guide",
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "Could not find information about my specific use case.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 97,
+      "id": "8118240999",
+      "timestamp": "2026-04-06 04:36:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "NL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy language",
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "The guide was very helpful for comparing models.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 98,
+      "id": "8394198376",
+      "timestamp": "2026-04-06 11:19:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "CA",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec",
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "Layout on mobile is a bit confusing.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 99,
+      "id": "7193532615",
+      "timestamp": "2026-04-15 21:27:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain"
+      ],
+      "neg_reasons": [],
+      "comment": "Could not find information about my specific use case.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 100,
+      "id": "1033015788",
+      "timestamp": "2026-04-13 19:03:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Fridge",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Jargon Guide",
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "The visuals made it easy to understand features.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 101,
+      "id": "2521136431",
+      "timestamp": "2026-04-06 04:24:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": "Unclear difference between OLED and QNED models.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 102,
+      "id": "2243458354",
+      "timestamp": "2026-04-23 20:26:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec",
+        "Jargon Guide"
+      ],
+      "neg_reasons": [],
+      "comment": "The benefit summary cards are excellent.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 103,
+      "id": "5632753983",
+      "timestamp": "2026-04-08 13:37:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Laundry",
+      "country": "UK",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Hard to decide",
+        "Unclear diff"
+      ],
+      "comment": "Hard to decide between the two top models.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 104,
+      "id": "1634323009",
+      "timestamp": "2026-04-12 23:52:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "FR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "Easy language, very approachable for non-tech users.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 105,
+      "id": "7783763790",
+      "timestamp": "2026-04-15 18:48:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "Great guide overall, very comprehensive.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 106,
+      "id": "5536224717",
+      "timestamp": "2026-04-16 14:40:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Fridge",
+      "country": "NL",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Need detail",
+        "Layout confusing"
+      ],
+      "comment": "Would love more detail on energy efficiency.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 107,
+      "id": "4847761430",
+      "timestamp": "2026-04-13 14:37:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "ES",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 108,
+      "id": "9952125442",
+      "timestamp": "2026-04-04 10:45:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Fridge",
+      "country": "NL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range"
+      ],
+      "neg_reasons": [],
+      "comment": "I want more information about OLED technology.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 109,
+      "id": "3567900251",
+      "timestamp": "2026-04-30 09:24:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "NL",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "No benefit"
+      ],
+      "comment": "Easy language, very approachable for non-tech users.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 110,
+      "id": "3850192297",
+      "timestamp": "2026-04-11 02:37:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy language",
+        "Benefit clear"
+      ],
+      "neg_reasons": [],
+      "comment": "The jargon guide tooltip was a great addition.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 111,
+      "id": "9991312028",
+      "timestamp": "2026-04-13 20:50:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "NL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy language"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 112,
+      "id": "4384950377",
+      "timestamp": "2026-04-05 04:04:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Benefit clear",
+        "Clear explain"
+      ],
+      "neg_reasons": [],
+      "comment": "The visuals made it easy to understand features.",
+      "device": "Tablet",
+      "device_os": "Tablet"
+    },
+    {
+      "no": 113,
+      "id": "4876877928",
+      "timestamp": "2026-04-06 05:53:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "PL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec"
+      ],
+      "neg_reasons": [],
+      "comment": "The jargon guide tooltip was a great addition.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 114,
+      "id": "8663811838",
+      "timestamp": "2026-04-08 09:51:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Benefit clear",
+        "Clear explain"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "Tablet",
+      "device_os": "Tablet"
+    },
+    {
+      "no": 115,
+      "id": "3597009738",
+      "timestamp": "2026-04-14 05:52:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "NL",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Benefit clear",
+        "Easy language"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 116,
+      "id": "3204833223",
+      "timestamp": "2026-04-25 05:17:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "ES",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Easy language"
+      ],
+      "neg_reasons": [],
+      "comment": "Would love more detail on energy efficiency.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 117,
+      "id": "6307626407",
+      "timestamp": "2026-04-13 16:23:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "MX",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Layout confusing"
+      ],
+      "comment": "I found the spec comparison very clear and useful.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 118,
+      "id": "4569592370",
+      "timestamp": "2026-04-10 15:44:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Need detail",
+        "Too technical"
+      ],
+      "comment": "I found the spec comparison very clear and useful.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 119,
+      "id": "2817865363",
+      "timestamp": "2026-04-24 19:33:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "Monitor",
+      "country": "IT",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Need detail"
+      ],
+      "comment": null,
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 120,
+      "id": "3469810046",
+      "timestamp": "2026-04-20 17:01:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain",
+        "Benefit clear"
+      ],
+      "neg_reasons": [],
+      "comment": "Great guide overall, very comprehensive.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 121,
+      "id": "5382302465",
+      "timestamp": "2026-04-12 02:33:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain"
+      ],
+      "neg_reasons": [],
+      "comment": null,
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 122,
+      "id": "8544878538",
+      "timestamp": "2026-04-24 21:40:00",
+      "period": "2026-Apr",
+      "content_type": "feature",
+      "category": "TV",
+      "country": "DE",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear explain",
+        "Visuals"
+      ],
+      "neg_reasons": [],
+      "comment": "The visuals made it easy to understand features.",
+      "device": "Mobile",
+      "device_os": "Mobile / iOS"
+    },
+    {
+      "no": 123,
+      "id": "9347720574",
+      "timestamp": "2026-04-26 04:04:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "FR",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec",
+        "Jargon Guide"
+      ],
+      "neg_reasons": [],
+      "comment": "I still cannot decide which product is right for me.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    },
+    {
+      "no": 124,
+      "id": "3778416511",
+      "timestamp": "2026-04-09 01:48:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "TV",
+      "country": "BR",
+      "helpful": "No",
+      "pos_reasons": [],
+      "neg_reasons": [
+        "Info missing",
+        "Technical terms"
+      ],
+      "comment": "Great guide overall, very comprehensive.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 125,
+      "id": "5182110973",
+      "timestamp": "2026-04-29 12:21:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Fridge",
+      "country": "UK",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Tailored Rec",
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "I want more information about OLED technology.",
+      "device": "PC",
+      "device_os": "PC / Mac"
+    },
+    {
+      "no": 126,
+      "id": "1440654676",
+      "timestamp": "2026-04-18 09:20:00",
+      "period": "2026-Apr",
+      "content_type": "lineup",
+      "category": "Monitor",
+      "country": "MX",
+      "helpful": "Yes",
+      "pos_reasons": [
+        "Clear Range",
+        "Easy Specs"
+      ],
+      "neg_reasons": [],
+      "comment": "I still cannot decide which product is right for me.",
+      "device": "Mobile",
+      "device_os": "Mobile / AOS"
+    }
+  ],
+  "monthly": {
+    "2026-Apr": {
+      "total": 126,
+      "helpful_yes": 93,
+      "helpful_no": 33,
+      "satisfaction_pct": 73.8,
+      "negative_rate": 26.2,
+      "positive_rate": 73.8,
+      "mobile_pct": 61.1,
+      "by_country": {
+        "FR": {
+          "total": 18,
+          "helpful_yes": 10,
+          "helpful_no": 8,
+          "satisfaction_pct": 55.6
+        },
+        "NL": {
+          "total": 12,
+          "helpful_yes": 10,
+          "helpful_no": 2,
+          "satisfaction_pct": 83.3
+        },
+        "DE": {
+          "total": 19,
+          "helpful_yes": 16,
+          "helpful_no": 3,
+          "satisfaction_pct": 84.2
+        },
+        "MX": {
+          "total": 10,
+          "helpful_yes": 9,
+          "helpful_no": 1,
+          "satisfaction_pct": 90.0
+        },
+        "ES": {
+          "total": 10,
+          "helpful_yes": 7,
+          "helpful_no": 3,
+          "satisfaction_pct": 70.0
+        },
+        "CA": {
+          "total": 7,
+          "helpful_yes": 3,
+          "helpful_no": 4,
+          "satisfaction_pct": 42.9
+        },
+        "IT": {
+          "total": 7,
+          "helpful_yes": 4,
+          "helpful_no": 3,
+          "satisfaction_pct": 57.1
+        },
+        "UK": {
+          "total": 28,
+          "helpful_yes": 24,
+          "helpful_no": 4,
+          "satisfaction_pct": 85.7
+        },
+        "PL": {
+          "total": 8,
+          "helpful_yes": 6,
+          "helpful_no": 2,
+          "satisfaction_pct": 75.0
+        },
+        "BR": {
+          "total": 7,
+          "helpful_yes": 4,
+          "helpful_no": 3,
+          "satisfaction_pct": 57.1
+        }
+      },
+      "by_category": {
+        "TV": {
+          "total": 59,
+          "helpful_yes": 43,
+          "helpful_no": 16,
+          "satisfaction_pct": 72.9
+        },
+        "Monitor": {
+          "total": 38,
+          "helpful_yes": 31,
+          "helpful_no": 7,
+          "satisfaction_pct": 81.6
+        },
+        "Laundry": {
+          "total": 16,
+          "helpful_yes": 11,
+          "helpful_no": 5,
+          "satisfaction_pct": 68.8
+        },
+        "Fridge": {
+          "total": 13,
+          "helpful_yes": 8,
+          "helpful_no": 5,
+          "satisfaction_pct": 61.5
+        }
+      },
+      "by_content_type": {
+        "feature": {
+          "total": 56,
+          "helpful_yes": 42,
+          "helpful_no": 14,
+          "satisfaction_pct": 75.0
+        },
+        "lineup": {
+          "total": 70,
+          "helpful_yes": 51,
+          "helpful_no": 19,
+          "satisfaction_pct": 72.9
+        }
+      },
+      "by_device": {
+        "Mobile": {
+          "total": 77,
+          "helpful_yes": 52,
+          "helpful_no": 25,
+          "satisfaction_pct": 67.5
+        },
+        "PC": {
+          "total": 40,
+          "helpful_yes": 33,
+          "helpful_no": 7,
+          "satisfaction_pct": 82.5
+        },
+        "Tablet": {
+          "total": 9,
+          "helpful_yes": 8,
+          "helpful_no": 1,
+          "satisfaction_pct": 88.9
+        }
+      },
+      "reasons": {
+        "lineup": {
+          "positive": {
+            "Clear Range": 20,
+            "Tailored Rec": 21,
+            "Jargon Guide": 12,
+            "Easy Specs": 21
+          },
+          "negative": {
+            "Hard to decide": 8,
+            "Unclear diff": 7,
+            "Technical terms": 7,
+            "Info missing": 5
+          }
+        },
+        "feature": {
+          "positive": {
+            "Benefit clear": 17,
+            "Visuals": 15,
+            "Clear explain": 19,
+            "Easy language": 10
+          },
+          "negative": {
+            "Too technical": 4,
+            "Layout confusing": 6,
+            "Need detail": 7,
+            "No benefit": 2
+          }
+        }
+      }
+    }
+  },
+  "prev_monthly": {
+    "2026-Mar": {
+      "total": 108,
+      "helpful_yes": 84,
+      "helpful_no": 24,
+      "satisfaction_pct": 77.8,
+      "negative_rate": 22.2,
+      "mobile_pct": 47.2
+    }
+  }
+}
