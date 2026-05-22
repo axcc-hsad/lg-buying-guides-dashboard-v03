@@ -1836,6 +1836,8 @@ body {
 }
 /* 각 열의 마지막 행 구분선 제거 — nth-of-type으로 좌/우 모두 처리 */
 .v03-signal-row:nth-last-child(-n+2) { border-bottom: none; }
+.v03-signal-collapsed { cursor: pointer; border: 1px dashed rgba(99,102,241,.3); border-radius: 6px; background: rgba(99,102,241,.04); }
+.v03-signal-collapsed:hover { background: rgba(99,102,241,.08); }
 .v03-signal-top { display: contents; }
 .v03-signal-target {
   color: var(--text);
@@ -5759,17 +5761,40 @@ function renderMainInsights() {
     ['Replication Point', 'ES / Monitor',  'PLP와 만족도 모두 높음',    'good'],
   ];
   const detectedSignals = v03GetSignalRows(); // null이면 mock 사용
-  const signalRows = (detectedSignals
-    ? detectedSignals.map(s => [s.type, s.target, s.desc, s.tone])
-    : MOCK_SIGNALS
-  ).map(([tag, target, desc, tone]) => `<div class="v03-signal-row ${tone}">
-    <div class="v03-signal-top">
-      <span class="v03-signal-icon ${tone}">${iconSvg(tone === 'good' ? 'good' : tone === 'risk' ? 'alert' : 'watch', 'ui-icon tiny')}</span>
-      <span class="v03-tag ${tone}">${tag}</span>
-      <span class="v03-signal-target">${target}</span>
-    </div>
-    <div class="v03-signal-desc">${desc}</div>
-  </div>`).join('');
+
+  const buildSignalRow = (s) => {
+    if (s._collapsed) {
+      // 접힌 요약 행: 클릭 시 펼치기
+      const itemsJson = JSON.stringify(s._hiddenItems.map(h => ({ type: h.type, target: h.target, desc: h.desc, tone: h.tone })));
+      return `<div class="v03-signal-row good v03-signal-collapsed" onclick="v03ExpandSignals(this, ${encodeURIComponent(itemsJson)})">
+        <div class="v03-signal-top">
+          <span class="v03-signal-icon good">${iconSvg('good','ui-icon tiny')}</span>
+          <span class="v03-tag good">${s.type}</span>
+          <span class="v03-signal-target" style="color:var(--accent2)">${s.desc} · 클릭하여 펼치기</span>
+        </div>
+      </div>`;
+    }
+    const tone = s.tone;
+    return `<div class="v03-signal-row ${tone}">
+      <div class="v03-signal-top">
+        <span class="v03-signal-icon ${tone}">${iconSvg(tone === 'good' ? 'good' : tone === 'risk' ? 'alert' : 'watch', 'ui-icon tiny')}</span>
+        <span class="v03-tag ${tone}">${s.type}</span>
+        <span class="v03-signal-target">${s.target}</span>
+      </div>
+      <div class="v03-signal-desc">${s.desc}</div>
+    </div>`;
+  };
+
+  const signalRows = detectedSignals
+    ? detectedSignals.map(buildSignalRow).join('')
+    : MOCK_SIGNALS.map(([tag, target, desc, tone]) => `<div class="v03-signal-row ${tone}">
+        <div class="v03-signal-top">
+          <span class="v03-signal-icon ${tone}">${iconSvg(tone === 'good' ? 'good' : tone === 'risk' ? 'alert' : 'watch', 'ui-icon tiny')}</span>
+          <span class="v03-tag ${tone}">${tag}</span>
+          <span class="v03-signal-target">${target}</span>
+        </div>
+        <div class="v03-signal-desc">${desc}</div>
+      </div>`).join('');
 
   document.getElementById('mainInsightsSummary').innerHTML = `
     <div class="v03-section">
@@ -6043,7 +6068,7 @@ const V03_SIGNAL_RULES = {
  */
 function v03DetectSignals(sheets, latest, prev) {
   const T = V03_SIGNAL_THRESHOLDS;
-  const signals = [];
+  const raw = [];
 
   for (const [, item] of sheets) {
     const m = v03ComputeSheetMetrics(item, latest, prev);
@@ -6051,38 +6076,119 @@ function v03DetectSignals(sheets, latest, prev) {
     const target = `${m.country} / ${m.category}`;
 
     if (V03_SIGNAL_RULES.replication(m, T)) {
-      signals.push({
-        type: 'Replication Point', tone: 'good', target, metrics: m,
-        desc: `PLP ${(m.plpConv * 100).toFixed(1)}% · Sessions ${m.sessionsMom != null ? (m.sessionsMom >= 0 ? '+' : '') + m.sessionsMom.toFixed(0) + '%' : '—'}`,
-      });
+      raw.push({ type: 'Replication Point', tone: 'good', target, metrics: m,
+        desc: `PLP ${(m.plpConv * 100).toFixed(1)}% · Sessions ${m.sessionsMom != null ? (m.sessionsMom >= 0 ? '+' : '') + m.sessionsMom.toFixed(0) + '%' : '—'}` });
     } else if (V03_SIGNAL_RULES.growth(m, T)) {
-      signals.push({
-        type: 'Growth Signal', tone: 'good', target, metrics: m,
-        desc: `Sessions +${m.sessionsMom.toFixed(0)}% · PLP +${m.plpConvMom.toFixed(1)}%p`,
-      });
+      raw.push({ type: 'Growth Signal', tone: 'good', target, metrics: m,
+        desc: `Sessions +${m.sessionsMom.toFixed(0)}% · PLP +${m.plpConvMom.toFixed(1)}%p` });
     } else if (V03_SIGNAL_RULES.traffic_drop(m, T)) {
-      signals.push({
-        type: 'Traffic Drop', tone: 'risk', target, metrics: m,
-        desc: `Session ${m.sessionsMom.toFixed(0)}% MoM`,
-      });
+      raw.push({ type: 'Traffic Drop', tone: 'risk', target, metrics: m,
+        desc: `Session ${m.sessionsMom.toFixed(0)}% MoM` });
     } else if (V03_SIGNAL_RULES.seo_weak(m, T)) {
-      signals.push({
-        type: 'SEO Weak', tone: 'watch', target, metrics: m,
-        desc: `Organic ${(m.organicShare * 100).toFixed(0)}% (${m.organicShareMom.toFixed(1)}%p MoM)`,
-      });
+      raw.push({ type: 'SEO Weak', tone: 'watch', target, metrics: m,
+        desc: `Organic ${(m.organicShare * 100).toFixed(0)}% (${m.organicShareMom.toFixed(1)}%p MoM)` });
     } else if (V03_SIGNAL_RULES.conversion_gap(m, T)) {
-      signals.push({
-        type: 'Conversion Gap', tone: 'watch', target, metrics: m,
-        desc: `PLP ${(m.plpConv * 100).toFixed(1)}% · ${m.sessions} sessions`,
+      raw.push({ type: 'Conversion Gap', tone: 'watch', target, metrics: m,
+        desc: `PLP ${(m.plpConv * 100).toFixed(1)}% · ${m.sessions} sessions` });
+    }
+  }
+
+  // ── 1단계: 국가 × 타입으로 그룹화 (같은 나라의 같은 신호 통합) ──
+  const groupMap = new Map();
+  for (const s of raw) {
+    const key = `${s.type}||${s.metrics.country}`;
+    if (!groupMap.has(key)) {
+      groupMap.set(key, { ...s, _cats: [s.metrics.category], _allMetrics: [s.metrics] });
+    } else {
+      const g = groupMap.get(key);
+      g._cats.push(s.metrics.category);
+      g._allMetrics.push(s.metrics);
+    }
+  }
+
+  // 그룹 처리: target 업데이트, 대표 desc 생성
+  const grouped = Array.from(groupMap.values()).map(g => {
+    // 라인업+피처 동일 카테고리 중복 제거
+    const cats = [...new Set(g._cats)];
+    g.target = cats.length === 1
+      ? `${g.metrics.country} / ${cats[0]}`
+      : `${g.metrics.country} / ${cats.slice(0,3).join(', ')}${cats.length > 3 ? ' +' + (cats.length - 3) : ''}`;
+
+    if (g.type === 'Traffic Drop') {
+      // 가장 큰 낙폭 기준
+      const worst = g._allMetrics.reduce((a,b) => a.sessionsMom < b.sessionsMom ? a : b);
+      g.desc = cats.length > 1
+        ? `Session avg ${(g._allMetrics.reduce((s,m)=>s+(m.sessionsMom||0),0)/g._allMetrics.length).toFixed(0)}% MoM (${cats.length}개 페이지)`
+        : `Session ${worst.sessionsMom.toFixed(0)}% MoM`;
+    } else if (g.type === 'SEO Weak') {
+      g.desc = cats.length > 1
+        ? `Organic avg ${(g._allMetrics.reduce((s,m)=>s+(m.organicShare||0)*100,0)/g._allMetrics.length).toFixed(0)}% (${cats.length}개 페이지)`
+        : g.desc;
+    } else if (g.type === 'Replication Point') {
+      // 최고 PLP 기준
+      const best = g._allMetrics.reduce((a,b) => (a.plpConv||0) > (b.plpConv||0) ? a : b);
+      g.desc = cats.length > 1
+        ? `Best PLP ${(best.plpConv*100).toFixed(1)}% (${cats.length}개 페이지)`
+        : g.desc;
+    }
+    return g;
+  });
+
+  // ── 2단계: 타입별 cap 적용 ──
+  // risk/watch: 심각도 순 상위 4개씩
+  // good(Replication): 세션 많은 순 상위 5개 + 나머지는 collapsed
+  const byType = {};
+  for (const s of grouped) {
+    if (!byType[s.type]) byType[s.type] = [];
+    byType[s.type].push(s);
+  }
+
+  // 정렬 함수
+  if (byType['Traffic Drop'])
+    byType['Traffic Drop'].sort((a,b) => (a.metrics.sessionsMom||0) - (b.metrics.sessionsMom||0));
+  if (byType['SEO Weak'])
+    byType['SEO Weak'].sort((a,b) => (a.metrics.organicShareMom||0) - (b.metrics.organicShareMom||0));
+  if (byType['Conversion Gap'])
+    byType['Conversion Gap'].sort((a,b) => (a.metrics.plpConv||1) - (b.metrics.plpConv||1));
+  if (byType['Replication Point'])
+    byType['Replication Point'].sort((a,b) => (b.metrics.sessions||0) - (a.metrics.sessions||0));
+  if (byType['Growth Signal'])
+    byType['Growth Signal'].sort((a,b) => (b.metrics.sessionsMom||0) - (a.metrics.sessionsMom||0));
+
+  const CAP_RISK  = 4;
+  const CAP_WATCH = 4;
+  const CAP_GOOD  = 5; // Replication Point 노출 상한
+
+  const result = [];
+
+  // risk 먼저
+  for (const type of ['Traffic Drop']) {
+    const list = byType[type] || [];
+    result.push(...list.slice(0, CAP_RISK));
+  }
+  // watch
+  for (const type of ['SEO Weak', 'Conversion Gap']) {
+    const list = byType[type] || [];
+    result.push(...list.slice(0, CAP_WATCH));
+  }
+  // good: 상위 CAP_GOOD개 + 나머지는 summary 행
+  for (const type of ['Growth Signal', 'Replication Point']) {
+    const list = byType[type] || [];
+    const shown = list.slice(0, type === 'Replication Point' ? CAP_GOOD : 3);
+    result.push(...shown);
+    const hidden = list.length - shown.length;
+    if (hidden > 0) {
+      result.push({
+        type: `${type} (+${hidden}개 더)`,
+        tone: 'good', target: '', metrics: {},
+        desc: `${list.length}개 페이지에서 감지`,
+        _collapsed: true, _hiddenCount: hidden, _parentType: type,
+        _hiddenItems: list.slice(shown.length),
       });
     }
   }
 
-  // risk → watch → good 순 정렬
-  const ORDER = { risk: 0, watch: 1, good: 2 };
-  signals.sort((a, b) => (ORDER[a.tone] ?? 3) - (ORDER[b.tone] ?? 3));
-
-  return signals;
+  return result;
 }
 
 /**
@@ -6899,6 +7005,25 @@ function switchToSatisfaction(filters) {
   if (filters) Object.assign(satFilters, filters);
   satCommentPage = 1;
   switchToPrimaryTab('satisfaction');
+}
+
+function v03ExpandSignals(collapseEl, encodedItems) {
+  try {
+    const items = JSON.parse(decodeURIComponent(encodedItems));
+    const rows = items.map(s => `<div class="v03-signal-row ${s.tone}">
+      <div class="v03-signal-top">
+        <span class="v03-signal-icon ${s.tone}">${iconSvg(s.tone === 'good' ? 'good' : s.tone === 'risk' ? 'alert' : 'watch', 'ui-icon tiny')}</span>
+        <span class="v03-tag ${s.tone}">${s.type}</span>
+        <span class="v03-signal-target">${s.target}</span>
+      </div>
+      <div class="v03-signal-desc">${s.desc}</div>
+    </div>`).join('');
+    // 접힌 행을 펼쳐진 행들로 대체
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = 'display:contents';
+    wrapper.innerHTML = rows;
+    collapseEl.replaceWith(...wrapper.children);
+  } catch(e) { console.error(e); }
 }
 
 function showToast(msg){
