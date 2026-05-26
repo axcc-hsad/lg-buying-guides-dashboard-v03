@@ -7459,31 +7459,40 @@ function renderContentDirectionNew() {
     if (!SAT_DATA) return `<div style="font-size:11px;color:var(--text2);font-style:italic;padding:8px 0;">만족도 데이터 로딩 중…</div>`;
     const p = SAT_DATA.meta.latest_period;
     const reasons = SAT_DATA.monthly[p]?.reasons || {};
-    const topN = (obj, keys, n) => keys
-      .filter(k => (obj||{})[k] > 0)
-      .sort((a, b) => (obj[b]||0) - (obj[a]||0))
-      .slice(0, n);
-    const reasonRow = (label, isPos) => {
+    const topN = (obj, keys, n) => {
+      const total = Object.values(obj||{}).reduce((s,v)=>s+v,0)||1;
+      return keys
+        .filter(k => (obj||{})[k] > 0)
+        .sort((a, b) => (obj[b]||0) - (obj[a]||0))
+        .slice(0, n)
+        .map(k => ({ label: k, pct: Math.round((obj[k]/total)*100) }));
+    };
+    const reasonRow = (item, idx, isPos) => {
       const col = isPos ? 'var(--green)' : 'var(--red)';
-      const bg  = isPos ? 'rgba(34,197,94,.08)' : 'rgba(239,68,68,.08)';
-      const dot = isPos ? '✅' : '❌';
-      return `<div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04);">
-        <span style="font-size:10px;flex-shrink:0;">${dot}</span>
-        <span style="flex:1;font-size:11px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${label}</span>
+      return `<div class="sat-reason-li">
+        <span class="sat-reason-li-no">${idx+1}.</span>
+        <span class="sat-reason-li-label" title="${item.label}">${item.label}</span>
+        <span class="sat-reason-li-pct ${isPos?'pos':'neg'}">${item.pct}%</span>
       </div>`;
     };
     const sectionHtml = (title, posObj, negObj, posKeys, negKeys, accentColor) => {
       const top2pos = topN(posObj, posKeys, 2);
       const top2neg = topN(negObj, negKeys, 2);
       return `<div style="flex:1;min-width:0;">
-        <div style="font-size:10px;font-weight:800;color:${accentColor};letter-spacing:.05em;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid rgba(255,255,255,.07);">${title}</div>
-        ${top2pos.map(k => reasonRow(k, true)).join('')}
-        ${top2neg.map(k => reasonRow(k, false)).join('')}
+        <div style="font-size:10px;font-weight:800;color:${accentColor};letter-spacing:.05em;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid rgba(255,255,255,.07);">${title}</div>
+        <div style="margin-bottom:6px;">
+          <div style="font-size:9px;color:var(--green);font-weight:700;letter-spacing:.04em;margin-bottom:3px;opacity:.8;">POSITIVE</div>
+          ${top2pos.length ? top2pos.map((item,i) => reasonRow(item,i,true)).join('') : '<div style="font-size:10px;color:var(--text2);padding:3px 0;">응답 없음</div>'}
+        </div>
+        <div>
+          <div style="font-size:9px;color:var(--red);font-weight:700;letter-spacing:.04em;margin-bottom:3px;opacity:.8;">NEGATIVE</div>
+          ${top2neg.length ? top2neg.map((item,i) => reasonRow(item,i,false)).join('') : '<div style="font-size:10px;color:var(--text2);padding:3px 0;">응답 없음</div>'}
+        </div>
       </div>`;
     };
     const lu = reasons.lineup || {};
     const ft = reasons.feature || {};
-    return `<div style="display:flex;gap:12px;">
+    return `<div style="display:flex;gap:16px;">
       ${sectionHtml('LINE-UP GUIDE',   lu.positive, lu.negative, SAT_REASONS.lineup.positive,  SAT_REASONS.lineup.negative,  'var(--accent2)')}
       <div style="width:1px;background:rgba(255,255,255,.07);flex-shrink:0;"></div>
       ${sectionHtml('FEATURE LIBRARY', ft.positive, ft.negative, SAT_REASONS.feature.positive, SAT_REASONS.feature.negative, 'var(--yellow)')}
@@ -7512,13 +7521,6 @@ function renderContentDirectionNew() {
       ${buildTopReasons()}
     </div>
 
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-        <div style="font-size:11px;font-weight:700;color:var(--text2);">${iconSvg('notes','ui-icon tiny')} Comment Signal — 위험 국가 부정 이유</div>
-        <button class="v03-mini-btn" onclick="switchToSatisfaction({helpful:'no'})">만족도 탭 상세 →</button>
-      </div>
-      <div id="v03-comment-signal-wrap">${v03BuildCommentSignal()}</div>
-    </div>
   </div>`;
 }
 
