@@ -7603,7 +7603,6 @@ async function loadSatisfactionData() {
 
 function v03BuildCommentSignal() {
   if (!SAT_DATA) {
-    // SAT_DATA 없으면 로딩 트리거 후 placeholder 반환
     loadSatisfactionData();
     return `<div style="color:var(--text2);font-size:12px;padding:6px 0;font-style:italic;">만족도 데이터 로딩 중…</div>`;
   }
@@ -7612,35 +7611,86 @@ function v03BuildCommentSignal() {
   const periodResponses = SAT_DATA.responses.filter(r => r.period === period);
   const withComment = periodResponses.filter(r => (r.comment||'').trim().length >= 10);
 
-  // 부정 응답 우선, 부족하면 긍정으로 채움
-  const negComments = withComment.filter(r => r.helpful === 'No').slice(0, 3);
-  const needed = 3 - negComments.length;
-  const posComments = needed > 0 ? withComment.filter(r => r.helpful === 'Yes').slice(0, needed) : [];
-  const showComments = [...negComments, ...posComments];
+  // 1. Satisfaction Risk 그룹 식별 (v03GetClusterData와 동일 기준)
+  const groups = {};
+  periodResponses.forEach(r => {
+    const key = `${r.country}||${r.content_type}`;
+    if (!groups[key]) groups[key] = { country: r.country, content_type: r.content_type, items: [] };
+    groups[key].items.push(r);
+  });
+  const riskGroups = Object.values(groups).filter(g => {
+    if (g.items.length < 3) return false;
+    const neg = g.items.filter(r => r.helpful === 'No').length;
+    const satPct = (g.items.length - neg) / g.items.length * 100;
+    const negRate = neg / g.items.length * 100;
+    return satPct < 75 || negRate > 20;
+  }).sort((a, b) => {
+    const aSat = a.items.filter(r => r.helpful !== 'No').length / a.items.length;
+    const bSat = b.items.filter(r => r.helpful !== 'No').length / b.items.length;
+    return aSat - bSat; // 만족도 낮은 순
+  });
 
-  // 주요 부정 이슈 키워드 (neg_reasons 구조화 데이터)
+  // 2. Risk 그룹에서 부정 코멘트 우선 추출
+  const seen = new Set();
+  const picked = [];
+  for (const g of riskGroups) {
+    if (picked.length >= 3) break;
+    const cands = g.items.filter(r =>
+      r.helpful === 'No' && (r.comment||'').trim().length >= 10 && !seen.has(r.comment)
+    );
+    for (const r of cands) {
+      if (picked.length >= 3) break;
+      picked.push({ ...r, _isRisk: true });
+      seen.add(r.comment);
+    }
+  }
+  // 3. 부족하면 나머지 부정 코멘트로 채움
+  if (picked.length < 3) {
+    const rest = periodResponses.filter(r =>
+      r.helpful === 'No' && (r.comment||'').trim().length >= 10 && !seen.has(r.comment)
+    );
+    for (const r of rest) {
+      if (picked.length >= 3) break;
+      picked.push(r);
+      seen.add(r.comment);
+    }
+  }
+
+  // 4. 주요 부정 이슈 — Risk 그룹 기준 (없으면 전체 기준)
   const negCounts = {};
-  periodResponses.forEach(r => (r.neg_reasons||[]).forEach(rn => negCounts[rn] = (negCounts[rn]||0)+1));
+  const negSource = riskGroups.length > 0
+    ? riskGroups.flatMap(g => g.items.filter(r => r.helpful === 'No'))
+    : periodResponses.filter(r => r.helpful === 'No');
+  negSource.forEach(r => (r.neg_reasons||[]).forEach(rn => negCounts[rn] = (negCounts[rn]||0)+1));
   const topNegReasons = Object.entries(negCounts).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([k])=>k);
 
-  const criteriaNote = `최신 기간(${period}) · 부정 응답 우선 · 주관식 10자 이상 기준`;
+  // 5. 렌더
+  const criteriaNote = riskGroups.length > 0
+    ? `Satisfaction Risk ${riskGroups.length}건 감지 기준 · 위험도 높은 국가×콘텐츠 부정 응답 우선 · 주관식 10자 이상`
+    : `최신 기간(${period}) · 부정 응답 우선 · 주관식 10자 이상`;
+
   const keywordsHtml = topNegReasons.length
-    ? `<div style="margin-bottom:10px;font-size:11px;color:var(--text2);">주요 부정 이슈:&nbsp;${topNegReasons.map(k=>`<span style="background:rgba(239,68,68,.1);color:var(--red);border-radius:4px;padding:1px 7px;font-size:10px;font-weight:700;">${k}</span>`).join(' ')}</div>`
+    ? `<div style="margin-bottom:10px;font-size:11px;color:var(--text2);">
+        ${riskGroups.length > 0 ? 'Risk 그룹 주요 부정 이슈:' : '주요 부정 이슈:'}&nbsp;
+        ${topNegReasons.map(k=>`<span style="background:rgba(239,68,68,.1);color:var(--red);border-radius:4px;padding:1px 7px;font-size:10px;font-weight:700;">${k}</span>`).join(' ')}
+      </div>`
     : '';
 
-  const commentRows = showComments.length
-    ? showComments.map(r => {
-        const isNeg = r.helpful === 'No';
-        const dot = `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${isNeg?'var(--red)':'var(--green)'};margin-right:5px;flex-shrink:0;margin-top:4px;"></span>`;
-        return `<div style="display:flex;align-items:flex-start;gap:2px;border-bottom:1px solid rgba(255,255,255,.05);padding:7px 0;">
-          ${dot}
-          <div>
-            <div style="font-size:10px;color:var(--text2);margin-bottom:2px;">${r.country} · ${r.category} · ${r.device||''}</div>
+  const commentRows = picked.length
+    ? picked.map(r => {
+        const ctLabel = r.content_type === 'lineup' ? 'Line-up' : r.content_type === 'feature' ? 'Feature' : (r.content_type||'');
+        const riskBadge = r._isRisk
+          ? `<span style="background:rgba(239,68,68,.12);color:var(--red);border-radius:3px;padding:1px 5px;font-size:9px;font-weight:700;margin-left:4px;">RISK</span>`
+          : '';
+        return `<div style="display:flex;align-items:flex-start;gap:4px;border-bottom:1px solid rgba(255,255,255,.05);padding:7px 0;">
+          <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0;margin-top:5px;"></span>
+          <div style="min-width:0;">
+            <div style="font-size:10px;color:var(--text2);margin-bottom:2px;">${r.country} · ${ctLabel} · ${r.category}${riskBadge}</div>
             <div style="font-size:12px;color:var(--text);line-height:1.55;">"${r.comment}"</div>
           </div>
         </div>`;
       }).join('')
-    : `<div style="font-size:11px;color:var(--text2);padding:6px 0;font-style:italic;">주관식 응답이 없습니다.</div>`;
+    : `<div style="font-size:11px;color:var(--text2);padding:6px 0;font-style:italic;">부정 주관식 응답이 없습니다.</div>`;
 
   return `
     <div style="font-size:10px;color:var(--text2);margin-bottom:8px;opacity:.7;">${criteriaNote}</div>
@@ -7648,7 +7698,7 @@ function v03BuildCommentSignal() {
     ${commentRows}
     <div style="margin-top:10px;display:flex;align-items:center;justify-content:space-between;">
       <span style="font-size:10px;color:var(--text2);">주관식 응답 ${withComment.length}건 / 전체 ${periodResponses.length}건</span>
-      <button class="v03-mini-btn" onclick="switchToSatisfaction({commentChip:'all'})">Comments 전체 보기 →</button>
+      <button class="v03-mini-btn" onclick="switchToSatisfaction({commentChip:'negative'})">부정 Comments 전체 보기 →</button>
     </div>`;
 }
 
