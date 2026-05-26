@@ -7507,14 +7507,8 @@ function satFilteredResponses() {
       const kw = satFilters.keyword.toLowerCase();
       if (!(r.comment||'').toLowerCase().includes(kw)) return false;
     }
-    if (satFilters.commentChip !== 'all') {
-      if (satFilters.commentChip === 'positive' && r.helpful !== 'Yes') return false;
-      if (satFilters.commentChip === 'negative' && r.helpful !== 'No') return false;
-      if (!['all','positive','negative'].includes(satFilters.commentChip)) {
-        const allReasons = [...(r.pos_reasons||[]), ...(r.neg_reasons||[])];
-        if (!allReasons.includes(satFilters.commentChip)) return false;
-      }
-    }
+    if (satFilters.commentChip === 'positive' && r.helpful !== 'Yes') return false;
+    if (satFilters.commentChip === 'negative' && r.helpful !== 'No') return false;
     return true;
   });
 }
@@ -7966,16 +7960,11 @@ function satRenderCommentsExplorer(responses) {
     ).join('') + (items.length === 3 ? '<div style="font-size:10px;color:var(--text2);margin-top:6px;opacity:.7;">…</div>' : '');
   };
 
-  const allReasons = [...new Set(
-    SAT_DATA.responses.flatMap(r=>[...(r.pos_reasons||[]),...(r.neg_reasons||[])])
-  )].sort();
-
-  const chips = [
-    ['all','전체'], ['positive','긍정만'], ['negative','부정만'],
-    ...allReasons.map(r=>[r,r])
-  ].map(([v,l]) =>
+  const chips = [['all','전체'],['positive','긍정만'],['negative','부정만']].map(([v,l]) =>
     `<span class="sat-filter-chip ${satFilters.commentChip===v?'active':''}" onclick="satSetCommentChip('${v}')">${l}</span>`
   ).join('');
+
+  const commentCount = responses.filter(r => r.comment?.trim()).length;
 
   return `
     <div class="sat-section-card" style="margin-top:14px;">
@@ -8008,7 +7997,7 @@ function satRenderCommentsExplorer(responses) {
       <div style="border-top:1px solid rgba(255,255,255,.06);padding-top:12px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
           <div style="font-size:11px;font-weight:700;color:var(--text2);">전체 코멘트 목록</div>
-          <div style="font-size:11px;color:var(--text2);">총 ${responses.length}건</div>
+          <div style="font-size:11px;color:var(--text2);">주관식 응답 ${commentCount}건</div>
         </div>
         <div class="sat-filter-bar" style="margin-bottom:12px;">${chips}</div>
         <div id="satCommentsTable">${satBuildCommentsTable(responses)}</div>
@@ -8018,26 +8007,23 @@ function satRenderCommentsExplorer(responses) {
 }
 
 function satBuildCommentsTable(responses) {
+  const withComment = responses.filter(r => r.comment?.trim());
   const start = (satCommentPage-1)*SAT_PER_PAGE;
-  const pageItems = responses.slice(start, start+SAT_PER_PAGE);
-  const totalPages = Math.ceil(responses.length/SAT_PER_PAGE);
+  const pageItems = withComment.slice(start, start+SAT_PER_PAGE);
+  const totalPages = Math.ceil(withComment.length/SAT_PER_PAGE);
 
-  if (responses.length === 0) return `<div style="padding:24px;text-align:center;color:var(--text2);font-size:12px;">조건에 맞는 응답이 없습니다.</div>`;
+  if (withComment.length === 0) return `<div style="padding:24px;text-align:center;color:var(--text2);font-size:12px;">주관식 응답이 없습니다.</div>`;
 
   const rows = pageItems.map(r => {
     const date = (r.timestamp||'').split(' ')[0];
-    const reasons = [...(r.pos_reasons||[]),...(r.neg_reasons||[])].map(rn =>
-      `<span class="sat-pill reason">${rn}</span>`).join(' ');
-    const comment = r.comment ? `"${r.comment}"` : '';
     return `<tr>
       <td style="color:var(--text2);white-space:nowrap">${date}</td>
       <td style="font-weight:700">${r.country}</td>
       <td style="color:var(--text2)">${r.content_type==='lineup'?'Line-up':'Feature'}</td>
       <td>${r.category}</td>
-      <td><span class="sat-pill ${r.helpful==='Yes'?'yes':'no'}">${r.helpful}</span></td>
-      <td>${reasons}</td>
+      <td><span class="sat-pill ${r.helpful==='Yes'?'yes':'no'}">${r.helpful==='Yes'?'긍정':'부정'}</span></td>
       <td style="color:var(--text2);font-size:11px">${r.device_os||r.device||'–'}</td>
-      <td style="color:var(--text2);font-style:italic;max-width:260px">${comment}</td>
+      <td style="color:var(--text);font-size:12px;max-width:320px;line-height:1.55;">${r.comment}</td>
     </tr>`;
   }).join('');
 
@@ -8055,9 +8041,9 @@ function satBuildCommentsTable(responses) {
     <div style="overflow-x:auto;">
       <table class="sat-comment-table">
         <thead><tr>
-          <th>Date <span style="cursor:pointer">↑</span></th>
+          <th>Date</th>
           <th>Country</th><th>Content</th><th>Category</th>
-          <th>Helpful</th><th>Reason</th><th>Device</th><th>Comment</th>
+          <th>Helpful</th><th>Device</th><th>Comment</th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>
