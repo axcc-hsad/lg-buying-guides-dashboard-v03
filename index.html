@@ -7690,9 +7690,9 @@ function satRenderOverview(monthly, prev) {
         ${smallKpi(icoThumbDown,'Negative 응답률',monthly.negative_rate.toFixed(0)+'%',momArrow(negDiff,true))}
         ${smallKpi(icoPhone,'Mobile 응답 비중',monthly.mobile_pct.toFixed(0)+'%',momArrow(mobileDiff,false))}
       </div>
-      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;">
+      <div style="flex:1;display:flex;flex-direction:column;">
         <div style="font-size:11px;color:var(--text2);margin-bottom:5px;font-weight:600;">전체 만족도 추이</div>
-        <div class="sat-trend-strip-new">${trendHtml}</div>
+        <div class="sat-trend-strip-new" style="flex:1;">${trendHtml}</div>
       </div>
     </div>
   `;
