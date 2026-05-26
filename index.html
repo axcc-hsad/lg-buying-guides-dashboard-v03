@@ -7514,8 +7514,8 @@ function renderSatisfactionTab() {
         ${satRenderReasons(monthly)}
         ${satRenderDevice(monthly)}
       </div>
-      ${satRenderCommentsExplorer(responses)}
       ${satRenderDataCheck(periodAll)}
+      ${satRenderCommentsExplorer(responses)}
     </div>
   `;
 }
@@ -7721,9 +7721,9 @@ function satRenderCountryCategorySection(monthly) {
   return `
     <div class="sat-section-card">
       <div class="sat-section-header"><span class="sat-section-num">2</span> Country &amp; Category View</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-        <div>
-          <div style="font-size:11px;color:var(--text2);font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:5px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;margin-bottom:12px;">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;color:var(--text2);font-weight:700;display:flex;align-items:center;gap:5px;">
             <svg style="width:12px;height:12px;stroke:var(--text2);fill:none;stroke-width:2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
             국가별 만족도 / 참여율
           </div>
@@ -7731,17 +7731,17 @@ function satRenderCountryCategorySection(monthly) {
             ${countryPanel('만족도 높은 국가', byHighSat, false)}
             ${countryPanel('만족도 낮은 국가', byLowSat, true)}
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
             ${respPanel('참여율 높은 국가', byHighResp, false)}
             ${respPanel('참여율 낮은 국가', byLowResp, true)}
           </div>
         </div>
-        <div>
-          <div style="font-size:11px;color:var(--text2);font-weight:700;margin-bottom:7px;display:flex;align-items:center;gap:5px;">
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="font-size:11px;color:var(--text2);font-weight:700;display:flex;align-items:center;gap:5px;">
             <svg style="width:12px;height:12px;stroke:var(--text2);fill:none;stroke-width:2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
             카테고리별 만족도
           </div>
-          <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+          <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;overflow:hidden;flex:1;">
             <table class="sat-cat-matrix">
               <thead><tr>
                 <th style="text-align:left">카테고리</th>
@@ -7750,7 +7750,7 @@ function satRenderCountryCategorySection(monthly) {
               <tbody>${matrixRows}</tbody>
             </table>
           </div>
-          <div style="display:flex;gap:12px;margin-top:8px;padding:0 4px;">
+          <div style="display:flex;gap:12px;padding:0 4px;">
             <span style="font-size:10px;color:var(--green)">● High (80%+)</span>
             <span style="font-size:10px;color:var(--yellow)">● Watch (60-79%)</span>
             <span style="font-size:10px;color:var(--red)">● Risk (&lt;60%)</span>
@@ -7777,30 +7777,42 @@ function satRenderReasons(monthly) {
     ).join('');
   };
 
-  const block = (typeLabel, reasons) => {
-    const posEntries = satTopReasons(reasons.positive, 3);
-    const negEntries = satTopReasons(reasons.negative, 3);
-    return `
-      <div style="margin-bottom:12px;">
-        <div style="font-size:11px;font-weight:800;color:var(--accent2);margin-bottom:8px;letter-spacing:.02em;">${typeLabel}</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-          <div class="sat-reason-box pos">
-            <div class="sat-reason-box-title pos">Positive Top</div>
-            ${reasonList(posEntries, true)}
-          </div>
-          <div class="sat-reason-box neg">
-            <div class="sat-reason-box-title neg">Negative Top</div>
-            ${reasonList(negEntries, false)}
-          </div>
-        </div>
-      </div>`;
-  };
+  const lu = reasons.lineup || {};
+  const ft = reasons.feature || {};
 
   return `
     <div class="sat-section-card">
       <div class="sat-section-header"><span class="sat-section-num">3</span> Reason Analysis</div>
-      ${block('Line-up Reasons', reasons.lineup||{})}
-      ${block('Feature Reasons', reasons.feature||{})}
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;">
+        <div>
+          <div style="font-size:10px;font-weight:800;color:var(--accent2);margin-bottom:6px;letter-spacing:.04em;">LINE-UP</div>
+          <div class="sat-reason-box pos" style="margin-bottom:8px;">
+            <div class="sat-reason-box-title pos">Positive Top</div>
+            ${reasonList(satTopReasons(lu.positive, 3), true)}
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:800;color:var(--accent2);margin-bottom:6px;letter-spacing:.04em;">&nbsp;</div>
+          <div class="sat-reason-box neg">
+            <div class="sat-reason-box-title neg">Negative Top</div>
+            ${reasonList(satTopReasons(lu.negative, 3), false)}
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:800;color:var(--accent2);margin-bottom:6px;letter-spacing:.04em;">FEATURE</div>
+          <div class="sat-reason-box pos">
+            <div class="sat-reason-box-title pos">Positive Top</div>
+            ${reasonList(satTopReasons(ft.positive, 3), true)}
+          </div>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:800;color:var(--accent2);margin-bottom:6px;letter-spacing:.04em;">&nbsp;</div>
+          <div class="sat-reason-box neg">
+            <div class="sat-reason-box-title neg">Negative Top</div>
+            ${reasonList(satTopReasons(ft.negative, 3), false)}
+          </div>
+        </div>
+      </div>
     </div>
   `;
 }
@@ -7866,12 +7878,68 @@ function satRenderDevice(monthly) {
 // ── Comments Explorer ─────────────────────────────────────
 function satRenderCommentsExplorer(responses) {
   satCommentPage = 1;
+
+  // Base responses (all filters except commentChip) for pos/neg summary
+  const period = satFilters.period || SAT_DATA.meta.latest_period;
+  const baseResponses = SAT_DATA.responses.filter(r => {
+    if (r.period !== period) return false;
+    if (satFilters.content !== 'all' && r.content_type !== satFilters.content) return false;
+    if (satFilters.country !== 'all' && r.country !== satFilters.country) return false;
+    if (satFilters.category !== 'all' && r.category !== satFilters.category) return false;
+    if (satFilters.helpful !== 'all' && r.helpful.toLowerCase() !== satFilters.helpful) return false;
+    if (satFilters.device !== 'all' && r.device !== satFilters.device) return false;
+    if (satFilters.keyword) {
+      const kw = satFilters.keyword.toLowerCase();
+      if (!(r.comment||'').toLowerCase().includes(kw)) return false;
+    }
+    return true;
+  });
+
+  const posAll = baseResponses.filter(r => r.helpful === 'Yes');
+  const negAll = baseResponses.filter(r => r.helpful === 'No');
+  const total  = baseResponses.length;
+
+  // Top reasons
+  const countReasons = (arr, key) => {
+    const m = {};
+    arr.forEach(r => (r[key]||[]).forEach(rn => m[rn]=(m[rn]||0)+1));
+    return Object.entries(m).sort((a,b)=>b[1]-a[1]);
+  };
+  const topPos = countReasons(posAll, 'pos_reasons');
+  const topNeg = countReasons(negAll, 'neg_reasons');
+
+  // AI summary text
+  const posPct  = total ? Math.round(posAll.length/total*100) : 0;
+  const negPct  = total ? Math.round(negAll.length/total*100) : 0;
+  const tp0 = topPos[0]?.[0], tp1 = topPos[1]?.[0];
+  const tn0 = topNeg[0]?.[0], tn1 = topNeg[1]?.[0];
+  const posLabel = [tp0,tp1].filter(Boolean).map(s=>`"${s}"`).join(', ') || '–';
+  const negLabel = [tn0,tn1].filter(Boolean).map(s=>`"${s}"`).join(', ') || '–';
+  const trend = posAll.length >= negAll.length ? '긍정 응답이 우세' : '부정 응답이 우세';
+  const aiText = total === 0
+    ? '필터 조건에 맞는 응답이 없습니다.'
+    : `총 ${total}건 중 긍정 ${posAll.length}건(${posPct}%), 부정 ${negAll.length}건(${negPct}%). ${trend}하며, 긍정 코멘트는 ${posLabel} 언급이 집중됨. 부정 코멘트는 ${negLabel} 관련 패턴이 반복 — 콘텐츠 개선 시 우선 점검 항목.`;
+
+  // Comment preview cards
+  const posPreview = posAll.filter(r=>r.comment?.trim()).slice(0,3);
+  const negPreview = negAll.filter(r=>r.comment?.trim()).slice(0,3);
+
+  const commentItems = (items) => {
+    if (!items.length) return `<div style="color:var(--text2);font-size:11px;font-style:italic;padding:6px 0;">코멘트 없음</div>`;
+    return items.map(r =>
+      `<div style="padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <div style="font-size:10px;color:var(--text2);margin-bottom:2px;">${r.country} · ${r.category}</div>
+        <div style="font-size:12px;color:var(--text);font-style:italic;">"${r.comment}"</div>
+      </div>`
+    ).join('') + (items.length === 3 ? '<div style="font-size:10px;color:var(--text2);margin-top:6px;opacity:.7;">…</div>' : '');
+  };
+
   const allReasons = [...new Set(
     SAT_DATA.responses.flatMap(r=>[...(r.pos_reasons||[]),...(r.neg_reasons||[])])
   )].sort();
 
   const chips = [
-    ['all','All'], ['positive','Positive'], ['negative','Negative'],
+    ['all','전체'], ['positive','긍정만'], ['negative','부정만'],
     ...allReasons.map(r=>[r,r])
   ].map(([v,l]) =>
     `<span class="sat-filter-chip ${satFilters.commentChip===v?'active':''}" onclick="satSetCommentChip('${v}')">${l}</span>`
@@ -7879,12 +7947,40 @@ function satRenderCommentsExplorer(responses) {
 
   return `
     <div class="sat-section-card" style="margin-top:14px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-        <div class="sat-section-header" style="margin:0;"><span class="sat-section-num">5</span> Comments Explorer</div>
-        <div style="font-size:11px;color:var(--text2);">총 ${responses.length}건</div>
+      <div class="sat-section-header" style="margin-bottom:12px;"><span class="sat-section-num">5</span> Comments Explorer</div>
+
+      <div style="background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.15);border-radius:8px;padding:11px 14px;margin-bottom:12px;">
+        <div style="font-size:10px;font-weight:800;color:var(--accent2);letter-spacing:.06em;margin-bottom:5px;">AI 요약</div>
+        <div style="font-size:12px;color:var(--text);line-height:1.7;">${aiText}</div>
       </div>
-      <div class="sat-filter-bar" style="margin-bottom:12px;">${chips}</div>
-      <div id="satCommentsTable">${satBuildCommentsTable(responses)}</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+        <div style="background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.18);border-radius:8px;padding:12px 14px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <div style="font-size:11px;font-weight:800;color:var(--green);">긍정 코멘트</div>
+            <span style="font-size:11px;color:var(--text2);">${posAll.length}건 · ${posPct}%</span>
+          </div>
+          ${commentItems(posPreview)}
+          ${posAll.length > 3 ? `<button class="v03-mini-btn" style="margin-top:8px;" onclick="satSetCommentChip('positive')">전체 보기 (${posAll.length}건) →</button>` : ''}
+        </div>
+        <div style="background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.18);border-radius:8px;padding:12px 14px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+            <div style="font-size:11px;font-weight:800;color:var(--red);">부정 코멘트</div>
+            <span style="font-size:11px;color:var(--text2);">${negAll.length}건 · ${negPct}%</span>
+          </div>
+          ${commentItems(negPreview)}
+          ${negAll.length > 3 ? `<button class="v03-mini-btn" style="margin-top:8px;" onclick="satSetCommentChip('negative')">전체 보기 (${negAll.length}건) →</button>` : ''}
+        </div>
+      </div>
+
+      <div style="border-top:1px solid rgba(255,255,255,.06);padding-top:12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <div style="font-size:11px;font-weight:700;color:var(--text2);">전체 코멘트 목록</div>
+          <div style="font-size:11px;color:var(--text2);">총 ${responses.length}건</div>
+        </div>
+        <div class="sat-filter-bar" style="margin-bottom:12px;">${chips}</div>
+        <div id="satCommentsTable">${satBuildCommentsTable(responses)}</div>
+      </div>
     </div>
   `;
 }
