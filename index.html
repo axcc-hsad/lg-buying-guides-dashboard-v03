@@ -7640,12 +7640,14 @@ function satRenderOverview(monthly, prev) {
     </div>`;
 
   // Trend strip — 전전월 | 전월 | 현재 3등분 고정
+  // "현재" = 실제 데이터가 있는 마지막 기간 (meta.latest_period가 아님)
   const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
-  const latestPeriod = satFilters.period || SAT_DATA.meta.latest_period;
   const allPeriodKeys = [...new Set([
     ...Object.keys(SAT_DATA.prev_monthly||{}),
     ...Object.keys(SAT_DATA.monthly||{})
   ])].sort();
+  // 데이터가 실제로 존재하는 마지막 기간을 "현재"로 고정
+  const latestDataPeriod = allPeriodKeys[allPeriodKeys.length - 1] || null;
   const last3raw = allPeriodKeys.slice(-3);
   while (last3raw.length < 3) last3raw.unshift(null);
   const ROLE_LABELS = ['전전월','전월','현재'];
@@ -7656,10 +7658,10 @@ function satRenderOverview(monthly, prev) {
     const diff = (v != null && prev != null) ? +(v - prev).toFixed(1) : null;
     const mNum = p ? parseInt(p.split('-')[1]) : null;
     const mName = mNum ? (MONTH_SHORT[mNum] || p) : '–';
-    const isLatest = p === latestPeriod;
+    const isCurrent = p === latestDataPeriod;
     const deltaCls = diff == null ? '' : diff > 0 ? 'up' : diff < 0 ? 'down' : 'flat';
     const deltaText = diff == null ? '' : `${diff>0?'+':''}${diff}%p`;
-    return `<div class="sat-trend-cell${isLatest?' latest':''}">
+    return `<div class="sat-trend-cell${isCurrent?' latest':''}">
       <div class="sat-trend-cell-role">${ROLE_LABELS[i]}</div>
       <div class="sat-trend-cell-month">${mName}</div>
       <div class="sat-trend-cell-val">${v!=null?v.toFixed(0)+'%':'–'}</div>
