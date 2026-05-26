@@ -7527,11 +7527,11 @@ function renderSatisfactionTab() {
   el.innerHTML = `
     <div style="padding:0 0 40px;">
       ${satRenderTopFilter()}
-      <div style="display:grid;grid-template-columns:2fr 3fr;gap:14px;margin-top:14px;align-items:start;">
+      <div style="display:grid;grid-template-columns:2fr 3fr;gap:14px;margin-top:14px;">
         ${satRenderOverview(monthly, prev)}
         ${satRenderCountryCategorySection(monthly)}
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;align-items:start;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px;">
         ${satRenderReasons(monthly)}
         ${satRenderDevice(monthly)}
       </div>
@@ -7678,7 +7678,7 @@ function satRenderOverview(monthly, prev) {
   const icoPhone = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="2" width="10" height="16" rx="2"/><circle cx="10" cy="15.5" r=".8" fill="currentColor" stroke="none"/></svg>`;
 
   return `
-    <div class="sat-section-card">
+    <div class="sat-section-card" style="display:flex;flex-direction:column;">
       <div class="sat-section-header"><span class="sat-section-num">1</span> Satisfaction Overview</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
         ${bigKpi(icoSmiley,'전체 만족도',monthly.satisfaction_pct.toFixed(0)+'%',momArrow(satDiff,false))}
@@ -7690,8 +7690,10 @@ function satRenderOverview(monthly, prev) {
         ${smallKpi(icoThumbDown,'Negative 응답률',monthly.negative_rate.toFixed(0)+'%',momArrow(negDiff,true))}
         ${smallKpi(icoPhone,'Mobile 응답 비중',monthly.mobile_pct.toFixed(0)+'%',momArrow(mobileDiff,false))}
       </div>
-      <div style="font-size:11px;color:var(--text2);margin-bottom:5px;font-weight:600;">전체 만족도 추이</div>
-      <div class="sat-trend-strip-new">${trendHtml}</div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;">
+        <div style="font-size:11px;color:var(--text2);margin-bottom:5px;font-weight:600;">전체 만족도 추이</div>
+        <div class="sat-trend-strip-new">${trendHtml}</div>
+      </div>
     </div>
   `;
 }
@@ -7759,7 +7761,7 @@ function satRenderCountryCategorySection(monthly) {
   return `
     <div class="sat-section-card">
       <div class="sat-section-header"><span class="sat-section-num">2</span> Country &amp; Category View</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
         <div style="display:flex;flex-direction:column;gap:8px;">
           <div style="font-size:11px;color:var(--text2);font-weight:700;display:flex;align-items:center;gap:5px;">
             <svg style="width:12px;height:12px;stroke:var(--text2);fill:none;stroke-width:2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg>
