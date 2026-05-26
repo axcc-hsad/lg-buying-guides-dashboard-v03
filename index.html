@@ -2082,6 +2082,61 @@ body {
   padding-top: 12px;
   margin-top: 4px;
 }
+/* ── 감지 기준 안내 패널 ── */
+.v03-criteria-wrap {
+  margin-bottom: 14px;
+}
+.v03-criteria-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px dashed rgba(255,255,255,.15);
+  border-radius: 8px;
+  padding: 7px 12px;
+  color: var(--text2);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: border-color .15s, background .15s;
+}
+.v03-criteria-toggle:hover {
+  border-color: rgba(255,255,255,.28);
+  background: rgba(255,255,255,.03);
+}
+.v03-criteria-body {
+  margin-top: 8px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.v03-criteria-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.v03-criteria-table th {
+  background: rgba(255,255,255,.04);
+  color: var(--text2);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: .04em;
+  padding: 7px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.v03-criteria-table td {
+  padding: 7px 12px;
+  color: var(--text);
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.v03-criteria-table tr:last-child td { border-bottom: none; }
+.v03-criteria-table td:first-child { white-space: nowrap; }
 @media (max-width: 900px) {
   .v03-owner-action-grid { grid-template-columns: 1fr; }
 }
@@ -6235,6 +6290,14 @@ function v03ToggleSignalBlock(slug) {
   body.style.display = isCollapsed ? '' : 'none';
   if (icon) icon.style.transform = isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
 }
+function v03ToggleCriteria() {
+  const body = document.getElementById('v03-criteria-body');
+  const icon = document.getElementById('v03-criteria-icon');
+  if (!body) return;
+  const open = body.style.display !== 'none';
+  body.style.display = open ? 'none' : '';
+  if (icon) icon.style.transform = open ? 'rotate(0deg)' : 'rotate(180deg)';
+}
 function v03ExpandAffectedRows(slug) {
   const wrap = document.getElementById('v03-affected-' + slug);
   if (!wrap) return;
@@ -7078,6 +7141,27 @@ function renderActionTodosNew() {
     </div>`;
   }).join('');
 
+  const T = V03_SIGNAL_THRESHOLDS;
+  const criteriaHtml = `<div class="v03-criteria-wrap">
+    <button class="v03-criteria-toggle" onclick="v03ToggleCriteria()">
+      ${iconSvg('info','ui-icon tiny')} 감지 기준 안내
+      <span id="v03-criteria-icon" style="margin-left:auto;transition:transform .2s;">${iconSvg('chevron_down','ui-icon tiny')}</span>
+    </button>
+    <div id="v03-criteria-body" style="display:none" class="v03-criteria-body">
+      <table class="v03-criteria-table">
+        <thead><tr><th>신호</th><th>감지 기준</th></tr></thead>
+        <tbody>
+          <tr><td><span class="v03-tag risk">Traffic Drop</span></td><td>Sessions MoM ≤${T.sessionsMomDown}% · 최소 세션 ${T.sessionsMinVol} 이상 페이지 대상</td></tr>
+          <tr><td><span class="v03-tag watch">SEO Weak</span></td><td>Organic Share &lt;${T.organicShareWeak * 100}% AND Organic Sessions MoM 감소 · 동종 콘텐츠+카테고리 내 하위 25% 추가 확증 (peer 4개 이상)</td></tr>
+          <tr><td><span class="v03-tag watch">Conversion Gap</span></td><td>PLP Conv. &lt;${T.convGapThreshold * 100}% · 최소 세션 ${T.convGapMinSessions} 이상 페이지 대상</td></tr>
+          <tr><td><span class="v03-tag risk">Satisfaction Risk</span></td><td>만족도 &lt;75% 또는 부정 응답률 &gt;20% · 응답 수 3건 이상 국가 대상</td></tr>
+          <tr><td><span class="v03-tag good">Growth Signal</span></td><td>Sessions MoM ≥+${T.sessionsMomUp}% AND PLP MoM ≥+${T.plpConvMomUp}%p · 두 조건 동시 충족</td></tr>
+          <tr><td><span class="v03-tag good">Replication Point</span></td><td>PLP Conv. ≥${T.replicationConv * 100}% AND Sessions MoM ≥${T.replicationMomFloor}%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+
   el.innerHTML = `<div class="v03-section">
     <div class="v03-section-head">
       <div>
@@ -7085,6 +7169,7 @@ function renderActionTodosNew() {
         <div class="v03-subtitle">신호 유형별 감지 내용 · 판단 · 담당별 조치 현황 — 진행 중 ${totalDoing}건 · 완료 ${totalDone}건</div>
       </div>
     </div>
+    ${criteriaHtml}
     <div class="v03-signal-block-list">${blocksHtml}</div>
   </div>`;
 }
