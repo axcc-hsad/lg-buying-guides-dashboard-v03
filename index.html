@@ -2990,8 +2990,13 @@ body {
 .sat-kpi-card-sm {
   background: rgba(255,255,255,.03); border: 1px solid var(--border);
   border-radius: 10px; padding: 10px 12px;
+  display: flex; align-items: center; gap: 8px;
 }
-.sat-kpi-icon-sm { color: var(--text2); margin-bottom: 4px; }
+.sat-kpi-icon-sm {
+  width: 28px; height: 28px; border-radius: 7px; background: rgba(99,102,241,.12);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  color: var(--accent2);
+}
 .sat-kpi-icon-sm svg { width: 14px; height: 14px; }
 .sat-kpi-value-sm { font-size: 18px; font-weight: 800; color: var(--text); line-height: 1.1; }
 /* Trend strip new style */
@@ -3009,7 +3014,7 @@ body {
   flex-direction: column;
   align-items: center;
   gap: 2px;
-  padding: 12px 8px;
+  padding: 10px 8px;
   text-align: center;
 }
 .sat-trend-cell.latest { background: rgba(99,102,241,.06); }
@@ -7634,38 +7639,34 @@ function satRenderOverview(monthly, prev) {
   const smallKpi = (icon, label, val, mom) => `
     <div class="sat-kpi-card-sm">
       <div class="sat-kpi-icon-sm">${icon}</div>
-      <div class="sat-kpi-label">${label}</div>
-      <div class="sat-kpi-value-sm">${val}</div>
-      ${mom}
+      <div>
+        <div class="sat-kpi-label">${label}</div>
+        <div class="sat-kpi-value-sm">${val}</div>
+        ${mom}
+      </div>
     </div>`;
 
-  // Trend strip — 전전월 | 전월 | 현재 3등분 고정
-  // "현재" = 실제 데이터가 있는 마지막 기간 (meta.latest_period가 아님)
-  const MONTH_SHORT = {1:'Jan',2:'Feb',3:'Mar',4:'Apr',5:'May',6:'Jun',7:'Jul',8:'Aug',9:'Sep',10:'Oct',11:'Nov',12:'Dec'};
   const allPeriodKeys = [...new Set([
     ...Object.keys(SAT_DATA.prev_monthly||{}),
     ...Object.keys(SAT_DATA.monthly||{})
   ])].sort();
-  // 데이터가 실제로 존재하는 마지막 기간을 "현재"로 고정
   const latestDataPeriod = allPeriodKeys[allPeriodKeys.length - 1] || null;
   const last3raw = allPeriodKeys.slice(-3);
   while (last3raw.length < 3) last3raw.unshift(null);
-  const ROLE_LABELS = ['전전월','전월','현재'];
   const pctOf = p => p ? (SAT_DATA.monthly[p]?.satisfaction_pct ?? SAT_DATA.prev_monthly[p]?.satisfaction_pct ?? null) : null;
   const trendItems = last3raw.map((p, i) => {
     const v    = pctOf(p);
     const prev = i > 0 ? pctOf(last3raw[i-1]) : null;
     const diff = (v != null && prev != null) ? +(v - prev).toFixed(1) : null;
     const mNum = p ? parseInt(p.split('-')[1]) : null;
-    const mName = mNum ? (MONTH_SHORT[mNum] || p) : '–';
+    const mName = mNum ? `${mNum}월` : '–';
     const isCurrent = p === latestDataPeriod;
     const deltaCls = diff == null ? '' : diff > 0 ? 'up' : diff < 0 ? 'down' : 'flat';
     const deltaText = diff == null ? '' : `${diff>0?'+':''}${diff}%p`;
     return `<div class="sat-trend-cell${isCurrent?' latest':''}">
-      <div class="sat-trend-cell-role">${ROLE_LABELS[i]}</div>
       <div class="sat-trend-cell-month">${mName}</div>
       <div class="sat-trend-cell-val">${v!=null?v.toFixed(0)+'%':'–'}</div>
-      ${deltaText ? `<div class="sat-trend-cell-delta ${deltaCls}">${deltaText}</div>` : '<div style="height:14px"></div>'}
+      ${deltaText ? `<div class="sat-trend-cell-delta ${deltaCls}">${deltaText}</div>` : ''}
     </div>`;
   });
   const trendHtml = `${trendItems[0]}<div class="sat-trend-sep"></div>${trendItems[1]}<div class="sat-trend-sep"></div>${trendItems[2]}`;
@@ -7678,21 +7679,21 @@ function satRenderOverview(monthly, prev) {
   const icoPhone = `<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="2" width="10" height="16" rx="2"/><circle cx="10" cy="15.5" r=".8" fill="currentColor" stroke="none"/></svg>`;
 
   return `
-    <div class="sat-section-card" style="display:flex;flex-direction:column;">
+    <div class="sat-section-card" style="display:flex;flex-direction:column;justify-content:space-between;">
       <div class="sat-section-header"><span class="sat-section-num">1</span> Satisfaction Overview</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:10px;">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
         ${bigKpi(icoSmiley,'전체 만족도',monthly.satisfaction_pct.toFixed(0)+'%',momArrow(satDiff,false))}
         ${bigKpi(icoPeople,'응답 수',monthly.total,momArrowCount(totalDiff))}
         ${bigKpi(icoThumbDown,'부정 응답률',monthly.negative_rate.toFixed(0)+'%',momArrow(negDiff,true))}
       </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
         ${smallKpi(icoThumbUp,'Positive 응답률',curPosRate.toFixed(0)+'%',momArrow(posDiff,false))}
         ${smallKpi(icoThumbDown,'Negative 응답률',monthly.negative_rate.toFixed(0)+'%',momArrow(negDiff,true))}
         ${smallKpi(icoPhone,'Mobile 응답 비중',monthly.mobile_pct.toFixed(0)+'%',momArrow(mobileDiff,false))}
       </div>
-      <div style="flex:1;display:flex;flex-direction:column;">
+      <div>
         <div style="font-size:11px;color:var(--text2);margin-bottom:5px;font-weight:600;">전체 만족도 추이</div>
-        <div class="sat-trend-strip-new" style="flex:1;">${trendHtml}</div>
+        <div class="sat-trend-strip-new">${trendHtml}</div>
       </div>
     </div>
   `;
