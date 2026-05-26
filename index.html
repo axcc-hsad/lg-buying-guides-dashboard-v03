@@ -7646,10 +7646,12 @@ function satRenderOverview(monthly, prev) {
       </div>
     </div>`;
 
+  const MON_NUM = {Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
+  const periodSort = p => { const [y,m] = p.split('-'); return parseInt(y)*100 + (MON_NUM[m] ?? parseInt(m)); };
   const allPeriodKeys = [...new Set([
     ...Object.keys(SAT_DATA.prev_monthly||{}),
     ...Object.keys(SAT_DATA.monthly||{})
-  ])].sort();
+  ])].sort((a,b) => periodSort(a) - periodSort(b));
   const latestDataPeriod = allPeriodKeys[allPeriodKeys.length - 1] || null;
   const last3raw = allPeriodKeys.slice(-3);
   while (last3raw.length < 3) last3raw.unshift(null);
@@ -7658,13 +7660,14 @@ function satRenderOverview(monthly, prev) {
     const v    = pctOf(p);
     const prev = i > 0 ? pctOf(last3raw[i-1]) : null;
     const diff = (v != null && prev != null) ? +(v - prev).toFixed(1) : null;
-    const mNum = p ? parseInt(p.split('-')[1]) : null;
-    const mName = mNum ? `${mNum}월` : '–';
+    const mPart = p ? p.split('-')[1] : null;
+    const mNum  = mPart ? (MON_NUM[mPart] ?? parseInt(mPart)) : null;
+    const mName = mNum ? `${mNum}월` : '';
     const isCurrent = p === latestDataPeriod;
     const deltaCls = diff == null ? '' : diff > 0 ? 'up' : diff < 0 ? 'down' : 'flat';
     const deltaText = diff == null ? '' : `${diff>0?'+':''}${diff}%p`;
     return `<div class="sat-trend-cell${isCurrent?' latest':''}">
-      <div class="sat-trend-cell-month">${mName}</div>
+      ${mName ? `<div class="sat-trend-cell-month">${mName}</div>` : ''}
       <div class="sat-trend-cell-val">${v!=null?v.toFixed(0)+'%':'–'}</div>
       ${deltaText ? `<div class="sat-trend-cell-delta ${deltaCls}">${deltaText}</div>` : ''}
     </div>`;
