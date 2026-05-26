@@ -8029,8 +8029,8 @@ function satRenderReasons(monthly) {
     return entries.map(([label,cnt],i) =>
       `<div class="sat-reason-li">
         <span class="sat-reason-li-no">${i+1}.</span>
-        <span class="sat-reason-li-label" title="${label}">${label}</span>
-        <span class="sat-reason-li-pct ${isPos?'pos':'neg'}" title="${cnt}건">${Math.round(cnt/total*100)}%</span>
+        <span class="sat-reason-li-label">${label}</span>
+        <span class="sat-reason-li-pct ${isPos?'pos':'neg'}">${Math.round(cnt/total*100)}%</span>
       </div>`
     ).join('');
   };
