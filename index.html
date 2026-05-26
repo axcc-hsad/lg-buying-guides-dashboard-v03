@@ -1957,6 +1957,14 @@ body {
 .v03-priority-badge.high  { color: var(--red);    background: rgba(239,68,68,.12); }
 .v03-priority-badge.watch { color: var(--yellow); background: rgba(234,179,8,.12); }
 .v03-priority-badge.ref   { color: var(--green);  background: rgba(34,197,94,.12); }
+.v03-priority-badge.good  { color: var(--green);  background: rgba(34,197,94,.12); }
+.v03-signal-block.green {
+  border-color: rgba(34,197,94,.22);
+  background: linear-gradient(160deg, rgba(34,197,94,.04) 0%, var(--surface2) 55%);
+}
+.v03-signal-block.green .v03-signal-block-header {
+  border-bottom-color: rgba(34,197,94,.10);
+}
 .v03-signal-block-body {
   padding: 16px;
 }
@@ -2331,7 +2339,8 @@ body {
   justify-content: flex-start;
   gap: 4px;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
 }
 .v03-panel-line strong {
   color: var(--text);
@@ -7155,10 +7164,14 @@ function renderActionTodosNew() {
     });
   });
 
+  const GREEN_TYPES = new Set(['Growth Signal', 'Replication Point']);
+
   const blocksHtml = slots.map(s => {
-    const slug    = s.slug;
-    const isEmpty = s.empty || s.count === 0;
-    const priLabel = PRIORITY_LABEL[s.priority] || s.priority;
+    const slug     = s.slug;
+    const isEmpty  = s.empty || s.count === 0;
+    const isGreen  = GREEN_TYPES.has(s.type);
+    const priLabel = isGreen ? '양호' : (PRIORITY_LABEL[s.priority] || s.priority);
+    const badgeCls = isGreen ? 'good' : s.priority;
     const chevron  = `<span class="v03-chevron-icon" style="transition:transform .2s;transform:rotate(180deg)">${iconSvg('chevron_down','ui-icon tiny')}</span>`;
 
     /* ── 영향 대상 테이블 ── */
@@ -7221,7 +7234,7 @@ function renderActionTodosNew() {
         : '';
 
       tableHtml = `<div class="v03-signal-field">
-        <div class="v03-signal-field-label">영향 대상 (${rows.length}건)</div>
+        <div class="v03-signal-field-label">${isGreen ? '성과 확인' : '영향 대상'} (${rows.length}건)</div>
         ${comboChipsHtml}
         <div class="v03-affected-table-wrap" id="v03-affected-${slug}">
           <table class="v03-affected-table"><thead>${thead}</thead><tbody>${tbody}</tbody></table>
@@ -7249,15 +7262,29 @@ function renderActionTodosNew() {
     const footerHtml = (s.links || [])
       .map(lk => `<button class="v03-mini-btn" onclick="${lk.fn}">${lk.label} →</button>`).join('');
 
+    const judgementLabel = isGreen ? '활용 포인트' : '판단';
     const bodyContent = isEmpty
       ? `<div class="v03-signal-block-body"><div style="color:var(--text2);font-size:12px;font-style:italic;padding:4px 0;">이번 달 감지된 신호 없음</div></div>`
+      : isGreen
+      ? `<div class="v03-signal-block-body">
+          <div class="v03-signal-field">
+            <div class="v03-signal-field-label">감지된 신호</div>
+            <div class="v03-signal-field-text">${s.signalText}</div>
+          </div>
+          <div class="v03-signal-field">
+            <div class="v03-signal-field-label">${judgementLabel}</div>
+            <div class="v03-signal-field-text">${s.judgement}</div>
+          </div>
+          ${tableHtml}
+          ${footerHtml ? `<div class="v03-block-footer">${footerHtml}</div>` : ''}
+        </div>`
       : `<div class="v03-signal-block-body">
           <div class="v03-signal-field">
             <div class="v03-signal-field-label">감지된 신호</div>
             <div class="v03-signal-field-text">${s.signalText}</div>
           </div>
           <div class="v03-signal-field">
-            <div class="v03-signal-field-label">판단</div>
+            <div class="v03-signal-field-label">${judgementLabel}</div>
             <div class="v03-signal-field-text">${s.judgement}</div>
           </div>
           ${tableHtml}
@@ -7268,11 +7295,11 @@ function renderActionTodosNew() {
           ${footerHtml ? `<div class="v03-block-footer">${footerHtml}</div>` : ''}
         </div>`;
 
-    return `<div class="v03-signal-block" id="v03-signal-block-${slug}">
+    return `<div class="v03-signal-block${isGreen ? ' green' : ''}" id="v03-signal-block-${slug}">
       <div class="v03-signal-block-header" onclick="v03ToggleSignalBlock('${slug}')">
         <div class="v03-signal-block-title">
           <span class="v03-tag ${s.tone}">${s.type}</span>
-          <span class="v03-priority-badge ${s.priority}">${priLabel}</span>
+          <span class="v03-priority-badge ${badgeCls}">${priLabel}</span>
           <span style="font-size:12px;color:var(--text2);font-weight:500;">${isEmpty ? '0건' : s.count + '건'}</span>
         </div>
         <span class="v03-signal-block-meta">${isEmpty ? '' : (s.countryLabel || '')}</span>
