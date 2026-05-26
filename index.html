@@ -1889,6 +1889,202 @@ body {
   font-style: italic;
   padding: 6px 0;
 }
+/* ── 신호 카드 새 필드 ── */
+.v03-cluster-symptom {
+  font-size: 12px;
+  color: var(--text);
+  font-weight: 600;
+  line-height: 1.35;
+}
+.v03-cluster-diag {
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.4;
+}
+.v03-cluster-anchor-btn {
+  margin-top: auto;
+  align-self: flex-start;
+  padding: 5px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid rgba(99,102,241,.35);
+  background: rgba(99,102,241,.1);
+  color: var(--accent2);
+  transition: background .15s;
+}
+.v03-cluster-anchor-btn:hover { background: rgba(99,102,241,.2); }
+
+/* ── Insight & Action 신호 블록 ── */
+.v03-signal-block {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  scroll-margin-top: 80px;
+}
+.v03-signal-block-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.v03-signal-block-header:hover { background: rgba(255,255,255,.02); }
+.v03-signal-block-title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.v03-signal-block-meta {
+  font-size: 11px;
+  color: var(--text2);
+  margin-left: auto;
+  flex-shrink: 0;
+}
+.v03-priority-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+.v03-priority-badge.high  { color: var(--red);    background: rgba(239,68,68,.12); }
+.v03-priority-badge.watch { color: var(--yellow); background: rgba(234,179,8,.12); }
+.v03-priority-badge.ref   { color: var(--green);  background: rgba(34,197,94,.12); }
+.v03-signal-block-body {
+  padding: 16px;
+}
+.v03-signal-field {
+  margin-bottom: 14px;
+}
+.v03-signal-field-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 5px;
+}
+.v03-signal-field-text {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.6;
+}
+/* ── 영향 대상 테이블 ── */
+.v03-affected-table-wrap {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  margin-bottom: 14px;
+}
+.v03-affected-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+.v03-affected-table th {
+  background: rgba(255,255,255,.04);
+  color: var(--text2);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: .04em;
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.v03-affected-table td {
+  padding: 7px 10px;
+  color: var(--text);
+  border-bottom: 1px solid rgba(255,255,255,.04);
+  white-space: nowrap;
+}
+.v03-affected-table tr:last-child td { border-bottom: none; }
+.v03-affected-table tr:hover td { background: rgba(255,255,255,.02); }
+.v03-cell-down { color: var(--red);    font-weight: 700; }
+.v03-cell-up   { color: var(--green);  font-weight: 700; }
+.v03-cell-warn { color: var(--yellow); font-weight: 600; }
+.v03-secondary-tag {
+  display: inline-block;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(99,102,241,.12);
+  color: var(--accent2);
+  margin: 1px 2px;
+}
+.v03-expand-row-btn {
+  background: none;
+  border: 1px dashed rgba(255,255,255,.15);
+  color: var(--text2);
+  font-size: 11px;
+  font-weight: 600;
+  width: 100%;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 0 0 7px 7px;
+}
+.v03-expand-row-btn:hover { background: rgba(255,255,255,.03); }
+.v03-hidden-row { display: none; }
+/* ── 담당별 조치 ── */
+.v03-owner-action-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.v03-owner-action-card {
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.v03-owner-name {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-bottom: 5px;
+}
+.v03-owner-action-text {
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+.v03-status-select {
+  width: 100%;
+  font-size: 11px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 3px 6px;
+  color: var(--text);
+  cursor: pointer;
+}
+.v03-status-select.doing { border-color: rgba(234,179,8,.4); color: var(--yellow); }
+.v03-status-select.done  { border-color: rgba(34,197,94,.4); color: var(--green); }
+.v03-status-select.hold  { border-color: rgba(255,255,255,.2); color: var(--text2); }
+.v03-block-footer {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+@media (max-width: 900px) {
+  .v03-owner-action-grid { grid-template-columns: 1fr; }
+}
 .v03-cluster-top {
   display: flex;
   align-items: center;
@@ -5906,20 +6102,15 @@ function renderMainInsights() {
         <div class="v03-cluster-empty-msg">이번 달 감지된 신호 없음</div>
       </div>`;
     }
-    const countriesHtml = (s.countries || []).map(co => `<span class="v03-country-tag">${co}</span>`).join('');
     return `<div class="v03-cluster-card ${s.tone}">
       <div class="v03-cluster-top">
         <span class="v03-tag ${s.tone}">${s.type}</span>
         <span class="v03-cluster-count">${s.count}건</span>
       </div>
-      ${countriesHtml ? `<div class="v03-cluster-row"><span class="v03-cluster-label">영향 국가</span><span class="v03-cluster-countries">${countriesHtml}</span></div>` : ''}
-      <div class="v03-cluster-rep">
-        <span class="v03-cluster-label">대표 확인</span>
-        <span>${s.repPage}</span>
-        ${s.repMetric ? `<span class="v03-cluster-metric ${s.repMetricClass}">${s.repMetric}</span>` : ''}
-      </div>
-      <div class="v03-cluster-check">↗ ${s.nextCheck}</div>
-      <button class="v03-mini-btn" style="margin-top:4px;align-self:flex-start" onclick="${s.detailFn}">상세 보기 →</button>
+      <div class="v03-cluster-check" style="font-size:11px;color:var(--text2);margin-bottom:2px;">${s.countryLabel || ''}</div>
+      <div class="v03-cluster-symptom">${s.symptomSummary || ''}</div>
+      <div class="v03-cluster-diag">${s.diagnosis || ''}</div>
+      <button class="v03-cluster-anchor-btn" onclick="v03ScrollToSignal('${s.type.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">상세 확인 ↓</button>
     </div>`;
   }).join('');
 
@@ -6015,6 +6206,41 @@ function v03SetActionStatus(id, owner, value) {
 
 function v03GetCompletedAt(id, owner) {
   return localStorage.getItem(v03ActionStateKey(id, owner) + '_completedAt') || '';
+}
+
+/* ── 신호 슬롯 헬퍼 ── */
+function v03SignalSlug(type) {
+  return type.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+}
+function v03CountryLabel(countries) {
+  if (!countries || !countries.length) return '–';
+  if (countries.length <= 3) return countries.join(', ');
+  return countries.slice(0, 3).join(', ') + ' 외 ' + (countries.length - 3) + '개국';
+}
+function v03ScrollToSignal(type) {
+  const slug = v03SignalSlug(type);
+  const el = document.getElementById('v03-signal-block-' + slug);
+  if (!el) return;
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const body = el.querySelector('.v03-signal-block-body');
+  if (body && body.style.display === 'none') v03ToggleSignalBlock(slug);
+}
+function v03ToggleSignalBlock(slug) {
+  const el = document.getElementById('v03-signal-block-' + slug);
+  if (!el) return;
+  const body = el.querySelector('.v03-signal-block-body');
+  const icon = el.querySelector('.v03-chevron-icon');
+  if (!body) return;
+  const isCollapsed = body.style.display === 'none';
+  body.style.display = isCollapsed ? '' : 'none';
+  if (icon) icon.style.transform = isCollapsed ? 'rotate(180deg)' : 'rotate(0deg)';
+}
+function v03ExpandAffectedRows(slug) {
+  const wrap = document.getElementById('v03-affected-' + slug);
+  if (!wrap) return;
+  wrap.querySelectorAll('.v03-hidden-row').forEach(r => r.classList.remove('v03-hidden-row'));
+  const btn = wrap.querySelector('.v03-expand-row-btn');
+  if (btn) btn.remove();
 }
 
 function v03ToggleCard(cardId) {
@@ -6348,42 +6574,149 @@ function v03GetClusterData() {
   const latest = getLatestMonth();
   const prev   = getPrevMonth();
   const sheets = getFilteredSheets();
-
   const T = V03_SIGNAL_THRESHOLDS;
 
-  // 6개 고정 슬롯 정의
+  // 6개 고정 슬롯 — 신호별 편집 내용 포함
   const SLOTS = [
-    { type: 'Traffic Drop',      tone: 'risk',  detailFn: "switchToPrimaryTab('rawdata');setTimeout(()=>scrollToDetail('acquisition'),100)" },
-    { type: 'SEO Weak',          tone: 'watch', detailFn: "switchToPrimaryTab('rawdata');setTimeout(()=>scrollToDetail('acquisition'),100)" },
-    { type: 'Conversion Gap',    tone: 'watch', detailFn: "switchToPrimaryTab('rawdata');setTimeout(()=>scrollToDetail('conversion'),100)" },
-    { type: 'Satisfaction Risk', tone: 'risk',  detailFn: "switchToSatisfaction({})" },
-    { type: 'Growth Signal',     tone: 'good',  detailFn: "switchToPrimaryTab('rawdata');setTimeout(()=>scrollToDetail('overview'),100)" },
-    { type: 'Replication Point', tone: 'good',  detailFn: "switchToPrimaryTab('categories')" },
+    {
+      type: 'Traffic Drop', tone: 'risk', priority: 'high',
+      symptomFn: items => {
+        const cats = items.map(i => i.category);
+        const top  = cats.sort((a,b) => cats.filter(c=>c===b).length - cats.filter(c=>c===a).length)[0];
+        const mono = [...new Set(cats)].length === 1;
+        return (top && mono ? top + ' 중심 ' : '') + items.length + '개 페이지 세션 하락';
+      },
+      diagnosis:  '유입 감소 또는 유입 품질 변화 — 전환 구조보다 유입 경로 우선 점검',
+      signalFn:   items => items.length + '개 페이지 세션 MoM 하락 감지',
+      judgement:  '유입 감소 또는 유입 품질 변화 가능성 — 전환 구조보다 유입 경로 우선 점검',
+      ownerActions: [
+        { owner: 'HSAD',       text: '내부 링크, SEO 문구, 제품 연결 상태 점검' },
+        { owner: 'D2C 컨텐츠팀', text: '채널별 세션 변화와 Organic 변화 확인' },
+        { owner: '법인',        text: '로컬 모델/스펙 차이와 제품 라인업 확인' },
+      ],
+      links: [
+        { label: '국가별 카드', fn: "switchToPrimaryTab('countries')" },
+        { label: '상세 데이터', fn: "switchToPrimaryTab('rawdata');setTimeout(()=>scrollToDetail('acquisition'),100)" },
+      ],
+    },
+    {
+      type: 'SEO Weak', tone: 'watch', priority: 'watch',
+      symptomFn: items => items.length + '개 페이지 Organic Share 기준 이하',
+      diagnosis:  '검색 의도와 메타 정보 불일치 점검',
+      signalFn:   items => items.length + '개 페이지 Organic Share 낮음 감지',
+      judgement:  '검색 의도와 페이지 문구/메타 정보 불일치 가능성',
+      ownerActions: [
+        { owner: 'HSAD',       text: '타이틀, 메타, 내부 링크, 앵커 문구 점검' },
+        { owner: 'D2C 컨텐츠팀', text: 'Search Console 쿼리/노출/클릭 변화 확인' },
+        { owner: '법인',        text: '현지 검색 표현과 제품명 적합성 확인' },
+      ],
+      links: [
+        { label: '상세 데이터', fn: "switchToPrimaryTab('rawdata');setTimeout(()=>scrollToDetail('acquisition'),100)" },
+      ],
+    },
+    {
+      type: 'Conversion Gap', tone: 'watch', priority: 'watch',
+      symptomFn: items => items.length + '개 페이지 유입 대비 PLP 전환 저조',
+      diagnosis:  'CTA 흐름 · 제품 진입 구조 확인',
+      signalFn:   items => items.length + '개 페이지 PLP 전환율 낮음 감지',
+      judgement:  '제품 진입 구조 또는 CTA 흐름 점검 필요',
+      ownerActions: [
+        { owner: 'HSAD',       text: 'CTA 문구, 제품 카드, PLP 연결 위치 점검' },
+        { owner: 'D2C 컨텐츠팀', text: '유입 대비 PLP/PDP 전환 지표 확인' },
+        { owner: '법인',        text: '로컬 제품 라인업 연결 상태 확인' },
+      ],
+      links: [
+        { label: '상세 데이터', fn: "switchToPrimaryTab('rawdata');setTimeout(()=>scrollToDetail('conversion'),100)" },
+      ],
+    },
+    {
+      type: 'Satisfaction Risk', tone: 'risk', priority: 'high',
+      symptomFn: items => items.length + '개국 만족도 · 부정 응답률 기준 초과',
+      diagnosis:  'Comments 원문 확인 → Info missing 집중',
+      signalFn:   items => items.length + '개국 만족도 또는 부정 응답률 기준 초과',
+      judgement:  '스펙·설명 부족 또는 기대와 콘텐츠 간 간극 가능성',
+      ownerActions: [
+        { owner: 'HSAD',       text: '스펙 설명, 제품 차이, 추천 기준 보강 검토' },
+        { owner: 'D2C 컨텐츠팀', text: '만족도 응답과 PLP/Purchase 지표 교차 확인' },
+        { owner: '법인',        text: '현지 모델/스펙 정보 누락 여부 확인' },
+      ],
+      links: [
+        { label: 'Comments 확인', fn: "switchToSatisfaction({country:'all',category:'all',helpful:'no',commentChip:'Info missing'})" },
+      ],
+    },
+    {
+      type: 'Growth Signal', tone: 'good', priority: 'ref',
+      symptomFn: items => items.length + '개 페이지 세션·전환 전월 대비 개선',
+      diagnosis:  '성과 지속 여부 모니터링',
+      signalFn:   items => items.length + '개 페이지 세션·전환 모두 전월 대비 개선',
+      judgement:  '현재 성과 구조 유지 및 확산 검토',
+      ownerActions: [
+        { owner: 'HSAD',       text: '성과 구조 문서화 및 확산 적용 요소 정리' },
+        { owner: 'D2C 컨텐츠팀', text: 'GA 성과 추세 지속 여부 모니터링' },
+        { owner: '법인',        text: '성과 유지 요인 로컬 적용 가능성 확인' },
+      ],
+      links: [
+        { label: '상세 데이터', fn: "switchToPrimaryTab('rawdata');setTimeout(()=>scrollToDetail('overview'),100)" },
+      ],
+    },
+    {
+      type: 'Replication Point', tone: 'good', priority: 'ref',
+      symptomFn: items => items.length + '개 페이지 성과·만족도 함께 양호',
+      diagnosis:  '확산 검토 후보 확인',
+      signalFn:   items => items.length + '개 페이지 성과·만족도 함께 양호',
+      judgement:  'CTA 흐름·스펙 설명 방식을 개선 기준으로 활용 가능',
+      ownerActions: [
+        { owner: 'HSAD',       text: 'CTA 흐름, 스펙 설명 방식, 제품 카드 구조 비교' },
+        { owner: 'D2C 컨텐츠팀', text: '대상과 저성과 페이지 GA 지표 비교' },
+        { owner: '법인',        text: '현지 모델/스펙 차이를 고려한 적용 요소 확인' },
+      ],
+      links: [
+        { label: '카테고리 비교', fn: "switchToPrimaryTab('categories')" },
+      ],
+    },
   ];
 
-  // 버킷 초기화
   const buckets = {};
   for (const s of SLOTS) buckets[s.type] = [];
 
   if (latest && sheets.length) {
-    // GA 신호: 페이지당 1개 신호 배정 (우선순위 순)
-    // 우선순위: Traffic Drop > Conversion Gap > SEO Weak > Replication Point > Growth Signal
+    // 우선순위 순으로 1개 신호 배정, 나머지는 secondary 저장
+    const GA_RULES = [
+      ['Traffic Drop',      m => V03_SIGNAL_RULES.traffic_drop(m, T)],
+      ['Conversion Gap',    m => V03_SIGNAL_RULES.conversion_gap(m, T)],
+      ['SEO Weak',          m => V03_SIGNAL_RULES.seo_weak(m, T)],
+      ['Replication Point', m => V03_SIGNAL_RULES.replication(m, T)],
+      ['Growth Signal',     m => V03_SIGNAL_RULES.growth(m, T)],
+    ];
     for (const [, item] of sheets) {
       const m = v03ComputeSheetMetrics(item, latest, prev);
       if (!m.country || !m.category) continue;
-
       let assigned = null;
-      if      (V03_SIGNAL_RULES.traffic_drop(m, T))   assigned = 'Traffic Drop';
-      else if (V03_SIGNAL_RULES.conversion_gap(m, T)) assigned = 'Conversion Gap';
-      else if (V03_SIGNAL_RULES.seo_weak(m, T))       assigned = 'SEO Weak';
-      else if (V03_SIGNAL_RULES.replication(m, T))    assigned = 'Replication Point';
-      else if (V03_SIGNAL_RULES.growth(m, T))         assigned = 'Growth Signal';
-
-      if (assigned) buckets[assigned].push(m);
+      const secondary = [];
+      for (const [rType, ruleFn] of GA_RULES) {
+        if (ruleFn(m)) {
+          if (!assigned) assigned = rType;
+          else secondary.push(rType);
+        }
+      }
+      if (!assigned) continue;
+      const ctLabel = item.content_type === 'lineup' ? '라인업'
+                    : item.content_type === 'feature_library' ? '피쳐'
+                    : (item.content_type || '–');
+      buckets[assigned].push({
+        country:         m.country,
+        contentType:     ctLabel,
+        category:        m.category,
+        sessionsMomVal:  m.sessionsMom  != null ? m.sessionsMom.toFixed(0)       + '%' : '–',
+        plpConvVal:      m.plpConv      != null ? (m.plpConv * 100).toFixed(1)   + '%' : '–',
+        organicShareVal: m.organicShare != null ? (m.organicShare * 100).toFixed(0) + '%' : '–',
+        secondary,
+        _m: m,
+      });
     }
   }
 
-  // Satisfaction Risk: SAT_DATA 기반
+  // Satisfaction Risk — SAT_DATA 기반
   if (SAT_DATA) {
     const p = SAT_DATA.meta?.latest_period;
     const monthly = p ? SAT_DATA.monthly?.[p] : null;
@@ -6394,77 +6727,47 @@ function v03GetClusterData() {
         const negRate = data.negative_rate    ?? (data.helpful_no  != null ? Math.round(data.helpful_no  / data.total * 100) : null);
         if (satPct == null) continue;
         if (satPct < 75 || (negRate != null && negRate > 20)) {
-          buckets['Satisfaction Risk'].push({ country, satPct, negRate, _sat: true });
+          buckets['Satisfaction Risk'].push({
+            country,
+            satPctVal:  satPct + '%',
+            negRateVal: negRate != null ? negRate + '%' : '–',
+            secondary: [], _sat: true,
+          });
         }
       }
     }
   }
 
-  // 각 슬롯 → 카드 데이터 생성
-  const NEXT_CHECK = {
-    'Traffic Drop':      'PLP 유지 여부 · 유입 경로 확인',
-    'SEO Weak':          'Organic 개선 · 검색 의도 점검',
-    'Conversion Gap':    'CTA 흐름 · PLP 진입 구조 확인',
-    'Satisfaction Risk': '부정 응답 원문 확인 → Comments 탭',
-    'Growth Signal':     '상위 성과 지속 여부 모니터링',
-    'Replication Point': '확산 검토 후보 — 타 국가 적용 가능성',
-  };
-
+  // 슬롯별 카드 데이터 조립
   const signalSlots = SLOTS.map(slot => {
     const items = buckets[slot.type] || [];
     const count = items.length;
+    const slug  = v03SignalSlug(slot.type);
 
     if (count === 0) {
-      return { type: slot.type, tone: slot.tone, count: 0, empty: true, detailFn: slot.detailFn };
+      return {
+        type: slot.type, tone: slot.tone, count: 0, empty: true, slug,
+        priority: slot.priority, ownerActions: slot.ownerActions, links: slot.links,
+        affectedItems: [], countryLabel: '–', symptomSummary: '', diagnosis: '',
+        signalText: '', judgement: slot.judgement,
+      };
     }
 
-    let repPage = '', repMetric = '', repMetricClass = '';
-    let countries = [];
-
-    if (slot.type === 'Satisfaction Risk') {
-      // SAT_DATA 기반
-      const sorted = [...items].sort((a, b) => (a.satPct ?? 100) - (b.satPct ?? 100));
-      const rep = sorted[0];
-      repPage      = rep.country;
-      repMetric    = `만족도 ${rep.satPct}% · 부정 ${rep.negRate ?? '–'}%`;
-      repMetricClass = 'down';
-      countries    = [...new Set(items.map(i => i.country))].sort();
-    } else {
-      // GA 기반 — 대표 페이지 선정
-      let repItem;
-      if (slot.type === 'Traffic Drop')
-        repItem = items.reduce((a, b) => (a.sessionsMom||0) < (b.sessionsMom||0) ? a : b);
-      else if (slot.type === 'SEO Weak')
-        repItem = items.reduce((a, b) => (a.organicShare||1) < (b.organicShare||1) ? a : b);
-      else if (slot.type === 'Conversion Gap')
-        repItem = items.reduce((a, b) => (a.plpConv||1) < (b.plpConv||1) ? a : b);
-      else // Growth / Replication
-        repItem = items.reduce((a, b) => (a.plpConv||0) > (b.plpConv||0) ? a : b);
-
-      repPage = `${repItem.country} / ${repItem.category}`;
-
-      if (slot.type === 'Traffic Drop' && repItem.sessionsMom != null) {
-        repMetric = `Session ${repItem.sessionsMom.toFixed(0)}% MoM`; repMetricClass = 'down';
-      } else if (slot.type === 'SEO Weak' && repItem.organicShare != null) {
-        repMetric = `Organic ${(repItem.organicShare*100).toFixed(0)}%`; repMetricClass = 'warn';
-      } else if (slot.type === 'Conversion Gap' && repItem.plpConv != null) {
-        repMetric = `PLP ${(repItem.plpConv*100).toFixed(1)}%`; repMetricClass = 'warn';
-      } else if (repItem.plpConv != null) {
-        repMetric = `PLP ${(repItem.plpConv*100).toFixed(1)}%`; repMetricClass = 'up';
-      }
-      countries = [...new Set(items.map(i => i.country))].sort();
-    }
+    const countries    = [...new Set(items.map(i => i.country))].sort();
+    const countryLabel = v03CountryLabel(countries);
+    const symptomSummary = slot.symptomFn(items);
 
     return {
-      type: slot.type, tone: slot.tone, count, empty: false,
-      repPage, repMetric, repMetricClass,
-      countries: countries.slice(0, 6),  // 최대 6개국 표시
-      nextCheck: NEXT_CHECK[slot.type] || '',
-      detailFn: slot.detailFn,
+      type: slot.type, tone: slot.tone, count, empty: false, slug,
+      priority: slot.priority, ownerActions: slot.ownerActions, links: slot.links,
+      affectedItems: items,
+      countryLabel, symptomSummary,
+      diagnosis:  slot.diagnosis,
+      signalText: slot.signalFn(items),
+      judgement:  slot.judgement,
     };
   });
 
-  // pill용 건수
   const typeCounts = {};
   for (const s of signalSlots) typeCounts[s.type] = s.count;
 
@@ -6585,26 +6888,127 @@ function v03ActionItems() {
 function renderActionTodosNew() {
   const el = document.getElementById('actionTodosPanel');
   if (!el) return;
-  const items = v03ActionItems();
-  const expanded = items.slice(0, 3).map((item, index) => v03ActionCard(item, index, true)).join('');
-  const collapsed = items.slice(3).map((item, offset) => v03ActionCard(item, offset + 3, false)).join('');
-  const summary = items.reduce((acc, item) => {
-    item.actions.forEach(action => {
-      const status = v03GetStatus(item.id, action.owner, action.status);
-      acc[status] = (acc[status] || 0) + 1;
+
+  const clusterData = v03GetClusterData() || { signalSlots: [] };
+  const slots = clusterData.signalSlots || [];
+
+  const PRIORITY_LABEL = { high: '우선순위 높음', watch: '검토 필요', ref: '참고/확산' };
+  const VISIBLE_ROWS   = 3;
+
+  let totalDoing = 0, totalDone = 0;
+  slots.forEach(s => {
+    (s.ownerActions || []).forEach(a => {
+      const st = v03GetStatus(s.slug, a.owner, '진행 전');
+      if (st === '진행 중') totalDoing++;
+      if (st === '완료')    totalDone++;
     });
-    return acc;
-  }, {});
+  });
+
+  const blocksHtml = slots.map(s => {
+    const slug    = s.slug;
+    const isEmpty = s.empty || s.count === 0;
+    const priLabel = PRIORITY_LABEL[s.priority] || s.priority;
+    const chevron  = `<span class="v03-chevron-icon" style="transition:transform .2s;transform:rotate(180deg)">${iconSvg('chevron_down','ui-icon tiny')}</span>`;
+
+    /* ── 영향 대상 테이블 ── */
+    let tableHtml = '';
+    if (!isEmpty && s.affectedItems && s.affectedItems.length) {
+      const isSat = s.type === 'Satisfaction Risk';
+      const rows  = s.affectedItems;
+
+      const thead = isSat
+        ? `<tr><th>국가</th><th>만족도</th><th>부정응답률</th><th>연관 신호</th></tr>`
+        : `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Sessions MoM</th><th>PLP Conv.</th><th>Organic</th><th>연관 신호</th></tr>`;
+
+      const tbody = rows.map((row, i) => {
+        const hidden  = i >= VISIBLE_ROWS ? ' class="v03-hidden-row"' : '';
+        const secHtml = (row.secondary || []).map(t => `<span class="v03-secondary-tag">${t}</span>`).join('') || '–';
+        if (isSat) {
+          return `<tr${hidden}><td><strong>${row.country}</strong></td><td class="v03-cell-down">${row.satPctVal}</td><td class="v03-cell-down">${row.negRateVal}</td><td>${secHtml}</td></tr>`;
+        }
+        const mom = parseFloat(row.sessionsMomVal);
+        const plp = parseFloat(row.plpConvVal);
+        const org = parseFloat(row.organicShareVal);
+        const momCls = isNaN(mom) ? '' : mom < 0 ? 'v03-cell-down' : mom > 5 ? 'v03-cell-up' : 'v03-cell-warn';
+        const plpCls = isNaN(plp) ? '' : plp < 20 ? 'v03-cell-warn' : plp > 35 ? 'v03-cell-up' : '';
+        const orgCls = isNaN(org) ? '' : org < 20 ? 'v03-cell-warn' : '';
+        return `<tr${hidden}><td><strong>${row.country}</strong></td><td>${row.contentType}</td><td>${row.category}</td><td class="${momCls}">${row.sessionsMomVal}</td><td class="${plpCls}">${row.plpConvVal}</td><td class="${orgCls}">${row.organicShareVal}</td><td>${secHtml}</td></tr>`;
+      }).join('');
+
+      const extra = rows.length - VISIBLE_ROWS;
+      const expandBtn = extra > 0
+        ? `<button class="v03-expand-row-btn" onclick="v03ExpandAffectedRows('${slug}')">외 ${extra}건 더 보기 ↓</button>`
+        : '';
+
+      tableHtml = `<div class="v03-signal-field">
+        <div class="v03-signal-field-label">영향 대상 (${rows.length}건)</div>
+        <div class="v03-affected-table-wrap" id="v03-affected-${slug}">
+          <table class="v03-affected-table"><thead>${thead}</thead><tbody>${tbody}</tbody></table>
+          ${expandBtn}
+        </div>
+      </div>`;
+    }
+
+    /* ── 담당별 조치 ── */
+    const ownersHtml = (s.ownerActions || []).map(a => {
+      const status = v03GetStatus(slug, a.owner, '진행 전');
+      const sCls   = v03StatusClass(status);
+      const opts   = ['진행 전','진행 중','완료','보류']
+        .map(st => `<option value="${st}"${st === status ? ' selected' : ''}>${st}</option>`).join('');
+      const doneAt = status === '완료' ? v03GetCompletedAt(slug, a.owner) : '';
+      return `<div class="v03-owner-action-card">
+        <div class="v03-owner-name">${a.owner}</div>
+        <div class="v03-owner-action-text">${a.text}</div>
+        <select class="v03-status-select ${sCls}" onclick="event.stopPropagation()" onchange="v03SetActionStatus('${slug}','${a.owner}',this.value)">${opts}</select>
+        ${doneAt ? `<div style="font-size:10px;color:var(--text2);margin-top:4px;">완료 ${doneAt}</div>` : ''}
+      </div>`;
+    }).join('');
+
+    /* ── 하단 링크 ── */
+    const footerHtml = (s.links || [])
+      .map(lk => `<button class="v03-mini-btn" onclick="${lk.fn}">${lk.label} →</button>`).join('');
+
+    const bodyContent = isEmpty
+      ? `<div class="v03-signal-block-body"><div style="color:var(--text2);font-size:12px;font-style:italic;padding:4px 0;">이번 달 감지된 신호 없음</div></div>`
+      : `<div class="v03-signal-block-body">
+          <div class="v03-signal-field">
+            <div class="v03-signal-field-label">감지된 신호</div>
+            <div class="v03-signal-field-text">${s.signalText}</div>
+          </div>
+          <div class="v03-signal-field">
+            <div class="v03-signal-field-label">판단</div>
+            <div class="v03-signal-field-text">${s.judgement}</div>
+          </div>
+          ${tableHtml}
+          <div class="v03-signal-field">
+            <div class="v03-signal-field-label">담당별 조치</div>
+            <div class="v03-owner-action-grid">${ownersHtml}</div>
+          </div>
+          ${footerHtml ? `<div class="v03-block-footer">${footerHtml}</div>` : ''}
+        </div>`;
+
+    return `<div class="v03-signal-block" id="v03-signal-block-${slug}">
+      <div class="v03-signal-block-header" onclick="v03ToggleSignalBlock('${slug}')">
+        <div class="v03-signal-block-title">
+          <span class="v03-tag ${s.tone}">${s.type}</span>
+          <span class="v03-priority-badge ${s.priority}">${priLabel}</span>
+          <span style="font-size:12px;color:var(--text2);font-weight:500;">${isEmpty ? '0건' : s.count + '건'}</span>
+        </div>
+        <span class="v03-signal-block-meta">${isEmpty ? '' : (s.countryLabel || '')}</span>
+        ${chevron}
+      </div>
+      ${bodyContent}
+    </div>`;
+  }).join('');
+
   el.innerHTML = `<div class="v03-section">
     <div class="v03-section-head">
       <div>
-        <div class="v03-title">2. Insight & Action Summary</div>
-        <div class="v03-subtitle">이번 달 주요 신호 ${items.length}건 · 진행 중 ${summary['진행 중'] || 0}건 · 완료 ${summary['완료'] || 0}건</div>
+        <div class="v03-title">2. Insight &amp; Action Summary</div>
+        <div class="v03-subtitle">신호 유형별 감지 내용 · 판단 · 담당별 조치 현황 — 진행 중 ${totalDoing}건 · 완료 ${totalDone}건</div>
       </div>
-      <div class="v03-subtitle">우선순위 높은 항목 먼저 표시</div>
     </div>
-    <div class="v03-action-list">${expanded}</div>
-    ${collapsed ? `<div class="v03-extra-head"><span>추가 신호</span></div><div class="v03-action-list">${collapsed}</div>` : ''}
+    <div class="v03-signal-block-list">${blocksHtml}</div>
   </div>`;
 }
 
