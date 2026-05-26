@@ -6126,19 +6126,34 @@ function v03MetricItem(label, value, delta, positiveIsGood = true, unit = '%') {
 }
 
 function v03GetSatisfactionSummary() {
+  if (!SAT_DATA) {
+    return { score:78, scoreMom:5, responses:126, responsesMom:18, negativeRate:22,
+             negativeMom:-3, positiveRate:64, positiveMom:4, negativeShare:36,
+             negativeShareMom:-4, mobileShare:58, mobileShareMom:7 };
+  }
+  const p  = SAT_DATA.meta.latest_period;
+  const pp = SAT_DATA.meta.prev_period;
+  const m  = SAT_DATA.monthly[p]  || {};
+  const pm = SAT_DATA.prev_monthly[pp] || {};
+  const score       = m.satisfaction_pct != null ? Math.round(m.satisfaction_pct) : 0;
+  const pScore      = pm.satisfaction_pct != null ? Math.round(pm.satisfaction_pct) : score;
+  const responses   = m.total || 0;
+  const pResponses  = pm.total || 0;
+  const negRate     = m.negative_rate != null ? Math.round(m.negative_rate) : 0;
+  const pNegRate    = pm.negative_rate != null ? Math.round(pm.negative_rate) : negRate;
+  const posRate     = m.positive_rate != null ? Math.round(m.positive_rate) : 0;
+  const pPosRate    = pm.positive_rate != null ? Math.round(pm.positive_rate) : posRate;
+  const negShare    = m.satisfaction_pct != null ? Math.round(100 - m.satisfaction_pct) : 0;
+  const pNegShare   = pm.satisfaction_pct != null ? Math.round(100 - pm.satisfaction_pct) : negShare;
+  const mobilePct   = m.mobile_pct != null ? Math.round(m.mobile_pct) : 0;
+  const pMobilePct  = pm.mobile_pct != null ? Math.round(pm.mobile_pct) : mobilePct;
   return {
-    score: 78,
-    scoreMom: 5,
-    responses: 126,
-    responsesMom: 18,
-    negativeRate: 22,
-    negativeMom: -3,
-    positiveRate: 64,
-    positiveMom: 4,
-    negativeShare: 36,
-    negativeShareMom: -4,
-    mobileShare: 58,
-    mobileShareMom: 7,
+    score, scoreMom: score - pScore,
+    responses, responsesMom: pResponses ? Math.round((responses - pResponses) / pResponses * 100) : 0,
+    negativeRate: negRate, negativeMom: negRate - pNegRate,
+    positiveRate: posRate, positiveMom: posRate - pPosRate,
+    negativeShare: negShare, negativeShareMom: negShare - pNegShare,
+    mobileShare: mobilePct, mobileShareMom: mobilePct - pMobilePct,
   };
 }
 
@@ -6890,24 +6905,41 @@ function v03GetClusterData() {
     });
   }
 
-  // ── Satisfaction Risk — SAT_DATA 기반 ──
+  // ── Satisfaction Risk — country × content_type 기준 ──
   if (SAT_DATA) {
     const p = SAT_DATA.meta?.latest_period;
-    const monthly = p ? SAT_DATA.monthly?.[p] : null;
-    if (monthly?.by_country) {
-      for (const [country, data] of Object.entries(monthly.by_country)) {
-        if (!data || (data.total || 0) < 3) continue;
-        const satPct  = data.satisfaction_pct ?? (data.helpful_yes != null ? Math.round(data.helpful_yes / data.total * 100) : null);
-        const negRate = data.negative_rate    ?? (data.helpful_no  != null ? Math.round(data.helpful_no  / data.total * 100) : null);
-        if (satPct == null) continue;
-        if (satPct < 75 || (negRate != null && negRate > 20)) {
-          buckets['Satisfaction Risk'].push({
-            country, satPctVal: satPct + '%',
-            negRateVal: negRate != null ? negRate + '%' : '–',
-            secondary: [], _sat: true,
-          });
-        }
-      }
+    const periodResponses = (SAT_DATA.responses||[]).filter(r => r.period === p);
+    const groups = {};
+    periodResponses.forEach(r => {
+      const key = `${r.country}||${r.content_type}`;
+      if (!groups[key]) groups[key] = { country: r.country, content_type: r.content_type, items: [] };
+      groups[key].items.push(r);
+    });
+    for (const g of Object.values(groups)) {
+      if (g.items.length < 3) continue;
+      const total = g.items.length;
+      const negItems = g.items.filter(r => r.helpful === 'No');
+      const satPct = Math.round((total - negItems.length) / total * 100);
+      const negRate = Math.round(negItems.length / total * 100);
+      if (satPct >= 75 && negRate <= 20) continue;
+      // 주요 부정 이유 (해당 콘텐츠 유형의 실제 항목만)
+      const negCounts = {};
+      negItems.forEach(r => (r.neg_reasons||[]).forEach(rn => negCounts[rn]=(negCounts[rn]||0)+1));
+      const topNegReasons = Object.entries(negCounts).sort((a,b)=>b[1]-a[1]).slice(0,2).map(([k])=>k);
+      // 주요 카테고리
+      const catCounts = {};
+      g.items.forEach(r => catCounts[r.category]=(catCounts[r.category]||0)+1);
+      const topCategory = Object.entries(catCounts).sort((a,b)=>b[1]-a[1])[0]?.[0]||'–';
+      buckets['Satisfaction Risk'].push({
+        country: g.country,
+        content_type: g.content_type,
+        contentType: g.content_type === 'lineup' ? 'Line-up Guide' : 'Feature Library',
+        category: topCategory,
+        satPctVal: satPct + '%',
+        negRateVal: negRate + '%',
+        topNegReasons,
+        secondary: [], _sat: true,
+      });
     }
   }
 
@@ -7032,14 +7064,24 @@ function v03GetClusterData() {
         break;
       }
       case 'Satisfaction Risk': {
-        const validSat = items.map(i => parseFloat(i.satPctVal)).filter(v => !isNaN(v));
-        const avgSat = validSat.length ? (validSat.reduce((a, b) => a + b, 0) / validSat.length).toFixed(0) : null;
+        const luItems = items.filter(i => i.content_type === 'lineup');
+        const ftItems = items.filter(i => i.content_type === 'feature');
+        const hasLu = luItems.length > 0;
+        const hasFt = ftItems.length > 0;
+        const luNegReasons = [...new Set(luItems.flatMap(i => i.topNegReasons||[]))];
+        const ftNegReasons = [...new Set(ftItems.flatMap(i => i.topNegReasons||[]))];
         const highNeg = items.filter(i => (parseFloat(i.negRateVal) || 0) > 25).length;
-        if (highNeg > 0) {
-          judgement = `부정 응답률 25% 초과 국가 ${highNeg}개. 만족도 하락은 스펙 정보 부족 또는 제품 기대와 콘텐츠 간 간극 신호 — Comments 원문에서 반복 패턴(Info missing, Not relevant) 확인 후 개선 우선순위 결정`;
-        } else {
-          judgement = `만족도 평균 ${avgSat ?? '–'}%로 기준 미달. GA 이탈 구간(세션 대비 PLP 진입률)과 교차하면 콘텐츠 불일치 발생 위치 특정 가능 — 설문 응답 패턴과 행동 데이터 병행 분석 권장`;
+        const parts = [];
+        if (hasLu) {
+          const focus = luNegReasons.length ? `'${luNegReasons[0]}' 집중` : '부정 이유 확인 필요';
+          parts.push(`Line-up Guide: 모델 차이 또는 구매 판단 정보 부족이 부정 응답에 영향을 줄 가능성 — ${focus}`);
         }
+        if (hasFt) {
+          const focus = ftNegReasons.length ? `'${ftNegReasons[0]}' 집중` : '부정 이유 확인 필요';
+          parts.push(`Feature Library: 이미지/영상 또는 기능 설명 전달력이 부정 응답에 영향을 줄 가능성 — ${focus}`);
+        }
+        if (highNeg > 0) parts.push(`부정 응답률 25% 초과 ${highNeg}건 — Comments 원문 우선 확인 권장`);
+        judgement = parts.join(' / ') || '만족도 기준 미달 — 콘텐츠 유형별 부정 이유 원문 확인 후 개선 우선순위 결정';
         break;
       }
       case 'Growth Signal': {
@@ -7060,9 +7102,35 @@ function v03GetClusterData() {
         judgement = slot.judgement;
     }
 
+    // ── Satisfaction Risk: dynamic ownerActions + links ──
+    let ownerActions = slot.ownerActions;
+    let links = slot.links;
+    if (slot.type === 'Satisfaction Risk') {
+      const luItems2 = items.filter(i => i.content_type === 'lineup');
+      const ftItems2 = items.filter(i => i.content_type === 'feature');
+      const hasLu2 = luItems2.length > 0;
+      const hasFt2 = ftItems2.length > 0;
+      const luTopReason = [...new Set(luItems2.flatMap(i => i.topNegReasons||[]))][0] || null;
+      const ftTopReason = [...new Set(ftItems2.flatMap(i => i.topNegReasons||[]))][0] || null;
+      const luHsadText = luTopReason
+        ? `Line-up Guide: '${luTopReason}' 관련 스펙·모델 비교 설명 보강 검토`
+        : 'Line-up Guide: 모델 차이·구매 판단 정보 보강 검토';
+      const ftHsadText = ftTopReason
+        ? `Feature Library: '${ftTopReason}' 관련 이미지/영상·설명 개선 검토`
+        : 'Feature Library: 기능 설명 전달력 및 이미지/영상 품질 개선 검토';
+      ownerActions = [
+        { owner: 'HSAD', text: [hasLu2 && luHsadText, hasFt2 && ftHsadText].filter(Boolean).join(' / ') },
+        { owner: 'D2C 컨텐츠팀', text: '만족도 응답 추이와 PLP/Purchase 지표 교차 확인' },
+        { owner: '법인', text: '현지 모델·스펙 정보 누락 및 이미지 현행화 여부 확인' },
+      ];
+      links = [
+        { label: 'Comments 확인', fn: `switchToSatisfaction({country:'all',category:'all',helpful:'no',commentChip:'negative'})` },
+      ];
+    }
+
     return {
       type: slot.type, tone: slot.tone, count, empty: false, slug,
-      priority: slot.priority, ownerActions: slot.ownerActions, links: slot.links,
+      priority: slot.priority, ownerActions, links,
       affectedItems: items, countryLabel, symptomSummary,
       diagnosis: slot.diagnosis, signalText, judgement,
     };
@@ -7222,7 +7290,7 @@ function renderActionTodosNew() {
       const rows  = s.affectedItems;
 
       const thead = isSat
-        ? `<tr><th>국가</th><th>만족도</th><th>부정응답률</th></tr>`
+        ? `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>만족도</th><th>부정응답률</th><th>주요 부정 이유</th><th></th></tr>`
         : isSeo
         ? `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Organic Share</th><th>Organic Sessions MoM</th><th>PLP Conv.</th></tr>`
         : `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Sessions MoM</th><th>PLP Conv.</th><th>Organic Share</th></tr>`;
@@ -7231,7 +7299,19 @@ function renderActionTodosNew() {
         const hidden   = i >= VISIBLE_ROWS ? ' v03-hidden-row' : '';
         const secAttr  = (row.secondary || []).length ? ` data-combosec="${(row.secondary||[]).join(',')}"` : '';
         if (isSat) {
-          return `<tr class="${hidden}"${secAttr}><td><strong>${row.country}</strong></td><td class="v03-cell-down">${row.satPctVal}</td><td class="v03-cell-down">${row.negRateVal}</td></tr>`;
+          const reasonTags = (row.topNegReasons||[]).map(r =>
+            `<span style="background:rgba(239,68,68,.1);color:var(--red);border-radius:4px;padding:1px 6px;font-size:10px;font-weight:700;white-space:nowrap;">${r}</span>`
+          ).join(' ');
+          const cf = `switchToSatisfaction({country:'${row.country}',content:'${row.content_type}',category:'${row.category}',commentChip:'negative'})`;
+          return `<tr class="${hidden}"${secAttr}>
+            <td><strong>${row.country}</strong></td>
+            <td style="font-size:11px;color:var(--text2);">${row.contentType}</td>
+            <td style="color:var(--text2);">${row.category}</td>
+            <td class="v03-cell-down">${row.satPctVal}</td>
+            <td class="v03-cell-down">${row.negRateVal}</td>
+            <td style="font-size:11px;">${reasonTags||'–'}</td>
+            <td><button class="v03-mini-btn" onclick="${cf}">확인</button></td>
+          </tr>`;
         }
         if (isSeo) {
           const share = parseFloat(row.organicShareVal);
@@ -7406,29 +7486,99 @@ function renderContentDirectionNew() {
         </div>
       </div>
       <div class="v03-sat-group" style="margin-top:12px;">
-        <div class="v03-sat-section-title">${iconSvg('country','ui-icon tiny')} 국가별 만족도 / 참여율</div>
-        <div class="v03-country-sat-grid">
-          <div class="v03-list-panel"><div class="v03-list-title">만족도 높은 국가</div><div class="v03-list-row"><span>UK</span><strong>86%</strong></div><div class="v03-list-row"><span>ES</span><strong>84%</strong></div><div class="v03-list-row"><span>CA-EN</span><strong>82%</strong></div></div>
-          <div class="v03-list-panel risk"><div class="v03-list-title">만족도 낮은 국가</div><div class="v03-list-row"><span>BR</span><strong>62%</strong></div><div class="v03-list-row"><span>MX</span><strong>65%</strong></div><div class="v03-list-row"><span>FR</span><strong>68%</strong></div></div>
-          <div class="v03-list-panel"><div class="v03-list-title">참여율 높은 국가</div><div class="v03-list-row"><span>BR</span><strong>30%</strong></div><div class="v03-list-row"><span>UK</span><strong>8%</strong></div><div class="v03-list-row"><span>ES</span><strong>7%</strong></div></div>
-          <div class="v03-list-panel risk"><div class="v03-list-title">참여율 낮은 국가</div><div class="v03-list-row"><span>IT</span><strong>1%</strong></div><div class="v03-list-row"><span>PL</span><strong>2%</strong></div><div class="v03-list-row"><span>NL</span><strong>2%</strong></div></div>
-        </div>
+        <div class="v03-sat-section-title">${iconSvg('country','ui-icon tiny')} 국가별 만족도 / 응답 비중</div>
+        ${(() => {
+          if (!SAT_DATA) return `<div style="font-size:11px;color:var(--text2);font-style:italic;">만족도 데이터 로딩 중…</div>`;
+          const p = SAT_DATA.meta.latest_period;
+          const byCo = SAT_DATA.monthly[p]?.by_country || {};
+          const coList = Object.entries(byCo).filter(([,v]) => v.total >= 3).sort((a,b) => b[1].satisfaction_pct - a[1].satisfaction_pct);
+          const totResp = coList.reduce((s,[,v])=>s+v.total,0)||1;
+          const mkRow = ([code,v]) => `<div class="v03-list-row"><span>${code}</span><strong>${Math.round(v.satisfaction_pct)}%</strong></div>`;
+          const mkRowShare = ([code,v]) => `<div class="v03-list-row"><span>${code}</span><strong>${Math.round(v.total/totResp*100)}%</strong></div>`;
+          const high = coList.slice(0,3);
+          const low  = [...coList].reverse().slice(0,3);
+          const byShare = [...coList].sort((a,b)=>b[1].total-a[1].total).slice(0,3);
+          const lowShare = [...coList].sort((a,b)=>a[1].total-b[1].total).slice(0,3);
+          return `<div class="v03-country-sat-grid">
+            <div class="v03-list-panel"><div class="v03-list-title">만족도 높은 국가</div>${high.map(mkRow).join('')}</div>
+            <div class="v03-list-panel risk"><div class="v03-list-title">만족도 낮은 국가</div>${low.map(mkRow).join('')}</div>
+            <div class="v03-list-panel"><div class="v03-list-title">응답 비중 높은 국가</div>${byShare.map(mkRowShare).join('')}</div>
+            <div class="v03-list-panel risk"><div class="v03-list-title">응답 비중 낮은 국가</div>${lowShare.map(mkRowShare).join('')}</div>
+          </div>`;
+        })()}
       </div>
     </div>
     <div class="v03-reason-device-grid">
       <div class="v03-sat-group">
         <div class="v03-sat-section-title">${iconSvg('sessions','ui-icon tiny')} Positive / Negative Reasons</div>
-        <div class="v03-panels-2">
-          <div class="v03-list-panel"><div class="v03-list-title">Positive Top</div><div class="v03-list-row"><span>1. Easy Specs</span><strong>34%</strong></div><div class="v03-list-row"><span>2. Clear Range</span><strong>28%</strong></div><div class="v03-list-row"><span>3. Tailored Rec.</span><strong>18%</strong></div></div>
-          <div class="v03-list-panel risk"><div class="v03-list-title">Negative Top</div><div class="v03-list-row"><span>1. Info missing</span><strong>31%</strong></div><div class="v03-list-row"><span>2. Hard to decide</span><strong>24%</strong></div><div class="v03-list-row"><span>3. Technical terms</span><strong>17%</strong></div></div>
-        </div>
+        ${(() => {
+          if (!SAT_DATA) return `<div style="font-size:11px;color:var(--text2);font-style:italic;">만족도 데이터 로딩 중…</div>`;
+          const p = SAT_DATA.meta.latest_period;
+          const reasons = SAT_DATA.monthly[p]?.reasons || {};
+          const buildList = (obj, isPos, orderedKeys) => {
+            const total = Object.values(obj||{}).reduce((s,v)=>s+v,0)||1;
+            const rows = orderedKeys.filter(k=>(obj||{})[k]>0)
+              .map((k,i) => `<div class="v03-list-row"><span>${i+1}. ${k}</span><strong style="${isPos?'':'color:var(--red);'}">${Math.round((obj[k]/total)*100)}%</strong></div>`)
+              .join('');
+            return rows || `<div style="font-size:11px;color:var(--text2);font-style:italic;padding:4px 0;">응답 없음</div>`;
+          };
+          const lu = reasons.lineup || {};
+          const ft = reasons.feature || {};
+          const SAT_R = typeof SAT_REASONS !== 'undefined' ? SAT_REASONS : {
+            lineup:{positive:[],negative:[]}, feature:{positive:[],negative:[]}
+          };
+          return `<div style="display:flex;flex-direction:column;gap:10px;">
+            <div>
+              <div style="font-size:10px;font-weight:700;color:var(--accent2);letter-spacing:.05em;margin-bottom:6px;">LINE-UP GUIDE</div>
+              <div class="v03-panels-2">
+                <div class="v03-list-panel"><div class="v03-list-title">Positive</div>${buildList(lu.positive,true,SAT_R.lineup.positive)}</div>
+                <div class="v03-list-panel risk"><div class="v03-list-title">Negative</div>${buildList(lu.negative,false,SAT_R.lineup.negative)}</div>
+              </div>
+            </div>
+            <div>
+              <div style="font-size:10px;font-weight:700;color:var(--accent2);letter-spacing:.05em;margin-bottom:6px;">FEATURE LIBRARY</div>
+              <div class="v03-panels-2">
+                <div class="v03-list-panel"><div class="v03-list-title">Positive</div>${buildList(ft.positive,true,SAT_R.feature.positive)}</div>
+                <div class="v03-list-panel risk"><div class="v03-list-title">Negative</div>${buildList(ft.negative,false,SAT_R.feature.negative)}</div>
+              </div>
+            </div>
+          </div>`;
+        })()}
       </div>
       <div class="v03-sat-group">
         <div class="v03-sat-section-title">${iconSvg('behavior','ui-icon tiny')} Device Signal</div>
-        <div class="v03-device-grid">
-          <div class="v03-list-panel"><div class="v03-list-title">PC / Mac</div><div class="v03-list-row"><span>만족도</span><strong>82%</strong></div><div class="v03-list-row"><span>부정 응답률</span><strong>18%</strong></div><div class="v03-list-row"><span>주요 이슈</span><strong>Hard to decide</strong></div></div>
-          <div class="v03-list-panel risk"><div class="v03-list-title">Mobile</div><div class="v03-list-row"><span>만족도</span><strong>68%</strong></div><div class="v03-list-row"><span>부정 응답률</span><strong>32%</strong></div><div class="v03-list-row"><span>주요 이슈</span><strong>Info missing</strong></div></div>
-        </div>
+        ${(() => {
+          if (!SAT_DATA) return `<div style="font-size:11px;color:var(--text2);font-style:italic;">만족도 데이터 로딩 중…</div>`;
+          const p = SAT_DATA.meta.latest_period;
+          const byDev = SAT_DATA.monthly[p]?.by_device || {};
+          const pc = byDev['PC'] || byDev['Desktop'] || null;
+          const mob = byDev['Mobile'] || null;
+          const devNegReason = (devKey) => {
+            const devResps = (SAT_DATA.responses||[]).filter(r => r.period===p && r.device===devKey && r.helpful==='No');
+            const cnts = {};
+            devResps.forEach(r => (r.neg_reasons||[]).forEach(rn => cnts[rn]=(cnts[rn]||0)+1));
+            const top = Object.entries(cnts).sort((a,b)=>b[1]-a[1])[0];
+            return top ? top[0] : '–';
+          };
+          const mkDevPanel = (label, data, isRisk, devKey) => {
+            if (!data) return '';
+            const sat = Math.round(data.satisfaction_pct);
+            const neg = Math.round((data.helpful_no/data.total)*100);
+            const topIssue = devNegReason(devKey);
+            return `<div class="v03-list-panel ${isRisk?'risk':''}"><div class="v03-list-title">${label}</div>
+              <div class="v03-list-row"><span>만족도</span><strong>${sat}%</strong></div>
+              <div class="v03-list-row"><span>부정 응답률</span><strong>${neg}%</strong></div>
+              <div class="v03-list-row"><span>주요 이슈</span><strong style="font-size:10px;">${topIssue}</strong></div>
+            </div>`;
+          };
+          const pcSat  = pc  ? Math.round(pc.satisfaction_pct)  : 100;
+          const mobSat = mob ? Math.round(mob.satisfaction_pct) : 100;
+          const pcFirst = pcSat >= mobSat;
+          return `<div class="v03-device-grid">
+            ${mkDevPanel('PC / Mac', pc,  !pcFirst,  'PC')}
+            ${mkDevPanel('Mobile',   mob, pcFirst,   'Mobile')}
+          </div>`;
+        })()}
       </div>
     </div>
     <div class="v03-sat-section-title" style="margin-top:18px;">${iconSvg('notes','ui-icon tiny')} Comment Signal</div>
@@ -7542,6 +7692,18 @@ function satTopReasons(reasonObj, n) {
   return Object.entries(reasonObj).sort((a,b)=>b[1]-a[1]).slice(0,n);
 }
 
+// 설문 항목 정의 (콘텐츠 유형별 분리)
+const SAT_REASONS = {
+  lineup: {
+    positive: ['Clear lineup overview','Simple spec comparison','Easy-to-understand terms (tooltip)','Tailored recommendations'],
+    negative: ['Hard to find a product','Unclear model differences','Complex terminology','Missing information'],
+  },
+  feature: {
+    positive: ['Easy-to-understand explanations','Helpful images and videos','Tailored recommendations'],
+    negative: ['Complex explanations','Unclear images or videos','Missing information'],
+  },
+};
+
 function satFilteredResponses() {
   if (!SAT_DATA) return [];
   const p = satFilters.period || SAT_DATA.meta.latest_period;
@@ -7558,6 +7720,10 @@ function satFilteredResponses() {
     }
     if (satFilters.commentChip === 'positive' && r.helpful !== 'Yes') return false;
     if (satFilters.commentChip === 'negative' && r.helpful !== 'No') return false;
+    if (satFilters.reason !== 'all') {
+      const allR = [...(r.pos_reasons||[]),...(r.neg_reasons||[])];
+      if (!allR.includes(satFilters.reason)) return false;
+    }
     return true;
   });
 }
@@ -7637,6 +7803,18 @@ function satRenderTopFilter() {
           <input class="sat-search" placeholder="Comments keyword search" value="${satFilters.keyword||''}" oninput="satSetFilter('keyword',this.value)">
         </div>
       </div>
+      ${(() => {
+        const ct = satFilters.content; const hl = satFilters.helpful;
+        const seen = new Set(); const opts = [['all','전체']];
+        const add = (list, dir) => list.forEach(r => { if(!seen.has(r)){ seen.add(r); opts.push([r,r]); } });
+        if (ct !== 'feature') { if(hl!=='no') add(SAT_REASONS.lineup.positive,'pos'); if(hl!=='yes') add(SAT_REASONS.lineup.negative,'neg'); }
+        if (ct !== 'lineup')  { if(hl!=='no') add(SAT_REASONS.feature.positive,'pos'); if(hl!=='yes') add(SAT_REASONS.feature.negative,'neg'); }
+        if (opts.length < 2) return '';
+        return `<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px;">
+          <span class="sat-filter-label">Reason:</span>
+          <div class="sat-btn-group">${opts.map(([v,l])=>`<button class="sat-fbtn ${satFilters.reason===v?'active':''}" onclick="satSetFilter('reason','${v}')">${l}</button>`).join('')}</div>
+        </div>`;
+      })()}
     </div>
   `;
 }
@@ -7852,53 +8030,52 @@ function satRenderCountryCategorySection(monthly) {
 function satRenderReasons(monthly) {
   if (!monthly) return `<div class="sat-section-card"></div>`;
   const reasons = monthly.reasons || {};
+  const lu = reasons.lineup || {};
+  const ft = reasons.feature || {};
 
-  const reasonList = (entries, isPos) => {
-    const total = entries.reduce((s,[,v])=>s+v,0)||1;
+  const reasonList = (obj, isPos, orderedKeys) => {
+    // Show in fixed survey order, only items with count > 0
+    const total = Object.values(obj||{}).reduce((s,v)=>s+v,0)||1;
+    const entries = orderedKeys
+      .filter(k => (obj||{})[k] > 0)
+      .map(k => [k, obj[k]]);
+    if (!entries.length) return `<div style="font-size:11px;color:var(--text2);padding:4px 0;font-style:italic;">응답 없음</div>`;
     return entries.map(([label,cnt],i) =>
       `<div class="sat-reason-li">
         <span class="sat-reason-li-no">${i+1}.</span>
         <span class="sat-reason-li-label">${label}</span>
-        <span class="sat-reason-li-pct ${isPos?'pos':'neg'}">${Math.round(cnt/total*100)}%</span>
+        <span class="sat-reason-li-pct ${isPos?'pos':'neg'}">${Math.round(cnt/total*100)}% (${cnt}건)</span>
       </div>`
     ).join('');
   };
 
-  const lu = reasons.lineup || {};
-  const ft = reasons.feature || {};
+  const sectionHtml = (titleLabel, posObj, negObj, posKeys, negKeys) => `
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="font-size:10px;font-weight:800;color:var(--accent2);letter-spacing:.06em;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.07);">${titleLabel}</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;">
+        <div style="display:flex;flex-direction:column;">
+          <div class="sat-reason-box pos" style="flex:1;">
+            <div class="sat-reason-box-title pos">Positive</div>
+            ${reasonList(posObj, true, posKeys)}
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;">
+          <div class="sat-reason-box neg" style="flex:1;">
+            <div class="sat-reason-box-title neg">Negative</div>
+            ${reasonList(negObj, false, negKeys)}
+          </div>
+        </div>
+      </div>
+    </div>`;
 
   return `
     <div class="sat-section-card" style="display:flex;flex-direction:column;">
       <div class="sat-section-header"><span class="sat-section-num">3</span> Reason Analysis</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;flex:1;">
-        <div style="display:flex;flex-direction:column;">
-          <div style="font-size:10px;font-weight:800;color:var(--accent2);margin-bottom:6px;letter-spacing:.04em;">LINE-UP</div>
-          <div class="sat-reason-box pos" style="flex:1;">
-            <div class="sat-reason-box-title pos">Positive Top</div>
-            ${reasonList(satTopReasons(lu.positive, 3), true)}
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;">
-          <div style="font-size:10px;font-weight:800;color:var(--accent2);margin-bottom:6px;letter-spacing:.04em;">&nbsp;</div>
-          <div class="sat-reason-box neg" style="flex:1;">
-            <div class="sat-reason-box-title neg">Negative Top</div>
-            ${reasonList(satTopReasons(lu.negative, 3), false)}
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;">
-          <div style="font-size:10px;font-weight:800;color:var(--accent2);margin-bottom:6px;letter-spacing:.04em;">FEATURE</div>
-          <div class="sat-reason-box pos" style="flex:1;">
-            <div class="sat-reason-box-title pos">Positive Top</div>
-            ${reasonList(satTopReasons(ft.positive, 3), true)}
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;">
-          <div style="font-size:10px;font-weight:800;color:var(--accent2);margin-bottom:6px;letter-spacing:.04em;">&nbsp;</div>
-          <div class="sat-reason-box neg" style="flex:1;">
-            <div class="sat-reason-box-title neg">Negative Top</div>
-            ${reasonList(satTopReasons(ft.negative, 3), false)}
-          </div>
-        </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;">
+        ${sectionHtml('LINE-UP GUIDE', lu.positive, lu.negative,
+            SAT_REASONS.lineup.positive, SAT_REASONS.lineup.negative)}
+        ${sectionHtml('FEATURE LIBRARY', ft.positive, ft.negative,
+            SAT_REASONS.feature.positive, SAT_REASONS.feature.negative)}
       </div>
     </div>
   `;

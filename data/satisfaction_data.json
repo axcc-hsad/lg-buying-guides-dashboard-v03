@@ -18,7 +18,7 @@
       "country": "FR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Benefit clear"
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "I found the spec comparison very clear and useful.",
@@ -35,8 +35,8 @@
       "country": "NL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range",
-        "Tailored Rec"
+        "Clear lineup overview",
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "Unclear difference between OLED and QNED models.",
@@ -53,7 +53,7 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec"
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -70,7 +70,7 @@
       "country": "MX",
       "helpful": "Yes",
       "pos_reasons": [
-        "Visuals"
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "Tailored recommendation was spot on for my needs.",
@@ -87,8 +87,8 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range",
-        "Jargon Guide"
+        "Clear lineup overview",
+        "Easy-to-understand terms (tooltip)"
       ],
       "neg_reasons": [],
       "comment": "I still cannot decide which product is right for me.",
@@ -105,7 +105,7 @@
       "country": "NL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs"
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "I found the spec comparison very clear and useful.",
@@ -122,8 +122,8 @@
       "country": "MX",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec",
-        "Clear Range"
+        "Tailored recommendations",
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "Could not find information about my specific use case.",
@@ -141,7 +141,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Too technical"
+        "Complex explanations"
       ],
       "comment": "Hard to decide between the two top models.",
       "device": "Mobile",
@@ -158,7 +158,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Hard to decide"
+        "Hard to find a product"
       ],
       "comment": null,
       "device": "Mobile",
@@ -175,8 +175,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Unclear diff",
-        "Technical terms"
+        "Unclear model differences",
+        "Complex terminology"
       ],
       "comment": "Hard to decide between the two top models.",
       "device": "Mobile",
@@ -193,8 +193,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Info missing",
-        "Hard to decide"
+        "Missing information",
+        "Hard to find a product"
       ],
       "comment": "Hard to decide between the two top models.",
       "device": "Mobile",
@@ -210,7 +210,7 @@
       "country": "IT",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs"
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "The jargon guide tooltip was a great addition.",
@@ -228,7 +228,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Technical terms"
+        "Complex terminology"
       ],
       "comment": "The benefit summary cards are excellent.",
       "device": "Mobile",
@@ -244,7 +244,7 @@
       "country": "FR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range"
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "Would love more detail on energy efficiency.",
@@ -261,7 +261,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Visuals"
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -278,8 +278,8 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain",
-        "Easy language"
+        "Easy-to-understand explanations",
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "Hard to decide between the two top models.",
@@ -296,7 +296,7 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range"
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "I want more information about OLED technology.",
@@ -314,7 +314,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Layout confusing"
+        "Unclear images or videos"
       ],
       "comment": "Great guide overall, very comprehensive.",
       "device": "Mobile",
@@ -331,8 +331,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Info missing",
-        "Hard to decide"
+        "Missing information",
+        "Hard to find a product"
       ],
       "comment": "Too much technical information without context.",
       "device": "Mobile",
@@ -348,7 +348,7 @@
       "country": "IT",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain"
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -366,7 +366,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Too technical"
+        "Complex explanations"
       ],
       "comment": "Unclear difference between OLED and QNED models.",
       "device": "PC",
@@ -382,8 +382,8 @@
       "country": "PL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Benefit clear",
-        "Visuals"
+        "Easy-to-understand explanations",
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "Would love more detail on energy efficiency.",
@@ -401,7 +401,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Technical terms"
+        "Complex terminology"
       ],
       "comment": "Tailored recommendation was spot on for my needs.",
       "device": "Mobile",
@@ -417,8 +417,8 @@
       "country": "CA",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain",
-        "Benefit clear"
+        "Easy-to-understand explanations",
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -435,7 +435,7 @@
       "country": "NL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain"
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "Unclear difference between OLED and QNED models.",
@@ -452,8 +452,8 @@
       "country": "FR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain",
-        "Benefit clear"
+        "Easy-to-understand explanations",
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "Would love more detail on energy efficiency.",
@@ -471,7 +471,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Technical terms"
+        "Complex terminology"
       ],
       "comment": "Too much technical information without context.",
       "device": "Tablet",
@@ -487,7 +487,7 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Visuals"
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "I still cannot decide which product is right for me.",
@@ -504,7 +504,7 @@
       "country": "NL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain"
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "The benefit summary cards are excellent.",
@@ -522,7 +522,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Hard to decide"
+        "Hard to find a product"
       ],
       "comment": "Too much technical information without context.",
       "device": "Mobile",
@@ -538,8 +538,8 @@
       "country": "NL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain",
-        "Benefit clear"
+        "Easy-to-understand explanations",
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "Could not find information about my specific use case.",
@@ -556,7 +556,7 @@
       "country": "PL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec"
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -573,7 +573,7 @@
       "country": "ES",
       "helpful": "Yes",
       "pos_reasons": [
-        "Jargon Guide"
+        "Easy-to-understand terms (tooltip)"
       ],
       "neg_reasons": [],
       "comment": "Unclear difference between OLED and QNED models.",
@@ -590,8 +590,8 @@
       "country": "FR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Visuals",
-        "Clear explain"
+        "Helpful images and videos",
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "Unclear difference between OLED and QNED models.",
@@ -608,8 +608,8 @@
       "country": "FR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec",
-        "Easy Specs"
+        "Tailored recommendations",
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "I want more information about OLED technology.",
@@ -627,8 +627,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Unclear diff",
-        "Hard to decide"
+        "Unclear model differences",
+        "Hard to find a product"
       ],
       "comment": "The jargon guide tooltip was a great addition.",
       "device": "Mobile",
@@ -645,8 +645,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Layout confusing",
-        "Need detail"
+        "Unclear images or videos",
+        "Missing information"
       ],
       "comment": "The visuals made it easy to understand features.",
       "device": "Mobile",
@@ -662,7 +662,7 @@
       "country": "ES",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec"
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "The jargon guide tooltip was a great addition.",
@@ -679,8 +679,8 @@
       "country": "BR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs",
-        "Tailored Rec"
+        "Simple spec comparison",
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "I want more information about OLED technology.",
@@ -697,7 +697,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs"
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "Would love more detail on energy efficiency.",
@@ -715,7 +715,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Info missing"
+        "Missing information"
       ],
       "comment": "Great guide overall, very comprehensive.",
       "device": "Mobile",
@@ -731,7 +731,7 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Benefit clear"
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "The visuals made it easy to understand features.",
@@ -748,7 +748,7 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range"
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "The benefit summary cards are excellent.",
@@ -765,7 +765,7 @@
       "country": "ES",
       "helpful": "Yes",
       "pos_reasons": [
-        "Benefit clear"
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "Layout on mobile is a bit confusing.",
@@ -782,8 +782,8 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs",
-        "Jargon Guide"
+        "Simple spec comparison",
+        "Easy-to-understand terms (tooltip)"
       ],
       "neg_reasons": [],
       "comment": "Would love more detail on energy efficiency.",
@@ -800,7 +800,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Visuals"
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "I want more information about OLED technology.",
@@ -817,8 +817,8 @@
       "country": "PL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain",
-        "Easy language"
+        "Easy-to-understand explanations",
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "The guide was very helpful for comparing models.",
@@ -835,7 +835,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Jargon Guide"
+        "Easy-to-understand terms (tooltip)"
       ],
       "neg_reasons": [],
       "comment": "Hard to decide between the two top models.",
@@ -852,8 +852,8 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec",
-        "Clear Range"
+        "Tailored recommendations",
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "Unclear difference between OLED and QNED models.",
@@ -871,8 +871,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Layout confusing",
-        "Need detail"
+        "Unclear images or videos",
+        "Missing information"
       ],
       "comment": null,
       "device": "PC",
@@ -888,8 +888,8 @@
       "country": "PL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range",
-        "Easy Specs"
+        "Clear lineup overview",
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "Layout on mobile is a bit confusing.",
@@ -906,7 +906,7 @@
       "country": "MX",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range"
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "The visuals made it easy to understand features.",
@@ -923,8 +923,8 @@
       "country": "FR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec",
-        "Jargon Guide"
+        "Tailored recommendations",
+        "Easy-to-understand terms (tooltip)"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -941,8 +941,8 @@
       "country": "FR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range",
-        "Jargon Guide"
+        "Clear lineup overview",
+        "Easy-to-understand terms (tooltip)"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -959,7 +959,7 @@
       "country": "IT",
       "helpful": "Yes",
       "pos_reasons": [
-        "Visuals"
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "Tailored recommendation was spot on for my needs.",
@@ -976,7 +976,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Benefit clear"
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "Hard to decide between the two top models.",
@@ -993,7 +993,7 @@
       "country": "CA",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range"
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "The benefit summary cards are excellent.",
@@ -1011,8 +1011,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Unclear diff",
-        "Technical terms"
+        "Unclear model differences",
+        "Complex terminology"
       ],
       "comment": "The benefit summary cards are excellent.",
       "device": "PC",
@@ -1028,7 +1028,7 @@
       "country": "IT",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs"
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "Could not find information about my specific use case.",
@@ -1045,7 +1045,7 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs"
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "Tailored recommendation was spot on for my needs.",
@@ -1063,7 +1063,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Info missing"
+        "Missing information"
       ],
       "comment": "Hard to decide between the two top models.",
       "device": "Mobile",
@@ -1080,8 +1080,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Hard to decide",
-        "Unclear diff"
+        "Hard to find a product",
+        "Unclear model differences"
       ],
       "comment": "Tailored recommendation was spot on for my needs.",
       "device": "Mobile",
@@ -1097,7 +1097,7 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs"
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -1114,8 +1114,8 @@
       "country": "MX",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range",
-        "Easy Specs"
+        "Clear lineup overview",
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "Easy language, very approachable for non-tech users.",
@@ -1132,7 +1132,7 @@
       "country": "NL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Benefit clear"
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "Would love more detail on energy efficiency.",
@@ -1150,7 +1150,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Need detail"
+        "Missing information"
       ],
       "comment": null,
       "device": "Mobile",
@@ -1167,7 +1167,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Unclear diff"
+        "Unclear model differences"
       ],
       "comment": "I still cannot decide which product is right for me.",
       "device": "Mobile",
@@ -1183,7 +1183,7 @@
       "country": "MX",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec"
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "Tailored recommendation was spot on for my needs.",
@@ -1200,7 +1200,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range"
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "Could not find information about my specific use case.",
@@ -1217,8 +1217,8 @@
       "country": "FR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Visuals",
-        "Benefit clear"
+        "Helpful images and videos",
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -1235,7 +1235,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec"
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "I found the spec comparison very clear and useful.",
@@ -1253,7 +1253,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Unclear diff"
+        "Unclear model differences"
       ],
       "comment": null,
       "device": "Mobile",
@@ -1269,7 +1269,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range"
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "Great guide overall, very comprehensive.",
@@ -1286,7 +1286,7 @@
       "country": "MX",
       "helpful": "Yes",
       "pos_reasons": [
-        "Visuals"
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "Tailored recommendation was spot on for my needs.",
@@ -1303,8 +1303,8 @@
       "country": "MX",
       "helpful": "Yes",
       "pos_reasons": [
-        "Jargon Guide",
-        "Easy Specs"
+        "Easy-to-understand terms (tooltip)",
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "Unclear difference between OLED and QNED models.",
@@ -1321,7 +1321,7 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs"
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "I want more information about OLED technology.",
@@ -1338,8 +1338,8 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Benefit clear",
-        "Easy language"
+        "Easy-to-understand explanations",
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "Could not find information about my specific use case.",
@@ -1356,8 +1356,8 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain",
-        "Easy language"
+        "Easy-to-understand explanations",
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "The benefit summary cards are excellent.",
@@ -1375,7 +1375,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "No benefit"
+        "Missing information"
       ],
       "comment": "The visuals made it easy to understand features.",
       "device": "Mobile",
@@ -1391,8 +1391,8 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Benefit clear",
-        "Clear explain"
+        "Easy-to-understand explanations",
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "Too much technical information without context.",
@@ -1409,8 +1409,8 @@
       "country": "BR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Jargon Guide",
-        "Tailored Rec"
+        "Easy-to-understand terms (tooltip)",
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "Layout on mobile is a bit confusing.",
@@ -1427,8 +1427,8 @@
       "country": "MX",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range",
-        "Easy Specs"
+        "Clear lineup overview",
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "The guide was very helpful for comparing models.",
@@ -1446,7 +1446,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Need detail"
+        "Missing information"
       ],
       "comment": "Great guide overall, very comprehensive.",
       "device": "Mobile",
@@ -1462,7 +1462,7 @@
       "country": "ES",
       "helpful": "Yes",
       "pos_reasons": [
-        "Visuals"
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "I found the spec comparison very clear and useful.",
@@ -1479,8 +1479,8 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs",
-        "Tailored Rec"
+        "Simple spec comparison",
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "Hard to decide between the two top models.",
@@ -1498,7 +1498,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Technical terms"
+        "Complex terminology"
       ],
       "comment": null,
       "device": "Mobile",
@@ -1515,7 +1515,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Hard to decide"
+        "Hard to find a product"
       ],
       "comment": "I found the spec comparison very clear and useful.",
       "device": "PC",
@@ -1531,7 +1531,7 @@
       "country": "BR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy language"
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "The jargon guide tooltip was a great addition.",
@@ -1548,7 +1548,7 @@
       "country": "BR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain"
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "Easy language, very approachable for non-tech users.",
@@ -1565,8 +1565,8 @@
       "country": "PL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec",
-        "Easy Specs"
+        "Tailored recommendations",
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -1584,8 +1584,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Too technical",
-        "Layout confusing"
+        "Complex explanations",
+        "Unclear images or videos"
       ],
       "comment": "Great guide overall, very comprehensive.",
       "device": "Mobile",
@@ -1601,7 +1601,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs"
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "Could not find information about my specific use case.",
@@ -1618,7 +1618,7 @@
       "country": "ES",
       "helpful": "Yes",
       "pos_reasons": [
-        "Visuals"
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "Unclear difference between OLED and QNED models.",
@@ -1635,7 +1635,7 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec"
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "Would love more detail on energy efficiency.",
@@ -1652,8 +1652,8 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain",
-        "Visuals"
+        "Easy-to-understand explanations",
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "Easy language, very approachable for non-tech users.",
@@ -1670,8 +1670,8 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Jargon Guide",
-        "Clear Range"
+        "Easy-to-understand terms (tooltip)",
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "Could not find information about my specific use case.",
@@ -1688,8 +1688,8 @@
       "country": "NL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy language",
-        "Visuals"
+        "Tailored recommendations",
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "The guide was very helpful for comparing models.",
@@ -1706,8 +1706,8 @@
       "country": "CA",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec",
-        "Easy Specs"
+        "Tailored recommendations",
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "Layout on mobile is a bit confusing.",
@@ -1724,7 +1724,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain"
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "Could not find information about my specific use case.",
@@ -1741,8 +1741,8 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Jargon Guide",
-        "Clear Range"
+        "Easy-to-understand terms (tooltip)",
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "The visuals made it easy to understand features.",
@@ -1759,7 +1759,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec"
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "Unclear difference between OLED and QNED models.",
@@ -1776,8 +1776,8 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec",
-        "Jargon Guide"
+        "Tailored recommendations",
+        "Easy-to-understand terms (tooltip)"
       ],
       "neg_reasons": [],
       "comment": "The benefit summary cards are excellent.",
@@ -1795,8 +1795,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Hard to decide",
-        "Unclear diff"
+        "Hard to find a product",
+        "Unclear model differences"
       ],
       "comment": "Hard to decide between the two top models.",
       "device": "Mobile",
@@ -1812,7 +1812,7 @@
       "country": "FR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Visuals"
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "Easy language, very approachable for non-tech users.",
@@ -1829,7 +1829,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy Specs"
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "Great guide overall, very comprehensive.",
@@ -1847,8 +1847,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Need detail",
-        "Layout confusing"
+        "Missing information",
+        "Unclear images or videos"
       ],
       "comment": "Would love more detail on energy efficiency.",
       "device": "PC",
@@ -1864,7 +1864,7 @@
       "country": "ES",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range"
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -1881,7 +1881,7 @@
       "country": "NL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range"
+        "Clear lineup overview"
       ],
       "neg_reasons": [],
       "comment": "I want more information about OLED technology.",
@@ -1899,7 +1899,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "No benefit"
+        "Missing information"
       ],
       "comment": "Easy language, very approachable for non-tech users.",
       "device": "Mobile",
@@ -1915,8 +1915,8 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy language",
-        "Benefit clear"
+        "Tailored recommendations",
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "The jargon guide tooltip was a great addition.",
@@ -1933,7 +1933,7 @@
       "country": "NL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy language"
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -1950,8 +1950,8 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Benefit clear",
-        "Clear explain"
+        "Easy-to-understand explanations",
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "The visuals made it easy to understand features.",
@@ -1968,7 +1968,7 @@
       "country": "PL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec"
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "The jargon guide tooltip was a great addition.",
@@ -1985,8 +1985,8 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Benefit clear",
-        "Clear explain"
+        "Easy-to-understand explanations",
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -2003,8 +2003,8 @@
       "country": "NL",
       "helpful": "Yes",
       "pos_reasons": [
-        "Benefit clear",
-        "Easy language"
+        "Easy-to-understand explanations",
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -2021,7 +2021,7 @@
       "country": "ES",
       "helpful": "Yes",
       "pos_reasons": [
-        "Easy language"
+        "Tailored recommendations"
       ],
       "neg_reasons": [],
       "comment": "Would love more detail on energy efficiency.",
@@ -2039,7 +2039,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Layout confusing"
+        "Unclear images or videos"
       ],
       "comment": "I found the spec comparison very clear and useful.",
       "device": "Mobile",
@@ -2056,8 +2056,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Need detail",
-        "Too technical"
+        "Missing information",
+        "Complex explanations"
       ],
       "comment": "I found the spec comparison very clear and useful.",
       "device": "Mobile",
@@ -2074,7 +2074,7 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Need detail"
+        "Missing information"
       ],
       "comment": null,
       "device": "PC",
@@ -2090,8 +2090,8 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain",
-        "Benefit clear"
+        "Easy-to-understand explanations",
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": "Great guide overall, very comprehensive.",
@@ -2108,7 +2108,7 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain"
+        "Easy-to-understand explanations"
       ],
       "neg_reasons": [],
       "comment": null,
@@ -2125,8 +2125,8 @@
       "country": "DE",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear explain",
-        "Visuals"
+        "Easy-to-understand explanations",
+        "Helpful images and videos"
       ],
       "neg_reasons": [],
       "comment": "The visuals made it easy to understand features.",
@@ -2143,8 +2143,8 @@
       "country": "FR",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec",
-        "Jargon Guide"
+        "Tailored recommendations",
+        "Easy-to-understand terms (tooltip)"
       ],
       "neg_reasons": [],
       "comment": "I still cannot decide which product is right for me.",
@@ -2162,8 +2162,8 @@
       "helpful": "No",
       "pos_reasons": [],
       "neg_reasons": [
-        "Info missing",
-        "Technical terms"
+        "Missing information",
+        "Complex terminology"
       ],
       "comment": "Great guide overall, very comprehensive.",
       "device": "PC",
@@ -2179,8 +2179,8 @@
       "country": "UK",
       "helpful": "Yes",
       "pos_reasons": [
-        "Tailored Rec",
-        "Easy Specs"
+        "Tailored recommendations",
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "I want more information about OLED technology.",
@@ -2197,8 +2197,8 @@
       "country": "MX",
       "helpful": "Yes",
       "pos_reasons": [
-        "Clear Range",
-        "Easy Specs"
+        "Clear lineup overview",
+        "Simple spec comparison"
       ],
       "neg_reasons": [],
       "comment": "I still cannot decide which product is right for me.",
@@ -2340,30 +2340,28 @@
       "reasons": {
         "lineup": {
           "positive": {
-            "Clear Range": 20,
-            "Tailored Rec": 21,
-            "Jargon Guide": 12,
-            "Easy Specs": 21
+            "Clear lineup overview": 20,
+            "Tailored recommendations": 21,
+            "Easy-to-understand terms (tooltip)": 12,
+            "Simple spec comparison": 21
           },
           "negative": {
-            "Hard to decide": 8,
-            "Unclear diff": 7,
-            "Technical terms": 7,
-            "Info missing": 5
+            "Hard to find a product": 8,
+            "Unclear model differences": 7,
+            "Complex terminology": 7,
+            "Missing information": 5
           }
         },
         "feature": {
           "positive": {
-            "Benefit clear": 17,
-            "Visuals": 15,
-            "Clear explain": 19,
-            "Easy language": 10
+            "Easy-to-understand explanations": 36,
+            "Helpful images and videos": 15,
+            "Tailored recommendations": 10
           },
           "negative": {
-            "Too technical": 4,
-            "Layout confusing": 6,
-            "Need detail": 7,
-            "No benefit": 2
+            "Complex explanations": 4,
+            "Unclear images or videos": 6,
+            "Missing information": 9
           }
         }
       }
@@ -2376,7 +2374,17 @@
       "helpful_no": 24,
       "satisfaction_pct": 77.8,
       "negative_rate": 22.2,
-      "mobile_pct": 47.2
+      "mobile_pct": 47.2,
+      "reasons": {
+        "lineup": {
+          "positive": {},
+          "negative": {}
+        },
+        "feature": {
+          "positive": {},
+          "negative": {}
+        }
+      }
     }
   }
 }
