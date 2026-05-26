@@ -6846,40 +6846,40 @@ function v03GetClusterData() {
       case 'Traffic Drop': {
         const v = repM?.sessionsMom;
         const vStr = v != null ? Math.abs(v).toFixed(0) + '%' : '–';
-        symptomSummary = `세션 이상 감지 — 전월 대비 ${vStr} 하락 (기준 ${T.sessionsMomDown}% 이하)`;
+        symptomSummary = `세션 이상 감지 — 전월 대비 ${vStr} 하락`;
         signalText = `${count}개 페이지 Sessions MoM ≤${T.sessionsMomDown}% 감지 (최소 세션 ${T.sessionsMinVol} 이상 페이지 대상)`;
         break;
       }
       case 'SEO Weak': {
         const share = repM?.organicShare != null ? (repM.organicShare * 100).toFixed(0) + '%' : '–';
         const omom  = repM?.organicMom   != null ? Math.abs(repM.organicMom).toFixed(0) + '%' : '–';
-        symptomSummary = `Organic 유입 약세 — Share ${share}, Sessions ${omom} 감소 (기준: Share ${T.organicShareWeak * 100}% 미만)`;
+        symptomSummary = `Organic 유입 약세 — Share ${share}, Sessions ${omom} 감소`;
         signalText = `${count}개 페이지 Organic Share <${T.organicShareWeak * 100}% AND Organic Sessions MoM 감소 동시 감지 (동종 콘텐츠·카테고리 내 하위 25% 포함 확증)`;
         break;
       }
       case 'Conversion Gap': {
         const plp = repM?.plpConv != null ? (repM.plpConv * 100).toFixed(1) + '%' : '–';
-        symptomSummary = `전환 저조 — PLP Conv. ${plp} (감지 기준 ${T.convGapThreshold * 100}% 미만)`;
+        symptomSummary = `전환 저조 — PLP Conv. ${plp}`;
         signalText = `${count}개 페이지 PLP Conv. <${T.convGapThreshold * 100}% 감지 (최소 세션 ${T.convGapMinSessions} 이상 페이지 대상)`;
         break;
       }
       case 'Satisfaction Risk': {
         const sat = repSat?.satPctVal || '–';
         const neg = repSat?.negRateVal || '–';
-        symptomSummary = `만족도 이상 감지 — 만족도 ${sat}, 부정 응답 ${neg} (기준: 만족도 75% 미만 또는 부정 20% 초과)`;
+        symptomSummary = `만족도 이상 감지 — 만족도 ${sat}, 부정 응답 ${neg}`;
         signalText = `${count}개국 만족도 <75% 또는 부정 응답률 >20% 감지 (응답 수 3건 이상 국가 대상)`;
         break;
       }
       case 'Growth Signal': {
         const mom  = repM?.sessionsMom  != null ? repM.sessionsMom.toFixed(0)  + '%' : '–';
         const pmom = repM?.plpConvMom   != null ? repM.plpConvMom.toFixed(1)   + '%p' : '–';
-        symptomSummary = `성과 개선 — 세션 +${mom} MoM · PLP +${pmom} (기준 ≥+${T.sessionsMomUp}%, ≥+${T.plpConvMomUp}%p)`;
+        symptomSummary = `성과 개선 — 세션 +${mom} MoM · PLP +${pmom}`;
         signalText = `${count}개 페이지 Sessions MoM ≥+${T.sessionsMomUp}% AND PLP MoM ≥+${T.plpConvMomUp}%p 동시 감지`;
         break;
       }
       case 'Replication Point': {
         const plp = repM?.plpConv != null ? (repM.plpConv * 100).toFixed(1) + '%' : '–';
-        symptomSummary = `성과 우수 — PLP Conv. ${plp} (기준 ${T.replicationConv * 100}% 이상)`;
+        symptomSummary = `성과 우수 — PLP Conv. ${plp}`;
         signalText = `${count}개 페이지 PLP Conv. ≥${T.replicationConv * 100}% AND Sessions MoM ≥${T.replicationMomFloor}% 감지`;
         break;
       }
