@@ -3063,8 +3063,8 @@ body {
   <div class="ptab-content active" id="ptab-brief">
     <div id="mainInsightsSummary"></div>
     <div id="intelBriefPanel" style="display:none"></div>
-    <div id="actionTodosPanel"></div>
     <div id="contentDirectionPanel"></div>
+    <div id="actionTodosPanel"></div>
   </div>
 
   <!-- Tab: Country Cards -->
@@ -6888,11 +6888,79 @@ function v03GetClusterData() {
         signalText = count + '건 감지';
     }
 
+    // ── 동적 판단 — 복합 지표 교차 분석 기반 ──
+    let judgement;
+    switch (slot.type) {
+      case 'Traffic Drop': {
+        const secSEO  = items.filter(i => i.secondary.includes('SEO Weak')).length;
+        const secConv = items.filter(i => i.secondary.includes('Conversion Gap')).length;
+        if (secSEO > 0 && secConv > 0) {
+          judgement = `${countries.length}개국에서 세션·Organic·전환 3중 약세 동반. 유입 채널 전반의 구조적 약화 가능성 높음 — 캠페인 의존도 및 Organic 비중 변화를 채널별로 분리 진단 필요`;
+        } else if (secSEO > 0) {
+          judgement = `세션 하락과 Organic 약화가 ${secSEO}개 페이지에서 동반 발생. 검색 유입 감소가 세션 하락의 주요 원인일 가능성 높음 — 채널별 유입 비중 분리 후 Organic 회복 여부 우선 판단`;
+        } else if (secConv > 0) {
+          judgement = `세션 하락과 전환 저조가 ${secConv}개 페이지에서 동반. 유입 손실 외 페이지 내 이탈 구조 가능성 — PLP 진입률과 CTA 클릭 흐름 교차 확인`;
+        } else {
+          judgement = `세션 하락이 ${countries.length}개국에 집중되나 전환 구조는 유지. 유입 경로(채널·캠페인) 변화가 우선 점검 대상 — 동일 카테고리 타 국가와 유입 패턴 비교 후 특이 원인 특정`;
+        }
+        break;
+      }
+      case 'SEO Weak': {
+        const secTraffic = items.filter(i => i.secondary.includes('Traffic Drop')).length;
+        const validShares = items.map(i => parseFloat(i.organicShareVal)).filter(v => !isNaN(v));
+        const avgShare = validShares.length ? (validShares.reduce((a, b) => a + b, 0) / validShares.length).toFixed(0) : null;
+        if (secTraffic > 0) {
+          judgement = `Organic 약화와 세션 하락이 ${secTraffic}개 페이지에서 동반. 검색 노출 감소가 실제 유입 손실로 이어지는 단계 — 메타·타이틀 개선 후 Search Console 노출수 추이 선행 확인`;
+        } else {
+          judgement = `Organic Share 평균 ${avgShare ?? '–'}%로 낮으나 세션은 유지. 채널 다변화 또는 직접 유입 증가 가능성 — Organic 절대량 MoM 변화를 함께 점검해 실제 손실 여부 판단`;
+        }
+        break;
+      }
+      case 'Conversion Gap': {
+        const secTraffic = items.filter(i => i.secondary.includes('Traffic Drop')).length;
+        const validPlp = items.map(i => parseFloat(i.plpConvVal)).filter(v => !isNaN(v));
+        const avgPlp = validPlp.length ? (validPlp.reduce((a, b) => a + b, 0) / validPlp.length).toFixed(1) : null;
+        if (secTraffic > 0) {
+          judgement = `세션 감소와 전환 저조가 ${secTraffic}개 페이지에서 동반 — 유입·전환 이중 손실 상태. 유입 경로 개선이 선행 과제이며 전환 구조 점검은 유입 회복 이후 단계로 분리`;
+        } else {
+          judgement = `유입은 유지 중이나 PLP 진입 전환 평균 ${avgPlp ?? '–'}%로 낮음. 세션 대비 PLP 이탈 발생 중 — CTA 위치·문구, 제품 카드 배열, 가격·사양 노출 순서로 이탈 지점 점검`;
+        }
+        break;
+      }
+      case 'Satisfaction Risk': {
+        const validSat = items.map(i => parseFloat(i.satPctVal)).filter(v => !isNaN(v));
+        const avgSat = validSat.length ? (validSat.reduce((a, b) => a + b, 0) / validSat.length).toFixed(0) : null;
+        const highNeg = items.filter(i => (parseFloat(i.negRateVal) || 0) > 25).length;
+        if (highNeg > 0) {
+          judgement = `부정 응답률 25% 초과 국가 ${highNeg}개. 만족도 하락은 스펙 정보 부족 또는 제품 기대와 콘텐츠 간 간극 신호 — Comments 원문에서 반복 패턴(Info missing, Not relevant) 확인 후 개선 우선순위 결정`;
+        } else {
+          judgement = `만족도 평균 ${avgSat ?? '–'}%로 기준 미달. GA 이탈 구간(세션 대비 PLP 진입률)과 교차하면 콘텐츠 불일치 발생 위치 특정 가능 — 설문 응답 패턴과 행동 데이터 병행 분석 권장`;
+        }
+        break;
+      }
+      case 'Growth Signal': {
+        const secRep = items.filter(i => i.secondary.includes('Replication Point')).length;
+        if (secRep > 0) {
+          judgement = `세션 성장과 PLP 전환 우수가 ${secRep}개 페이지에서 동반. 유입-전환 전 구간 양호 상태 — CTA 구조와 콘텐츠 밀도를 동종 카테고리 저성과 국가의 개선 기준으로 활용 가능`;
+        } else {
+          judgement = `세션 성장 중이나 전환 개선폭 확인 필요. 유입 품질(Organic vs. Direct 비중)과 PLP 체류 패턴을 병행하면 성과 지속 가능성 판단 가능 — 다음 달 동일 지표 추적 필수`;
+        }
+        break;
+      }
+      case 'Replication Point': {
+        const cats = [...new Set(items.map(i => i.category))].join('·');
+        judgement = `${cats} 카테고리에서 PLP 전환과 세션 안정성 동시 확인. 저성과 국가와 CTA 구조·스펙 설명 밀도·제품 카드 배열을 항목별 비교하면 전환 기여 요소 특정 가능 — 확산 적용 전 로컬 제품 라인업 적합성 검토 선행`;
+        break;
+      }
+      default:
+        judgement = slot.judgement;
+    }
+
     return {
       type: slot.type, tone: slot.tone, count, empty: false, slug,
       priority: slot.priority, ownerActions: slot.ownerActions, links: slot.links,
       affectedItems: items, countryLabel, symptomSummary,
-      diagnosis: slot.diagnosis, signalText, judgement: slot.judgement,
+      diagnosis: slot.diagnosis, signalText, judgement,
     };
   });
 
@@ -7165,7 +7233,7 @@ function renderActionTodosNew() {
   el.innerHTML = `<div class="v03-section">
     <div class="v03-section-head">
       <div>
-        <div class="v03-title">2. Insight &amp; Action Summary</div>
+        <div class="v03-title">3. Insight &amp; Action Summary</div>
         <div class="v03-subtitle">신호 유형별 감지 내용 · 판단 · 담당별 조치 현황 — 진행 중 ${totalDoing}건 · 완료 ${totalDone}건</div>
       </div>
     </div>
@@ -7181,7 +7249,7 @@ function renderContentDirectionNew() {
   el.innerHTML = `<div class="v03-section">
     <div class="v03-section-head">
       <div>
-        <div class="v03-title">3. Satisfaction Detail Summary</div>
+        <div class="v03-title">2. Satisfaction Detail Summary</div>
         <div class="v03-subtitle">만족도 데이터에서 확인된 전체 흐름, 국가, 이유, 디바이스, 코멘트 신호 요약</div>
       </div>
     </div>
