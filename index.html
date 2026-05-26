@@ -1839,6 +1839,120 @@ body {
 .v03-signal-collapsed { cursor: pointer; border: 1px dashed rgba(99,102,241,.3); border-radius: 6px; background: rgba(99,102,241,.04); }
 .v03-signal-collapsed:hover { background: rgba(99,102,241,.08); }
 .v03-signal-top { display: contents; }
+
+/* ── Signal count pills ── */
+.v03-signal-pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.v03-signal-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.v03-signal-pill.risk  { color: var(--red);    background: rgba(239,68,68,.1);  border-color: rgba(239,68,68,.25); }
+.v03-signal-pill.watch { color: var(--yellow); background: rgba(234,179,8,.1); border-color: rgba(234,179,8,.25); }
+.v03-signal-pill.good  { color: var(--green);  background: rgba(34,197,94,.1);  border-color: rgba(34,197,94,.25); }
+.v03-signal-pill strong { font-size: 12px; }
+
+/* ── Cluster card grid ── */
+.v03-cluster-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.v03-cluster-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 13px 14px;
+  border-left: 3px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.v03-cluster-card.risk  { border-left-color: var(--red); }
+.v03-cluster-card.watch { border-left-color: var(--yellow); }
+.v03-cluster-card.good  { border-left-color: var(--green); }
+.v03-cluster-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.v03-cluster-count {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text2);
+}
+.v03-cluster-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+}
+.v03-cluster-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text);
+  flex-wrap: wrap;
+}
+.v03-cluster-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text2);
+  flex-shrink: 0;
+  min-width: 46px;
+}
+.v03-cluster-countries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+.v03-country-tag {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.1);
+  color: var(--text2);
+}
+.v03-cluster-metric {
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: auto;
+}
+.v03-cluster-metric.down { color: var(--red); }
+.v03-cluster-metric.up   { color: var(--green); }
+.v03-cluster-metric.warn { color: var(--yellow); }
+.v03-cluster-check {
+  font-size: 11px;
+  color: var(--text2);
+  border-top: 1px solid rgba(255,255,255,.05);
+  padding-top: 7px;
+  margin-top: 2px;
+}
+.v03-cluster-rep {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text);
+}
+@media (max-width: 900px) {
+  .v03-cluster-grid { grid-template-columns: 1fr; }
+}
 .v03-signal-target {
   color: var(--text);
   font-size: 12px;
@@ -5751,50 +5865,55 @@ function renderMainInsights() {
     return pe ? po / pe : null;
   })() : null;
 
-  // ── 신호 데이터: v03GetSignalRows()가 null 반환 시(데이터 없음) 표시하는 fallback
-  const MOCK_SIGNALS = [
-    ['Growth Signal',     'UK / TV',       '만족도와 PLP 모두 양호',     'good'],
-    ['Traffic Drop',      'FR / Monitor',  'Session -21%, PLP는 유지', 'risk'],
-    ['SEO Weak',          'NL / TV',       'Organic Share 낮음',        'watch'],
-    ['Satisfaction',      'BR / Monitor',  'Info missing 응답 집중',    'watch'],
-    ['Conversion Gap',    'MX / Feature',  '유입 대비 PLP 전환 낮음',   'risk'],
-    ['Replication Point', 'ES / Monitor',  'PLP와 만족도 모두 높음',    'good'],
-  ];
-  const detectedSignals = v03GetSignalRows(); // null이면 mock 사용
-
-  const buildSignalRow = (s) => {
-    if (s._collapsed) {
-      // 접힌 요약 행: 클릭 시 펼치기
-      const itemsJson = JSON.stringify(s._hiddenItems.map(h => ({ type: h.type, target: h.target, desc: h.desc, tone: h.tone })));
-      return `<div class="v03-signal-row good v03-signal-collapsed" onclick="v03ExpandSignals(this, ${encodeURIComponent(itemsJson)})">
-        <div class="v03-signal-top">
-          <span class="v03-signal-icon good">${iconSvg('good','ui-icon tiny')}</span>
-          <span class="v03-tag good">${s.type}</span>
-          <span class="v03-signal-target" style="color:var(--accent2)">${s.desc} · 클릭하여 펼치기</span>
-        </div>
-      </div>`;
-    }
-    const tone = s.tone;
-    return `<div class="v03-signal-row ${tone}">
-      <div class="v03-signal-top">
-        <span class="v03-signal-icon ${tone}">${iconSvg(tone === 'good' ? 'good' : tone === 'risk' ? 'alert' : 'watch', 'ui-icon tiny')}</span>
-        <span class="v03-tag ${tone}">${s.type}</span>
-        <span class="v03-signal-target">${s.target}</span>
-      </div>
-      <div class="v03-signal-desc">${s.desc}</div>
-    </div>`;
+  // ── 클러스터 데이터 (신호 건수 pill + 우선순위 클러스터 카드) ──
+  const MOCK_CLUSTER_DATA = {
+    typeCounts: { 'Traffic Drop': 3, 'SEO Weak': 5, 'Conversion Gap': 2, 'Replication Point': 1 },
+    clusters: [
+      { type: 'Traffic Drop',      tone: 'risk',  summaryTitle: 'Monitor 중심 3개 국가 세션 하락',
+        countries: ['FR','NL','IT'], rawCount: 3, repPage: 'FR / Monitor',
+        repMetric: 'Session -21% MoM', repMetricClass: 'down', nextCheck: 'PLP 유지 여부 · 유입 경로 확인' },
+      { type: 'SEO Weak',          tone: 'watch', summaryTitle: 'TV / Monitor 전체 Organic 유입 저조',
+        countries: ['NL','PL','IT'], rawCount: 5, repPage: 'NL / TV',
+        repMetric: 'Organic 14%', repMetricClass: 'warn', nextCheck: 'Organic 개선 · 검색 의도 점검' },
+      { type: 'Conversion Gap',    tone: 'watch', summaryTitle: 'Feature Monitor PLP 전환 저조',
+        countries: ['MX','CA-FR'], rawCount: 2, repPage: 'MX / Feature',
+        repMetric: 'PLP 18%', repMetricClass: 'warn', nextCheck: 'CTA 흐름 · PLP 진입 구조 확인' },
+      { type: 'Replication Point', tone: 'good',  summaryTitle: 'Monitor 성과·만족도 양호 패턴',
+        countries: ['ES','UK'], rawCount: 1, repPage: 'ES / Monitor',
+        repMetric: 'PLP 41%', repMetricClass: 'up', nextCheck: '확산 검토 후보 — 타 국가 적용 가능성' },
+    ],
   };
+  const clusterData = v03GetClusterData() || MOCK_CLUSTER_DATA;
 
-  const signalRows = detectedSignals
-    ? detectedSignals.map(buildSignalRow).join('')
-    : MOCK_SIGNALS.map(([tag, target, desc, tone]) => `<div class="v03-signal-row ${tone}">
-        <div class="v03-signal-top">
-          <span class="v03-signal-icon ${tone}">${iconSvg(tone === 'good' ? 'good' : tone === 'risk' ? 'alert' : 'watch', 'ui-icon tiny')}</span>
-          <span class="v03-tag ${tone}">${tag}</span>
-          <span class="v03-signal-target">${target}</span>
-        </div>
-        <div class="v03-signal-desc">${desc}</div>
-      </div>`).join('');
+  const PILL_ORDER = ['Traffic Drop','SEO Weak','Conversion Gap','Growth Signal','Replication Point'];
+  const PILL_TONE  = { 'Traffic Drop':'risk','SEO Weak':'watch','Conversion Gap':'watch',
+                       'Growth Signal':'good','Replication Point':'good' };
+
+  const pillsHtml = PILL_ORDER
+    .filter(t => clusterData.typeCounts[t])
+    .map(t => `<span class="v03-signal-pill ${PILL_TONE[t]}">${t} <strong>${clusterData.typeCounts[t]}</strong>건</span>`)
+    .join('');
+
+  const clusterCardsHtml = clusterData.clusters.map(c => {
+    const countriesHtml = c.countries.map(co => `<span class="v03-country-tag">${co}</span>`).join('');
+    return `<div class="v03-cluster-card ${c.tone}">
+      <div class="v03-cluster-top">
+        <span class="v03-tag ${c.tone}">${c.type}</span>
+        <span class="v03-cluster-count">${c.rawCount}건</span>
+      </div>
+      <div class="v03-cluster-title">${c.summaryTitle}</div>
+      <div class="v03-cluster-row">
+        <span class="v03-cluster-label">영향 국가</span>
+        <span class="v03-cluster-countries">${countriesHtml}</span>
+      </div>
+      <div class="v03-cluster-rep">
+        <span class="v03-cluster-label">대표 확인</span>
+        <span>${c.repPage}</span>
+        ${c.repMetric ? `<span class="v03-cluster-metric ${c.repMetricClass}">${c.repMetric}</span>` : ''}
+      </div>
+      <div class="v03-cluster-check">↗ ${c.nextCheck}</div>
+    </div>`;
+  }).join('');
 
   document.getElementById('mainInsightsSummary').innerHTML = `
     <div class="v03-section">
@@ -5833,8 +5952,9 @@ function renderMainInsights() {
         </div>
       </div>
       <div class="v03-signal-board">
-        <div class="v03-board-title">이번 달 핵심 신호</div>
-        <div class="v03-signal-grid">${signalRows}</div>
+        <div class="v03-board-title" style="margin-bottom:12px;">이번 달 핵심 신호</div>
+        <div class="v03-signal-pill-row">${pillsHtml}</div>
+        <div class="v03-cluster-grid">${clusterCardsHtml}</div>
       </div>
       <div class="v03-panels-2">
         <div class="v03-panel">
@@ -6203,6 +6323,122 @@ function v03GetSignalRows() {
   if (!latest || !sheets.length) return null; // 데이터 없으면 mock fallback
 
   return v03DetectSignals(sheets, latest, prev);
+}
+
+/**
+ * 이번 달 핵심 신호를 클러스터 뷰로 반환
+ * 신호 건수 pill용 typeCounts + 클러스터 카드용 clusters(최대 6개) 반환
+ * 그룹핑 기준: 신호 타입 × 카테고리 (같은 원인/패턴으로 묶음)
+ */
+function v03GetClusterData() {
+  const latest = getLatestMonth();
+  const prev   = getPrevMonth();
+  const sheets = getFilteredSheets();
+  if (!latest || !sheets.length) return null;
+
+  const T = V03_SIGNAL_THRESHOLDS;
+  const TONE = { 'Traffic Drop': 'risk', 'SEO Weak': 'watch', 'Conversion Gap': 'watch',
+                 'Growth Signal': 'good', 'Replication Point': 'good' };
+  const rawAll = [];
+
+  for (const [, item] of sheets) {
+    const m = v03ComputeSheetMetrics(item, latest, prev);
+    if (!m.country || !m.category) continue;
+    let type = null;
+    if      (V03_SIGNAL_RULES.replication(m, T))   type = 'Replication Point';
+    else if (V03_SIGNAL_RULES.growth(m, T))         type = 'Growth Signal';
+    else if (V03_SIGNAL_RULES.traffic_drop(m, T))   type = 'Traffic Drop';
+    else if (V03_SIGNAL_RULES.seo_weak(m, T))       type = 'SEO Weak';
+    else if (V03_SIGNAL_RULES.conversion_gap(m, T)) type = 'Conversion Gap';
+    if (!type) continue;
+    rawAll.push({ type, tone: TONE[type], metrics: m });
+  }
+
+  // 신호 유형별 건수 (pill용)
+  const typeCounts = {};
+  for (const s of rawAll) typeCounts[s.type] = (typeCounts[s.type] || 0) + 1;
+
+  // 클러스터링: 타입 × 카테고리
+  const clusterMap = new Map();
+  for (const s of rawAll) {
+    const key = `${s.type}||${s.metrics.category}`;
+    if (!clusterMap.has(key)) clusterMap.set(key, { type: s.type, tone: s.tone, category: s.metrics.category, items: [s] });
+    else clusterMap.get(key).items.push(s);
+  }
+
+  const TONE_ORDER = { risk: 0, watch: 1, good: 2 };
+  const ACTION_LABEL = {
+    'Traffic Drop':      '세션 하락',
+    'SEO Weak':          'Organic 유입 저조',
+    'Conversion Gap':    'PLP 전환 저조',
+    'Growth Signal':     '세션+PLP 동반 상승',
+    'Replication Point': '성과·만족도 양호 패턴',
+  };
+  const NEXT_CHECK = {
+    'Traffic Drop':      'PLP 유지 여부 · 유입 경로 확인',
+    'SEO Weak':          'Organic 개선 · 검색 의도 점검',
+    'Conversion Gap':    'CTA 흐름 · PLP 진입 구조 확인',
+    'Growth Signal':     '상위 성과 지속 여부 모니터링',
+    'Replication Point': '확산 검토 후보 — 타 국가 적용 가능성',
+  };
+
+  const clusters = Array.from(clusterMap.values()).map(c => {
+    const countries = [...new Set(c.items.map(i => i.metrics.country))].sort();
+    const sessions  = c.items.reduce((s, i) => s + (i.metrics.sessions || 0), 0);
+
+    // 대표 페이지 선정
+    let repItem;
+    if (c.type === 'Traffic Drop')
+      repItem = c.items.reduce((a, b) => (a.metrics.sessionsMom||0) < (b.metrics.sessionsMom||0) ? a : b);
+    else if (c.type === 'SEO Weak')
+      repItem = c.items.reduce((a, b) => (a.metrics.organicShare||1) < (b.metrics.organicShare||1) ? a : b);
+    else if (c.type === 'Conversion Gap')
+      repItem = c.items.reduce((a, b) => (a.metrics.plpConv||1) < (b.metrics.plpConv||1) ? a : b);
+    else
+      repItem = c.items.reduce((a, b) => (a.metrics.plpConv||0) > (b.metrics.plpConv||0) ? a : b);
+
+    const repPage = `${repItem.metrics.country} / ${repItem.metrics.category}`;
+    let repMetric = '', repMetricClass = '';
+    if (c.type === 'Traffic Drop' && repItem.metrics.sessionsMom != null) {
+      repMetric = `Session ${repItem.metrics.sessionsMom.toFixed(0)}% MoM`; repMetricClass = 'down';
+    } else if (c.type === 'SEO Weak' && repItem.metrics.organicShare != null) {
+      repMetric = `Organic ${(repItem.metrics.organicShare*100).toFixed(0)}%`; repMetricClass = 'warn';
+    } else if (c.type === 'Conversion Gap' && repItem.metrics.plpConv != null) {
+      repMetric = `PLP ${(repItem.metrics.plpConv*100).toFixed(1)}%`; repMetricClass = 'warn';
+    } else if (repItem.metrics.plpConv != null) {
+      repMetric = `PLP ${(repItem.metrics.plpConv*100).toFixed(1)}%`; repMetricClass = 'up';
+    }
+
+    // 요약 제목
+    const summaryTitle = countries.length === 1
+      ? `${countries[0]} ${c.category} ${ACTION_LABEL[c.type]}`
+      : `${c.category} 중심 ${countries.length}개 국가 ${ACTION_LABEL[c.type]}`;
+
+    // 우선순위 점수
+    let severity = 1;
+    if (c.type === 'Traffic Drop')
+      severity = Math.abs(c.items.reduce((s,i)=>s+(i.metrics.sessionsMom||0),0)/c.items.length) / 10;
+    else if (c.type === 'SEO Weak')
+      severity = c.items.reduce((s,i)=>s+(1-(i.metrics.organicShare||0.5)),0)/c.items.length * 10;
+    else if (c.type === 'Conversion Gap')
+      severity = c.items.reduce((s,i)=>s+(1-(i.metrics.plpConv||0.5)),0)/c.items.length * 5;
+
+    return {
+      type: c.type, tone: c.tone, category: c.category,
+      countries, sessions, rawCount: c.items.length,
+      summaryTitle, repPage, repMetric, repMetricClass,
+      nextCheck: NEXT_CHECK[c.type] || '',
+      priorityScore: countries.length * (sessions / 500) * severity,
+    };
+  });
+
+  clusters.sort((a, b) =>
+    TONE_ORDER[a.tone] !== TONE_ORDER[b.tone]
+      ? TONE_ORDER[a.tone] - TONE_ORDER[b.tone]
+      : b.priorityScore - a.priorityScore
+  );
+
+  return { typeCounts, clusters: clusters.slice(0, 6) };
 }
 
 // ============================================================
