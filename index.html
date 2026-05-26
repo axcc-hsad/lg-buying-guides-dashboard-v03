@@ -2021,6 +2021,44 @@ body {
   color: var(--accent2);
   margin: 1px 2px;
 }
+.v03-combo-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.v03-combo-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: var(--surface2);
+  color: var(--text2);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.v03-combo-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.v03-combo-chip.active {
+  background: rgba(99,102,241,.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.v03-combo-chip .v03-chip-count {
+  font-weight: 800;
+}
+.v03-affected-table tr.v03-row-hl td {
+  background: rgba(234,179,8,.07);
+}
+.v03-affected-table tr.v03-row-dim td {
+  opacity: 0.32;
+}
 .v03-expand-row-btn {
   background: none;
   border: 1px dashed rgba(255,255,255,.15);
@@ -6306,6 +6344,23 @@ function v03ExpandAffectedRows(slug) {
   if (btn) btn.remove();
 }
 
+function v03ToggleComboChip(chipEl, slug, sec) {
+  const wrap = document.getElementById('v03-affected-' + slug);
+  if (!wrap) return;
+  const isActive = chipEl.classList.contains('active');
+  chipEl.closest('.v03-combo-chips').querySelectorAll('.v03-combo-chip').forEach(c => c.classList.remove('active'));
+  const rows = wrap.querySelectorAll('tbody tr');
+  rows.forEach(r => r.classList.remove('v03-row-hl', 'v03-row-dim'));
+  if (!isActive) {
+    chipEl.classList.add('active');
+    rows.forEach(r => {
+      const secs = (r.dataset.combosec || '').split(',');
+      if (secs.includes(sec)) r.classList.add('v03-row-hl');
+      else r.classList.add('v03-row-dim');
+    });
+  }
+}
+
 function v03ToggleCard(cardId) {
   const card = document.getElementById(cardId);
   if (!card) return;
@@ -7114,16 +7169,16 @@ function renderActionTodosNew() {
       const rows  = s.affectedItems;
 
       const thead = isSat
-        ? `<tr><th>국가</th><th>만족도</th><th>부정응답률</th><th>연관 신호</th></tr>`
+        ? `<tr><th>국가</th><th>만족도</th><th>부정응답률</th></tr>`
         : isSeo
-        ? `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Organic Share</th><th>Organic Sessions MoM</th><th>PLP Conv.</th><th>연관 신호</th></tr>`
-        : `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Sessions MoM</th><th>PLP Conv.</th><th>Organic Share</th><th>연관 신호</th></tr>`;
+        ? `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Organic Share</th><th>Organic Sessions MoM</th><th>PLP Conv.</th></tr>`
+        : `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Sessions MoM</th><th>PLP Conv.</th><th>Organic Share</th></tr>`;
 
       const tbody = rows.map((row, i) => {
-        const hidden  = i >= VISIBLE_ROWS ? ' class="v03-hidden-row"' : '';
-        const secHtml = (row.secondary || []).map(t => `<span class="v03-secondary-tag">${t}</span>`).join('') || '–';
+        const hidden   = i >= VISIBLE_ROWS ? ' v03-hidden-row' : '';
+        const secAttr  = (row.secondary || []).length ? ` data-combosec="${(row.secondary||[]).join(',')}"` : '';
         if (isSat) {
-          return `<tr${hidden}><td><strong>${row.country}</strong></td><td class="v03-cell-down">${row.satPctVal}</td><td class="v03-cell-down">${row.negRateVal}</td><td>${secHtml}</td></tr>`;
+          return `<tr class="${hidden}"${secAttr}><td><strong>${row.country}</strong></td><td class="v03-cell-down">${row.satPctVal}</td><td class="v03-cell-down">${row.negRateVal}</td></tr>`;
         }
         if (isSeo) {
           const share = parseFloat(row.organicShareVal);
@@ -7132,7 +7187,7 @@ function renderActionTodosNew() {
           const shareCls = isNaN(share) ? '' : share < 20 ? 'v03-cell-down' : share < 30 ? 'v03-cell-warn' : '';
           const omomCls  = isNaN(omom)  ? '' : omom < 0  ? 'v03-cell-down' : 'v03-cell-up';
           const plpCls   = isNaN(plp)   ? '' : plp < 20  ? 'v03-cell-warn' : plp > 35 ? 'v03-cell-up' : '';
-          return `<tr${hidden}><td><strong>${row.country}</strong></td><td>${row.contentType}</td><td>${row.category}</td><td class="${shareCls}">${row.organicShareVal}</td><td class="${omomCls}">${row.organicMomVal}</td><td class="${plpCls}">${row.plpConvVal}</td><td>${secHtml}</td></tr>`;
+          return `<tr class="${hidden}"${secAttr}><td><strong>${row.country}</strong></td><td>${row.contentType}</td><td>${row.category}</td><td class="${shareCls}">${row.organicShareVal}</td><td class="${omomCls}">${row.organicMomVal}</td><td class="${plpCls}">${row.plpConvVal}</td></tr>`;
         }
         const mom = parseFloat(row.sessionsMomVal);
         const plp = parseFloat(row.plpConvVal);
@@ -7140,8 +7195,25 @@ function renderActionTodosNew() {
         const momCls = isNaN(mom) ? '' : mom < 0 ? 'v03-cell-down' : mom > 5 ? 'v03-cell-up' : 'v03-cell-warn';
         const plpCls = isNaN(plp) ? '' : plp < 20 ? 'v03-cell-warn' : plp > 35 ? 'v03-cell-up' : '';
         const orgCls = isNaN(org) ? '' : org < 20 ? 'v03-cell-warn' : '';
-        return `<tr${hidden}><td><strong>${row.country}</strong></td><td>${row.contentType}</td><td>${row.category}</td><td class="${momCls}">${row.sessionsMomVal}</td><td class="${plpCls}">${row.plpConvVal}</td><td class="${orgCls}">${row.organicShareVal}</td><td>${secHtml}</td></tr>`;
+        return `<tr class="${hidden}"${secAttr}><td><strong>${row.country}</strong></td><td>${row.contentType}</td><td>${row.category}</td><td class="${momCls}">${row.sessionsMomVal}</td><td class="${plpCls}">${row.plpConvVal}</td><td class="${orgCls}">${row.organicShareVal}</td></tr>`;
       }).join('');
+
+      /* ── 복합 진단 칩 ── */
+      const COMBO_DEFS = {
+        'Traffic Drop':      [{ sec: 'SEO Weak',          label: '세션↓ + Organic↓' }, { sec: 'Conversion Gap',    label: '세션↓ + 전환↓' }],
+        'SEO Weak':          [{ sec: 'Traffic Drop',      label: 'Organic↓ + 세션↓' }, { sec: 'Conversion Gap',    label: 'Organic↓ + 전환↓' }],
+        'Conversion Gap':    [{ sec: 'Traffic Drop',      label: '전환↓ + 세션↓' },    { sec: 'SEO Weak',          label: '전환↓ + Organic↓' }],
+        'Satisfaction Risk': [{ sec: 'Traffic Drop',      label: '만족도↓ + 세션↓' }],
+        'Growth Signal':     [{ sec: 'Replication Point', label: '성장 + 전환우수' }],
+        'Replication Point': [{ sec: 'Growth Signal',     label: '전환우수 + 성장' }],
+      };
+      const comboDefs = COMBO_DEFS[s.type] || [];
+      const comboChipItems = comboDefs.map(def => {
+        const count = rows.filter(r => (r.secondary || []).includes(def.sec)).length;
+        if (!count) return '';
+        return `<button class="v03-combo-chip" onclick="v03ToggleComboChip(this,'${slug}','${def.sec}')"><span class="v03-chip-count">${count}건</span> ${def.label}</button>`;
+      }).filter(Boolean).join('');
+      const comboChipsHtml = comboChipItems ? `<div class="v03-combo-chips">${comboChipItems}</div>` : '';
 
       const extra = rows.length - VISIBLE_ROWS;
       const expandBtn = extra > 0
@@ -7150,6 +7222,7 @@ function renderActionTodosNew() {
 
       tableHtml = `<div class="v03-signal-field">
         <div class="v03-signal-field-label">영향 대상 (${rows.length}건)</div>
+        ${comboChipsHtml}
         <div class="v03-affected-table-wrap" id="v03-affected-${slug}">
           <table class="v03-affected-table"><thead>${thead}</thead><tbody>${tbody}</tbody></table>
           ${expandBtn}
