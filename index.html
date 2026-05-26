@@ -2347,12 +2347,7 @@ body {
   font-weight: 600;
   font-size: 12px;
 }
-/* Info tooltip */
-.v03-info-wrap {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
+/* Info tooltip button */
 .v03-info-btn {
   width: 14px;
   min-width: 14px;
@@ -2372,25 +2367,24 @@ body {
   flex-grow: 0;
   user-select: none;
 }
-.v03-info-wrap .v03-tooltip-box {
+/* Global tooltip — position:fixed escapes all parent overflow/flex constraints */
+#v03-global-tip {
   display: none;
-  position: absolute;
-  bottom: calc(100% + 6px);
-  left: 0;
-  min-width: 210px;
+  position: fixed;
+  z-index: 9999;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 9px 11px;
+  padding: 9px 12px;
   font-size: 11px;
   line-height: 1.6;
   color: var(--text2);
-  z-index: 20;
-  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+  max-width: 240px;
+  white-space: normal;
+  box-shadow: 0 6px 18px rgba(0,0,0,.3);
   pointer-events: none;
   font-weight: 400;
 }
-.v03-info-wrap:hover .v03-tooltip-box { display: block; }
 .v03-country-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
@@ -6260,15 +6254,15 @@ function renderMainInsights() {
       <div class="v03-panels-2">
         <div class="v03-panel">
           <div class="v03-panel-title">라인업 가이드</div>
-          <div class="v03-panel-line"><span>성과 양호<span class="v03-info-wrap"><span class="v03-info-btn">i</span><span class="v03-tooltip-box">세션 수 + PLP 전환율 MoM 복합 기준<br>두 지표 모두 전월 대비 양호한 경우</span></span></span><strong>ES Monitor, UK TV</strong></div>
-          <div class="v03-panel-line"><span>유입 이슈<span class="v03-info-wrap"><span class="v03-info-btn">i</span><span class="v03-tooltip-box">Organic 유입 또는 External 세션 MoM 하락<br>Organic Share가 전월 대비 낮아진 경우</span></span></span><strong>FR Monitor, NL TV</strong></div>
-          <div class="v03-panel-line"><span>만족도 이슈<span class="v03-info-wrap"><span class="v03-info-btn">i</span><span class="v03-tooltip-box">설문 만족도 점수 하락 또는<br>부정 응답률이 전월 대비 상승한 경우</span></span></span><strong>BR Monitor</strong></div>
+          <div class="v03-panel-line"><span>성과 양호<span class="v03-info-btn" data-tiphtml="세션 수 + PLP 전환율 MoM 복합 기준<br>두 지표 모두 전월 대비 양호한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>ES Monitor, UK TV</strong></div>
+          <div class="v03-panel-line"><span>유입 이슈<span class="v03-info-btn" data-tiphtml="Organic 유입 또는 External 세션 MoM 하락<br>Organic Share가 전월 대비 낮아진 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>FR Monitor, NL TV</strong></div>
+          <div class="v03-panel-line"><span>만족도 이슈<span class="v03-info-btn" data-tiphtml="설문 만족도 점수 하락 또는<br>부정 응답률이 전월 대비 상승한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>BR Monitor</strong></div>
         </div>
         <div class="v03-panel feature">
           <div class="v03-panel-title">피쳐 라이브러리</div>
-          <div class="v03-panel-line"><span>성과 양호<span class="v03-info-wrap"><span class="v03-info-btn">i</span><span class="v03-tooltip-box">세션 수 + PLP 전환율 MoM 복합 기준<br>두 지표 모두 전월 대비 양호한 경우</span></span></span><strong>PL TV</strong></div>
-          <div class="v03-panel-line"><span>유입 이슈<span class="v03-info-wrap"><span class="v03-info-btn">i</span><span class="v03-tooltip-box">Organic 유입 또는 External 세션 MoM 하락<br>Organic Share가 전월 대비 낮아진 경우</span></span></span><strong>MX Monitor</strong></div>
-          <div class="v03-panel-line"><span>만족도 이슈<span class="v03-info-wrap"><span class="v03-info-btn">i</span><span class="v03-tooltip-box">설문 만족도 점수 하락 또는<br>부정 응답률이 전월 대비 상승한 경우</span></span></span><strong>CA-FR TV</strong></div>
+          <div class="v03-panel-line"><span>성과 양호<span class="v03-info-btn" data-tiphtml="세션 수 + PLP 전환율 MoM 복합 기준<br>두 지표 모두 전월 대비 양호한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>PL TV</strong></div>
+          <div class="v03-panel-line"><span>유입 이슈<span class="v03-info-btn" data-tiphtml="Organic 유입 또는 External 세션 MoM 하락<br>Organic Share가 전월 대비 낮아진 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>MX Monitor</strong></div>
+          <div class="v03-panel-line"><span>만족도 이슈<span class="v03-info-btn" data-tiphtml="설문 만족도 점수 하락 또는<br>부정 응답률이 전월 대비 상승한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>CA-FR TV</strong></div>
         </div>
       </div>
       <div class="v03-signal-board">
@@ -6351,6 +6345,26 @@ function v03ExpandAffectedRows(slug) {
   wrap.querySelectorAll('.v03-hidden-row').forEach(r => r.classList.remove('v03-hidden-row'));
   const btn = wrap.querySelector('.v03-expand-row-btn');
   if (btn) btn.remove();
+}
+
+function v03ShowTip(el) {
+  const tip = document.getElementById('v03-global-tip');
+  tip.innerHTML = el.dataset.tiphtml || '';
+  tip.style.display = 'block';
+  const rect = el.getBoundingClientRect();
+  const tipW = tip.offsetWidth;
+  const tipH = tip.offsetHeight;
+  let top  = rect.top - tipH - 8;
+  let left = rect.left + rect.width / 2 - tipW / 2;
+  if (top < 8) top = rect.bottom + 8;
+  if (left < 8) left = 8;
+  if (left + tipW > window.innerWidth - 8) left = window.innerWidth - tipW - 8;
+  tip.style.top  = top  + 'px';
+  tip.style.left = left + 'px';
+}
+function v03HideTip() {
+  const tip = document.getElementById('v03-global-tip');
+  if (tip) tip.style.display = 'none';
 }
 
 function v03ToggleComboChip(chipEl, slug, sec) {
@@ -8032,5 +8046,6 @@ function showToast(msg){
   setTimeout(()=>toast.classList.remove('show'),3000);
 }
 </script>
+<div id="v03-global-tip"></div>
 </body>
 </html>
