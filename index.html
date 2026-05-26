@@ -6409,7 +6409,7 @@ const V03_SIGNAL_RULES = {
 
   seo_weak: (m, T) =>
     m.organicShare != null && m.organicShare < T.organicShareWeak &&
-    m.organicShareMom != null && m.organicShareMom <= T.organicShareMomDown,
+    m.organicMom != null && m.organicMom < 0,
 
   conversion_gap: (m, T) =>
     m.sessions >= T.convGapMinSessions &&
@@ -6576,19 +6576,32 @@ function v03GetClusterData() {
   const sheets = getFilteredSheets();
   const T = V03_SIGNAL_THRESHOLDS;
 
-  // 6개 고정 슬롯 — 신호별 편집 내용 포함
+  // ── 1st pass: collect metrics + peer group data ──
+  const allSM = [];
+  const peerGroups = {};
+  for (const [, item] of sheets) {
+    const m = v03ComputeSheetMetrics(item, latest, prev);
+    if (!m.country || !m.category) continue;
+    allSM.push({ item, m });
+    const pgKey = `${item.content_type || ''}|${m.category}`;
+    if (!peerGroups[pgKey]) peerGroups[pgKey] = { organicShare: [] };
+    if (m.organicShare != null) peerGroups[pgKey].organicShare.push(m.organicShare);
+  }
+  // Compute 25th percentile per peer group (min 4 items)
+  const peerP25 = {};
+  for (const [k, vals] of Object.entries(peerGroups)) {
+    if (vals.organicShare.length >= 4) {
+      const s = [...vals.organicShare].sort((a, b) => a - b);
+      peerP25[k] = s[Math.floor(0.25 * (s.length - 1))];
+    }
+  }
+
+  // ── 6 고정 슬롯 정의 ──
   const SLOTS = [
     {
       type: 'Traffic Drop', tone: 'risk', priority: 'high',
-      symptomFn: items => {
-        const cats = items.map(i => i.category);
-        const top  = cats.sort((a,b) => cats.filter(c=>c===b).length - cats.filter(c=>c===a).length)[0];
-        const mono = [...new Set(cats)].length === 1;
-        return (top && mono ? top + ' 중심 ' : '') + items.length + '개 페이지 세션 하락';
-      },
-      diagnosis:  '유입 감소 또는 유입 품질 변화 — 전환 구조보다 유입 경로 우선 점검',
-      signalFn:   items => items.length + '개 페이지 세션 MoM 하락 감지',
-      judgement:  '유입 감소 또는 유입 품질 변화 가능성 — 전환 구조보다 유입 경로 우선 점검',
+      diagnosis: '유입 감소 또는 유입 품질 변화 — 전환 구조보다 유입 경로 우선 점검',
+      judgement: '유입 감소 또는 유입 품질 변화 가능성 — 전환 구조보다 유입 경로 우선 점검',
       ownerActions: [
         { owner: 'HSAD',       text: '내부 링크, SEO 문구, 제품 연결 상태 점검' },
         { owner: 'D2C 컨텐츠팀', text: '채널별 세션 변화와 Organic 변화 확인' },
@@ -6601,10 +6614,8 @@ function v03GetClusterData() {
     },
     {
       type: 'SEO Weak', tone: 'watch', priority: 'watch',
-      symptomFn: items => items.length + '개 페이지 Organic Share 기준 이하',
-      diagnosis:  '검색 의도와 메타 정보 불일치 점검',
-      signalFn:   items => items.length + '개 페이지 Organic Share 낮음 감지',
-      judgement:  '검색 의도와 페이지 문구/메타 정보 불일치 가능성',
+      diagnosis: '검색 의도와 메타 정보 불일치 점검',
+      judgement: '검색 의도와 페이지 문구/메타 정보 불일치 가능성',
       ownerActions: [
         { owner: 'HSAD',       text: '타이틀, 메타, 내부 링크, 앵커 문구 점검' },
         { owner: 'D2C 컨텐츠팀', text: 'Search Console 쿼리/노출/클릭 변화 확인' },
@@ -6616,10 +6627,8 @@ function v03GetClusterData() {
     },
     {
       type: 'Conversion Gap', tone: 'watch', priority: 'watch',
-      symptomFn: items => items.length + '개 페이지 유입 대비 PLP 전환 저조',
-      diagnosis:  'CTA 흐름 · 제품 진입 구조 확인',
-      signalFn:   items => items.length + '개 페이지 PLP 전환율 낮음 감지',
-      judgement:  '제품 진입 구조 또는 CTA 흐름 점검 필요',
+      diagnosis: 'CTA 흐름 · 제품 진입 구조 확인',
+      judgement: '제품 진입 구조 또는 CTA 흐름 점검 필요',
       ownerActions: [
         { owner: 'HSAD',       text: 'CTA 문구, 제품 카드, PLP 연결 위치 점검' },
         { owner: 'D2C 컨텐츠팀', text: '유입 대비 PLP/PDP 전환 지표 확인' },
@@ -6631,10 +6640,8 @@ function v03GetClusterData() {
     },
     {
       type: 'Satisfaction Risk', tone: 'risk', priority: 'high',
-      symptomFn: items => items.length + '개국 만족도 · 부정 응답률 기준 초과',
-      diagnosis:  'Comments 원문 확인 → Info missing 집중',
-      signalFn:   items => items.length + '개국 만족도 또는 부정 응답률 기준 초과',
-      judgement:  '스펙·설명 부족 또는 기대와 콘텐츠 간 간극 가능성',
+      diagnosis: 'Comments 원문 확인 → Info missing 집중',
+      judgement: '스펙·설명 부족 또는 기대와 콘텐츠 간 간극 가능성',
       ownerActions: [
         { owner: 'HSAD',       text: '스펙 설명, 제품 차이, 추천 기준 보강 검토' },
         { owner: 'D2C 컨텐츠팀', text: '만족도 응답과 PLP/Purchase 지표 교차 확인' },
@@ -6646,10 +6653,8 @@ function v03GetClusterData() {
     },
     {
       type: 'Growth Signal', tone: 'good', priority: 'ref',
-      symptomFn: items => items.length + '개 페이지 세션·전환 전월 대비 개선',
-      diagnosis:  '성과 지속 여부 모니터링',
-      signalFn:   items => items.length + '개 페이지 세션·전환 모두 전월 대비 개선',
-      judgement:  '현재 성과 구조 유지 및 확산 검토',
+      diagnosis: '성과 지속 여부 모니터링',
+      judgement: '현재 성과 구조 유지 및 확산 검토',
       ownerActions: [
         { owner: 'HSAD',       text: '성과 구조 문서화 및 확산 적용 요소 정리' },
         { owner: 'D2C 컨텐츠팀', text: 'GA 성과 추세 지속 여부 모니터링' },
@@ -6661,10 +6666,8 @@ function v03GetClusterData() {
     },
     {
       type: 'Replication Point', tone: 'good', priority: 'ref',
-      symptomFn: items => items.length + '개 페이지 성과·만족도 함께 양호',
-      diagnosis:  '확산 검토 후보 확인',
-      signalFn:   items => items.length + '개 페이지 성과·만족도 함께 양호',
-      judgement:  'CTA 흐름·스펙 설명 방식을 개선 기준으로 활용 가능',
+      diagnosis: '확산 검토 후보 확인',
+      judgement: 'CTA 흐름·스펙 설명 방식을 개선 기준으로 활용 가능',
       ownerActions: [
         { owner: 'HSAD',       text: 'CTA 흐름, 스펙 설명 방식, 제품 카드 구조 비교' },
         { owner: 'D2C 컨텐츠팀', text: '대상과 저성과 페이지 GA 지표 비교' },
@@ -6679,44 +6682,48 @@ function v03GetClusterData() {
   const buckets = {};
   for (const s of SLOTS) buckets[s.type] = [];
 
-  if (latest && sheets.length) {
-    // 우선순위 순으로 1개 신호 배정, 나머지는 secondary 저장
-    const GA_RULES = [
-      ['Traffic Drop',      m => V03_SIGNAL_RULES.traffic_drop(m, T)],
-      ['Conversion Gap',    m => V03_SIGNAL_RULES.conversion_gap(m, T)],
-      ['SEO Weak',          m => V03_SIGNAL_RULES.seo_weak(m, T)],
-      ['Replication Point', m => V03_SIGNAL_RULES.replication(m, T)],
-      ['Growth Signal',     m => V03_SIGNAL_RULES.growth(m, T)],
-    ];
-    for (const [, item] of sheets) {
-      const m = v03ComputeSheetMetrics(item, latest, prev);
-      if (!m.country || !m.category) continue;
-      let assigned = null;
-      const secondary = [];
-      for (const [rType, ruleFn] of GA_RULES) {
-        if (ruleFn(m)) {
-          if (!assigned) assigned = rType;
-          else secondary.push(rType);
-        }
+  // ── 2nd pass: classify, deduplicate, collect affectedItems ──
+  const GA_RULES = [
+    ['Traffic Drop',      m => V03_SIGNAL_RULES.traffic_drop(m, T)],
+    ['Conversion Gap',    m => V03_SIGNAL_RULES.conversion_gap(m, T)],
+    ['SEO Weak',          (m, pgKey) => {
+      if (!V03_SIGNAL_RULES.seo_weak(m, T)) return false;
+      const p25 = peerP25[pgKey];
+      return p25 == null || m.organicShare <= p25;
+    }],
+    ['Replication Point', m => V03_SIGNAL_RULES.replication(m, T)],
+    ['Growth Signal',     m => V03_SIGNAL_RULES.growth(m, T)],
+  ];
+
+  const fmt = (v, dec = 0) => v != null ? (v >= 0 ? '+' : '') + v.toFixed(dec) : null;
+
+  for (const { item, m } of allSM) {
+    const pgKey = `${item.content_type || ''}|${m.category}`;
+    let assigned = null;
+    const secondary = [];
+    for (const [rType, ruleFn] of GA_RULES) {
+      if (ruleFn(m, pgKey)) {
+        if (!assigned) assigned = rType;
+        else secondary.push(rType);
       }
-      if (!assigned) continue;
-      const ctLabel = item.content_type === 'lineup' ? '라인업'
-                    : item.content_type === 'feature_library' ? '피쳐'
-                    : (item.content_type || '–');
-      buckets[assigned].push({
-        country:         m.country,
-        contentType:     ctLabel,
-        category:        m.category,
-        sessionsMomVal:  m.sessionsMom  != null ? m.sessionsMom.toFixed(0)       + '%' : '–',
-        plpConvVal:      m.plpConv      != null ? (m.plpConv * 100).toFixed(1)   + '%' : '–',
-        organicShareVal: m.organicShare != null ? (m.organicShare * 100).toFixed(0) + '%' : '–',
-        secondary,
-        _m: m,
-      });
     }
+    if (!assigned) continue;
+    const ctLabel = item.content_type === 'lineup' ? '라인업'
+                  : item.content_type === 'feature_library' ? '피쳐'
+                  : (item.content_type || '–');
+    buckets[assigned].push({
+      country:         m.country,
+      contentType:     ctLabel,
+      category:        m.category,
+      sessionsMomVal:  m.sessionsMom  != null ? (fmt(m.sessionsMom)  + '%') : '–',
+      plpConvVal:      m.plpConv      != null ? (m.plpConv * 100).toFixed(1) + '%' : '–',
+      organicShareVal: m.organicShare != null ? (m.organicShare * 100).toFixed(0) + '%' : '–',
+      organicMomVal:   m.organicMom   != null ? (fmt(m.organicMom)   + '%') : '–',
+      secondary, _m: m,
+    });
   }
 
-  // Satisfaction Risk — SAT_DATA 기반
+  // ── Satisfaction Risk — SAT_DATA 기반 ──
   if (SAT_DATA) {
     const p = SAT_DATA.meta?.latest_period;
     const monthly = p ? SAT_DATA.monthly?.[p] : null;
@@ -6728,8 +6735,7 @@ function v03GetClusterData() {
         if (satPct == null) continue;
         if (satPct < 75 || (negRate != null && negRate > 20)) {
           buckets['Satisfaction Risk'].push({
-            country,
-            satPctVal:  satPct + '%',
+            country, satPctVal: satPct + '%',
             negRateVal: negRate != null ? negRate + '%' : '–',
             secondary: [], _sat: true,
           });
@@ -6738,7 +6744,7 @@ function v03GetClusterData() {
     }
   }
 
-  // 슬롯별 카드 데이터 조립
+  // ── 슬롯별 카드 데이터 조립 ──
   const signalSlots = SLOTS.map(slot => {
     const items = buckets[slot.type] || [];
     const count = items.length;
@@ -6748,23 +6754,82 @@ function v03GetClusterData() {
       return {
         type: slot.type, tone: slot.tone, count: 0, empty: true, slug,
         priority: slot.priority, ownerActions: slot.ownerActions, links: slot.links,
-        affectedItems: [], countryLabel: '–', symptomSummary: '', diagnosis: '',
+        affectedItems: [], countryLabel: '–', symptomSummary: '', diagnosis: slot.diagnosis,
         signalText: '', judgement: slot.judgement,
       };
     }
 
     const countries    = [...new Set(items.map(i => i.country))].sort();
     const countryLabel = v03CountryLabel(countries);
-    const symptomSummary = slot.symptomFn(items);
+
+    // 대표 아이템 — 최악 지표 기준
+    const ms = items.map(i => i._m).filter(Boolean);
+    let repM = null, repSat = null;
+    if (slot.type === 'Satisfaction Risk') {
+      repSat = [...items].sort((a, b) => parseFloat(a.satPctVal) - parseFloat(b.satPctVal))[0];
+    } else if (slot.type === 'Traffic Drop') {
+      repM = ms.reduce((a, b) => (a.sessionsMom || 0) < (b.sessionsMom || 0) ? a : b);
+    } else if (slot.type === 'SEO Weak') {
+      repM = ms.reduce((a, b) => (a.organicShare || 1) < (b.organicShare || 1) ? a : b);
+    } else if (slot.type === 'Conversion Gap') {
+      repM = ms.reduce((a, b) => (a.plpConv || 1) < (b.plpConv || 1) ? a : b);
+    } else {
+      repM = ms.reduce((a, b) => (a.plpConv || 0) > (b.plpConv || 0) ? a : b);
+    }
+
+    // B안: 결론 먼저 + 대표 수치 + 감지 기준
+    let symptomSummary, signalText;
+    switch (slot.type) {
+      case 'Traffic Drop': {
+        const v = repM?.sessionsMom;
+        const vStr = v != null ? Math.abs(v).toFixed(0) + '%' : '–';
+        symptomSummary = `세션 이상 감지 — 전월 대비 ${vStr} 하락 (기준 ${T.sessionsMomDown}% 이하)`;
+        signalText = `${count}개 페이지 Sessions MoM ≤${T.sessionsMomDown}% 감지 (최소 세션 ${T.sessionsMinVol} 이상 페이지 대상)`;
+        break;
+      }
+      case 'SEO Weak': {
+        const share = repM?.organicShare != null ? (repM.organicShare * 100).toFixed(0) + '%' : '–';
+        const omom  = repM?.organicMom   != null ? Math.abs(repM.organicMom).toFixed(0) + '%' : '–';
+        symptomSummary = `Organic 유입 약세 — Share ${share}, Sessions ${omom} 감소 (기준: Share ${T.organicShareWeak * 100}% 미만)`;
+        signalText = `${count}개 페이지 Organic Share <${T.organicShareWeak * 100}% AND Organic Sessions MoM 감소 동시 감지 (동종 콘텐츠·카테고리 내 하위 25% 포함 확증)`;
+        break;
+      }
+      case 'Conversion Gap': {
+        const plp = repM?.plpConv != null ? (repM.plpConv * 100).toFixed(1) + '%' : '–';
+        symptomSummary = `전환 저조 — PLP Conv. ${plp} (감지 기준 ${T.convGapThreshold * 100}% 미만)`;
+        signalText = `${count}개 페이지 PLP Conv. <${T.convGapThreshold * 100}% 감지 (최소 세션 ${T.convGapMinSessions} 이상 페이지 대상)`;
+        break;
+      }
+      case 'Satisfaction Risk': {
+        const sat = repSat?.satPctVal || '–';
+        const neg = repSat?.negRateVal || '–';
+        symptomSummary = `만족도 이상 감지 — 만족도 ${sat}, 부정 응답 ${neg} (기준: 만족도 75% 미만 또는 부정 20% 초과)`;
+        signalText = `${count}개국 만족도 <75% 또는 부정 응답률 >20% 감지 (응답 수 3건 이상 국가 대상)`;
+        break;
+      }
+      case 'Growth Signal': {
+        const mom  = repM?.sessionsMom  != null ? repM.sessionsMom.toFixed(0)  + '%' : '–';
+        const pmom = repM?.plpConvMom   != null ? repM.plpConvMom.toFixed(1)   + '%p' : '–';
+        symptomSummary = `성과 개선 — 세션 +${mom} MoM · PLP +${pmom} (기준 ≥+${T.sessionsMomUp}%, ≥+${T.plpConvMomUp}%p)`;
+        signalText = `${count}개 페이지 Sessions MoM ≥+${T.sessionsMomUp}% AND PLP MoM ≥+${T.plpConvMomUp}%p 동시 감지`;
+        break;
+      }
+      case 'Replication Point': {
+        const plp = repM?.plpConv != null ? (repM.plpConv * 100).toFixed(1) + '%' : '–';
+        symptomSummary = `성과 우수 — PLP Conv. ${plp} (기준 ${T.replicationConv * 100}% 이상)`;
+        signalText = `${count}개 페이지 PLP Conv. ≥${T.replicationConv * 100}% AND Sessions MoM ≥${T.replicationMomFloor}% 감지`;
+        break;
+      }
+      default:
+        symptomSummary = count + '건';
+        signalText = count + '건 감지';
+    }
 
     return {
       type: slot.type, tone: slot.tone, count, empty: false, slug,
       priority: slot.priority, ownerActions: slot.ownerActions, links: slot.links,
-      affectedItems: items,
-      countryLabel, symptomSummary,
-      diagnosis:  slot.diagnosis,
-      signalText: slot.signalFn(items),
-      judgement:  slot.judgement,
+      affectedItems: items, countryLabel, symptomSummary,
+      diagnosis: slot.diagnosis, signalText, judgement: slot.judgement,
     };
   });
 
@@ -6914,17 +6979,29 @@ function renderActionTodosNew() {
     let tableHtml = '';
     if (!isEmpty && s.affectedItems && s.affectedItems.length) {
       const isSat = s.type === 'Satisfaction Risk';
+      const isSeo = s.type === 'SEO Weak';
       const rows  = s.affectedItems;
 
       const thead = isSat
         ? `<tr><th>국가</th><th>만족도</th><th>부정응답률</th><th>연관 신호</th></tr>`
-        : `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Sessions MoM</th><th>PLP Conv.</th><th>Organic</th><th>연관 신호</th></tr>`;
+        : isSeo
+        ? `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Organic Share</th><th>Organic Sessions MoM</th><th>PLP Conv.</th><th>연관 신호</th></tr>`
+        : `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Sessions MoM</th><th>PLP Conv.</th><th>Organic Share</th><th>연관 신호</th></tr>`;
 
       const tbody = rows.map((row, i) => {
         const hidden  = i >= VISIBLE_ROWS ? ' class="v03-hidden-row"' : '';
         const secHtml = (row.secondary || []).map(t => `<span class="v03-secondary-tag">${t}</span>`).join('') || '–';
         if (isSat) {
           return `<tr${hidden}><td><strong>${row.country}</strong></td><td class="v03-cell-down">${row.satPctVal}</td><td class="v03-cell-down">${row.negRateVal}</td><td>${secHtml}</td></tr>`;
+        }
+        if (isSeo) {
+          const share = parseFloat(row.organicShareVal);
+          const omom  = parseFloat(row.organicMomVal);
+          const plp   = parseFloat(row.plpConvVal);
+          const shareCls = isNaN(share) ? '' : share < 20 ? 'v03-cell-down' : share < 30 ? 'v03-cell-warn' : '';
+          const omomCls  = isNaN(omom)  ? '' : omom < 0  ? 'v03-cell-down' : 'v03-cell-up';
+          const plpCls   = isNaN(plp)   ? '' : plp < 20  ? 'v03-cell-warn' : plp > 35 ? 'v03-cell-up' : '';
+          return `<tr${hidden}><td><strong>${row.country}</strong></td><td>${row.contentType}</td><td>${row.category}</td><td class="${shareCls}">${row.organicShareVal}</td><td class="${omomCls}">${row.organicMomVal}</td><td class="${plpCls}">${row.plpConvVal}</td><td>${secHtml}</td></tr>`;
         }
         const mom = parseFloat(row.sessionsMomVal);
         const plp = parseFloat(row.plpConvVal);
