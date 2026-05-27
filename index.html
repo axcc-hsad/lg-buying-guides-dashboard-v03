@@ -2329,7 +2329,7 @@ body {
   border-bottom: 1px solid rgba(255,255,255,.04);
 }
 .v03-panel-line:last-child { border-bottom: none; }
-.v03-panel-line span:first-child {
+.v03-panel-label {
   flex: 0 0 80px;
   color: var(--text2);
   font-size: 11px;
@@ -2349,23 +2349,25 @@ body {
 }
 /* Info tooltip button */
 .v03-info-btn {
+  flex: 0 0 14px;
   width: 14px;
-  min-width: 14px;
   height: 14px;
-  aspect-ratio: 1 / 1;
+  min-width: 14px;
+  min-height: 14px;
+  padding: 0;
+  border: 0;
   border-radius: 50%;
   background: rgba(99,102,241,.2);
   color: var(--accent2);
   font-size: 9px;
-  font-weight: 900;
-  font-style: italic;
-  cursor: default;
+  font-weight: 700;
+  font-style: normal;
+  cursor: help;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  flex-grow: 0;
   user-select: none;
+  line-height: 1;
 }
 /* Global tooltip — position:fixed escapes all parent overflow/flex constraints */
 #v03-global-tip {
@@ -4335,7 +4337,7 @@ function renderFilters() {
       <div class="filter-label filter-label-category">${sectionTag('sessions', t('filter_category'))}</div>
       <div class="filter-row">
         <button class="btn btn-outline ${selectedCategory === 'ALL' ? 'active' : ''}" data-filter="category" data-val="ALL"><span class="filter-btn-inner">${iconSvg('sessions')}${t('all_categories')}</span></button>`;
-    DATA.meta.categories.forEach(c => {
+    sortCategories(DATA.meta.categories).forEach(c => {
       html += `<button class="btn btn-outline ${selectedCategory === c ? 'active' : ''}" data-filter="category" data-val="${c}"><span class="filter-btn-inner">${iconSvg(categoryIcon(c))}${categoryLabel(c)}</span></button>`;
     });
     html += `</div></div>`;
@@ -4466,6 +4468,28 @@ function categoryLabel(cat) {
 }
 function categoryIcon(cat) {
   return (CATEGORY_LABELS[cat] || {}).icon || 'sessions';
+}
+
+// ── Category order constants ───────────────────────────────
+const CATEGORY_ORDER = ['TV', 'Monitor', 'Fridge', 'Laundry'];
+const CATEGORY_META = {
+  TV:      { order: 0, aliases: ['TV'] },
+  Monitor: { order: 1, aliases: ['Monitor'] },
+  Fridge:  { order: 2, aliases: ['Fridge', 'REF', 'Refrigerator'] },
+  Laundry: { order: 3, aliases: ['Laundry', 'WM'] },
+};
+function canonicalCategory(raw) {
+  for (const [key, meta] of Object.entries(CATEGORY_META)) {
+    if (meta.aliases.includes(raw)) return key;
+  }
+  return raw;
+}
+function sortCategories(arr) {
+  return [...arr].sort((a, b) => {
+    const oa = CATEGORY_META[canonicalCategory(a)]?.order ?? 999;
+    const ob = CATEGORY_META[canonicalCategory(b)]?.order ?? 999;
+    return oa !== ob ? oa - ob : a.localeCompare(b);
+  });
 }
 
 function getTopCategoryName(perProduct = {}) {
@@ -6282,15 +6306,15 @@ function renderMainInsights() {
       <div class="v03-panels-2">
         <div class="v03-panel">
           <div class="v03-panel-title">라인업 가이드</div>
-          <div class="v03-panel-line"><span>성과 양호<span class="v03-info-btn" data-tiphtml="세션 수 + PLP 전환율 MoM 복합 기준<br>두 지표 모두 전월 대비 양호한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>ES Monitor, UK TV</strong></div>
-          <div class="v03-panel-line"><span>유입 이슈<span class="v03-info-btn" data-tiphtml="Organic 유입 또는 External 세션 MoM 하락<br>Organic Share가 전월 대비 낮아진 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>FR Monitor, NL TV</strong></div>
-          <div class="v03-panel-line"><span>만족도 이슈<span class="v03-info-btn" data-tiphtml="설문 만족도 점수 하락 또는<br>부정 응답률이 전월 대비 상승한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>BR Monitor</strong></div>
+          <div class="v03-panel-line"><span class="v03-panel-label">성과 양호<span class="v03-info-btn" data-tiphtml="세션 수 + PLP 전환율 MoM 복합 기준<br>두 지표 모두 전월 대비 양호한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>ES Monitor, UK TV</strong></div>
+          <div class="v03-panel-line"><span class="v03-panel-label">유입 이슈<span class="v03-info-btn" data-tiphtml="Organic 유입 또는 External 세션 MoM 하락<br>Organic Share가 전월 대비 낮아진 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>FR Monitor, NL TV</strong></div>
+          <div class="v03-panel-line"><span class="v03-panel-label">만족도 이슈<span class="v03-info-btn" data-tiphtml="설문 만족도 점수 하락 또는<br>부정 응답률이 전월 대비 상승한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>BR Monitor</strong></div>
         </div>
         <div class="v03-panel feature">
           <div class="v03-panel-title">피쳐 라이브러리</div>
-          <div class="v03-panel-line"><span>성과 양호<span class="v03-info-btn" data-tiphtml="세션 수 + PLP 전환율 MoM 복합 기준<br>두 지표 모두 전월 대비 양호한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>PL TV</strong></div>
-          <div class="v03-panel-line"><span>유입 이슈<span class="v03-info-btn" data-tiphtml="Organic 유입 또는 External 세션 MoM 하락<br>Organic Share가 전월 대비 낮아진 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>MX Monitor</strong></div>
-          <div class="v03-panel-line"><span>만족도 이슈<span class="v03-info-btn" data-tiphtml="설문 만족도 점수 하락 또는<br>부정 응답률이 전월 대비 상승한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>CA-FR TV</strong></div>
+          <div class="v03-panel-line"><span class="v03-panel-label">성과 양호<span class="v03-info-btn" data-tiphtml="세션 수 + PLP 전환율 MoM 복합 기준<br>두 지표 모두 전월 대비 양호한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>PL TV</strong></div>
+          <div class="v03-panel-line"><span class="v03-panel-label">유입 이슈<span class="v03-info-btn" data-tiphtml="Organic 유입 또는 External 세션 MoM 하락<br>Organic Share가 전월 대비 낮아진 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>MX Monitor</strong></div>
+          <div class="v03-panel-line"><span class="v03-panel-label">만족도 이슈<span class="v03-info-btn" data-tiphtml="설문 만족도 점수 하락 또는<br>부정 응답률이 전월 대비 상승한 경우" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()">i</span></span><strong>CA-FR TV</strong></div>
         </div>
       </div>
       <div class="v03-signal-board">
@@ -7720,7 +7744,7 @@ function satRenderTopFilter() {
     ...countryOrder.filter(c => SAT_DATA.responses.some(r=>r.country===c)),
     ...[...new Set(SAT_DATA.responses.map(r=>r.country))].filter(c=>!countryOrder.includes(c)).sort()
   ];
-  const categories = [...new Set(SAT_DATA.responses.map(r=>r.category))].sort();
+  const categories = sortCategories([...new Set(SAT_DATA.responses.map(r=>r.category))]);
 
   const btns = (key, opts) => opts.map(([v,l]) =>
     `<button class="sat-fbtn ${satFilters[key]===v?'active':''}" onclick="satSetFilter('${key}','${v}')">${l}</button>`
@@ -7917,7 +7941,7 @@ function satRenderCountryCategorySection(monthly) {
   };
 
   // Category matrix
-  const cats = Object.entries(monthly.by_category||{}).filter(([,d])=>d.total>0);
+  const cats = sortCategories(Object.keys(monthly.by_category||{}).filter(k=>(monthly.by_category[k]?.total||0)>0)).map(k=>[k,monthly.by_category[k]]);
   const chipStatus = (pct) => pct>=80?'high':pct>=60?'watch':'risk';
   const chipLabel  = (pct) => pct>=80?'High':pct>=60?'Watch':'Risk';
 
