@@ -6817,7 +6817,7 @@ function v03GetClusterData() {
         { owner: '법인',        text: '현지 모델/스펙 정보 누락 여부 확인' },
       ],
       links: [
-        { label: 'Comments 확인', fn: "switchToSatisfaction({country:'all',category:'all',helpful:'no',commentChip:'Info missing'})" },
+        { label: 'Customer Comments', fn: "switchToSatisfaction({country:'all',category:'all',commentChip:'negative'})" },
       ],
     },
     {
@@ -7111,7 +7111,7 @@ function v03GetClusterData() {
         { owner: '법인', text: '현지 모델·스펙 정보 누락 및 이미지 현행화 여부 확인' },
       ];
       links = [
-        { label: 'Comments 확인', fn: `switchToSatisfaction({country:'all',category:'all',helpful:'no',commentChip:'negative'})` },
+        { label: 'Customer Comments', fn: `switchToSatisfaction({country:'all',category:'all',commentChip:'negative'})` },
       ];
     }
 
@@ -7176,7 +7176,7 @@ function v03ActionItems() {
         { owner: 'D2C 컨텐츠팀', status: '진행 전', text: '만족도 응답과 PLP/Purchase 지표 교차 확인' },
         { owner: '법인', status: '진행 전', text: '현지 모델/스펙 정보 누락 여부 확인' },
       ],
-      links: [{ label: 'Comments 확인', onclick: "switchToSatisfaction({country:'all',category:'all',helpful:'no',commentChip:'Info missing'})" }],
+      links: [{ label: 'Customer Comments', onclick: "switchToSatisfaction({country:'all',category:'all',commentChip:'negative'})" }],
     },
     {
       id: 'seo_weak',
@@ -7530,7 +7530,7 @@ function renderContentDirectionNew() {
 let SAT_DATA = null;
 let satFilters = {
   period: null, content: 'all', country: 'all', category: 'all',
-  helpful: 'all', reason: 'all', device: 'all', keyword: '', commentChip: 'all'
+  helpful: 'all', reason: 'all', device: 'all', keyword: '', highlightNeg: false
 };
 let satCommentPage = 1;
 const SAT_PER_PAGE = 20;
@@ -7620,7 +7620,7 @@ function v03BuildCommentSignal() {
       ${rows}
     </div>
     <div style="margin-top:8px;display:flex;justify-content:flex-end;">
-      <button class="v03-mini-btn" onclick="switchToSatisfaction({helpful:'no',commentChip:'negative'})">부정 응답 상세 보기 →</button>
+      <button class="v03-mini-btn" onclick="switchToSatisfaction({commentChip:'negative'})">Customer Comments →</button>
     </div>`;
 }
 
@@ -7677,8 +7677,6 @@ function satFilteredResponses() {
       const kw = satFilters.keyword.toLowerCase();
       if (!(r.comment||'').toLowerCase().includes(kw)) return false;
     }
-    if (satFilters.commentChip === 'positive' && r.helpful !== 'Yes') return false;
-    if (satFilters.commentChip === 'negative' && r.helpful !== 'No') return false;
     if (satFilters.reason !== 'all') {
       const allR = [...(r.pos_reasons||[]),...(r.neg_reasons||[])];
       if (!allR.includes(satFilters.reason)) return false;
@@ -8089,80 +8087,22 @@ function satRenderDevice(monthly) {
 function satRenderCommentsExplorer(responses) {
   satCommentPage = 1;
 
-  // Base responses (all filters except commentChip) for pos/neg summary
-  const period = satFilters.period || SAT_DATA.meta.latest_period;
-  const baseResponses = SAT_DATA.responses.filter(r => {
-    if (r.period !== period) return false;
-    if (satFilters.content !== 'all' && r.content_type !== satFilters.content) return false;
-    if (satFilters.country !== 'all' && r.country !== satFilters.country) return false;
-    if (satFilters.category !== 'all' && r.category !== satFilters.category) return false;
-    if (satFilters.helpful !== 'all' && r.helpful.toLowerCase() !== satFilters.helpful) return false;
-    if (satFilters.device !== 'all' && r.device !== satFilters.device) return false;
-    if (satFilters.keyword) {
-      const kw = satFilters.keyword.toLowerCase();
-      if (!(r.comment||'').toLowerCase().includes(kw)) return false;
-    }
-    return true;
-  });
-
-  const posAll = baseResponses.filter(r => r.helpful === 'Yes');
-  const negAll = baseResponses.filter(r => r.helpful === 'No');
-  const total  = baseResponses.length;
-
-  const posPct = total ? Math.round(posAll.length/total*100) : 0;
-  const negPct = total ? Math.round(negAll.length/total*100) : 0;
-
-  // Comment preview cards
-  const posPreview = posAll.filter(r=>r.comment?.trim()).slice(0,3);
-  const negPreview = negAll.filter(r=>r.comment?.trim()).slice(0,3);
-
-  const commentItems = (items) => {
-    if (!items.length) return `<div style="color:var(--text2);font-size:11px;font-style:italic;padding:6px 0;">코멘트 없음</div>`;
-    return items.map(r =>
-      `<div style="padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05);">
-        <div style="font-size:10px;color:var(--text2);margin-bottom:2px;">${r.country} · ${r.category}</div>
-        <div style="font-size:12px;color:var(--text);font-style:italic;">"${r.comment}"</div>
-      </div>`
-    ).join('') + (items.length === 3 ? '<div style="font-size:10px;color:var(--text2);margin-top:6px;opacity:.7;">…</div>' : '');
-  };
-
-  const chips = [['all','전체'],['positive','긍정만'],['negative','부정만']].map(([v,l]) =>
-    `<span class="sat-filter-chip ${satFilters.commentChip===v?'active':''}" onclick="satSetCommentChip('${v}')">${l}</span>`
-  ).join('');
-
-  const commentCount = responses.filter(r => r.comment?.trim()).length;
+  const p = satFilters.period || SAT_DATA.meta.latest_period;
+  const countryLabel  = satFilters.country  === 'all' ? '전체 국가'      : satFilters.country;
+  const contentLabel  = satFilters.content  === 'all' ? '전체 콘텐츠'    : satFilters.content === 'lineup' ? 'Line-up Guide' : 'Feature Library';
+  const categoryLabel = satFilters.category === 'all' ? '전체 카테고리'  : satFilters.category;
+  const filterText    = `현재 조회 조건: ${p} · ${countryLabel} · ${contentLabel} · ${categoryLabel}`;
+  const commentCount  = responses.filter(r => r.comment?.trim()).length;
 
   return `
-    <div class="sat-section-card" style="margin-top:14px;">
-      <div class="sat-section-header" style="margin-bottom:12px;"><span class="sat-section-num">5</span> Comments Explorer</div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
-        <div style="background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.18);border-radius:8px;padding:12px 14px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-            <div style="font-size:11px;font-weight:800;color:var(--green);">긍정 코멘트</div>
-            <span style="font-size:11px;color:var(--text2);">${posAll.length}건 · ${posPct}%</span>
-          </div>
-          ${commentItems(posPreview)}
-          ${posAll.length > 3 ? `<button class="v03-mini-btn" style="margin-top:8px;" onclick="satSetCommentChip('positive')">전체 보기 (${posAll.length}건) →</button>` : ''}
-        </div>
-        <div style="background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.18);border-radius:8px;padding:12px 14px;">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-            <div style="font-size:11px;font-weight:800;color:var(--red);">부정 코멘트</div>
-            <span style="font-size:11px;color:var(--text2);">${negAll.length}건 · ${negPct}%</span>
-          </div>
-          ${commentItems(negPreview)}
-          ${negAll.length > 3 ? `<button class="v03-mini-btn" style="margin-top:8px;" onclick="satSetCommentChip('negative')">전체 보기 (${negAll.length}건) →</button>` : ''}
-        </div>
+    <div class="sat-section-card" style="margin-top:14px;" id="satCommentSection">
+      <div class="sat-section-header" style="margin-bottom:6px;"><span class="sat-section-num">5</span> Customer Comments</div>
+      <div style="font-size:11px;color:var(--text2);margin-bottom:12px;">선택한 조건에서 작성된 주관식 응답 원문 확인</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;margin-bottom:12px;">
+        <span style="font-size:11px;color:var(--text2);">${filterText}</span>
+        <span style="font-size:11px;color:var(--text2);flex-shrink:0;margin-left:12px;">주관식 응답 ${commentCount}건</span>
       </div>
-
-      <div style="border-top:1px solid rgba(255,255,255,.06);padding-top:12px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-          <div style="font-size:11px;font-weight:700;color:var(--text2);">전체 코멘트 목록</div>
-          <div style="font-size:11px;color:var(--text2);">주관식 응답 ${commentCount}건</div>
-        </div>
-        <div class="sat-filter-bar" style="margin-bottom:12px;">${chips}</div>
-        <div id="satCommentsTable">${satBuildCommentsTable(responses)}</div>
-      </div>
+      <div id="satCommentsTable">${satBuildCommentsTable(responses)}</div>
     </div>
   `;
 }
@@ -8176,13 +8116,15 @@ function satBuildCommentsTable(responses) {
   if (withComment.length === 0) return `<div style="padding:24px;text-align:center;color:var(--text2);font-size:12px;">주관식 응답이 없습니다.</div>`;
 
   const rows = pageItems.map(r => {
-    const date = (r.timestamp||'').split(' ')[0];
-    return `<tr>
+    const date  = (r.timestamp||'').split(' ')[0];
+    const isNeg = r.helpful === 'No';
+    const hlStyle = (satFilters.highlightNeg && isNeg) ? 'background:rgba(239,68,68,.07);' : '';
+    return `<tr style="${hlStyle}">
       <td style="color:var(--text2);white-space:nowrap">${date}</td>
       <td style="font-weight:700">${r.country}</td>
       <td style="color:var(--text2)">${r.content_type==='lineup'?'Line-up':'Feature'}</td>
       <td>${r.category}</td>
-      <td><span class="sat-pill ${r.helpful==='Yes'?'yes':'no'}">${r.helpful==='Yes'?'긍정':'부정'}</span></td>
+      <td><span class="sat-pill ${isNeg?'no':'yes'}">${isNeg?'Negative':'Positive'}</span></td>
       <td style="color:var(--text2);font-size:11px">${r.device_os||r.device||'–'}</td>
       <td style="color:var(--text);font-size:12px;max-width:320px;line-height:1.55;">${r.comment}</td>
     </tr>`;
@@ -8204,7 +8146,7 @@ function satBuildCommentsTable(responses) {
         <thead><tr>
           <th>Date</th>
           <th>Country</th><th>Content</th><th>Category</th>
-          <th>Helpful</th><th>Device</th><th>Comment</th>
+          <th>Response</th><th>Device</th><th>Comment</th>
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>
@@ -8218,18 +8160,6 @@ function satSetFilter(key, val) {
   satFilters[key] = val;
   satCommentPage = 1;
   renderSatisfactionTab();
-}
-
-function satSetCommentChip(val) {
-  satFilters.commentChip = val;
-  satCommentPage = 1;
-  const responses = satFilteredResponses();
-  const tableEl = document.getElementById('satCommentsTable');
-  if (tableEl) { tableEl.innerHTML = satBuildCommentsTable(responses); }
-  // update chip active state
-  document.querySelectorAll('.sat-filter-chip').forEach(el => {
-    el.classList.toggle('active', el.getAttribute('onclick').includes(`'${val}'`));
-  });
 }
 
 function satPageNav(dir) {
@@ -8258,9 +8188,24 @@ function satExportCSV() {
 }
 
 function switchToSatisfaction(filters) {
-  if (filters) Object.assign(satFilters, filters);
+  satFilters.highlightNeg = false;
+  let scrollToComments = false;
+  if (filters) {
+    const { commentChip, ...rest } = filters;
+    Object.assign(satFilters, rest);
+    if (commentChip === 'negative') {
+      satFilters.highlightNeg = true;
+      scrollToComments = true;
+    }
+  }
   satCommentPage = 1;
   switchToPrimaryTab('satisfaction');
+  if (scrollToComments) {
+    setTimeout(() => {
+      const el = document.getElementById('satCommentSection');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 120);
+  }
 }
 
 function v03ExpandSignals(collapseEl, encodedItems) {
