@@ -7533,6 +7533,7 @@ let satFilters = {
   helpful: 'all', reason: 'all', device: 'all', keyword: '', highlightNeg: false
 };
 let satCommentPage = 1;
+let satCommentFilter = 'all'; // 'all' | 'positive' | 'negative'
 const SAT_PER_PAGE = 20;
 
 async function loadSatisfactionData() {
@@ -8084,15 +8085,28 @@ function satRenderCommentsExplorer(responses) {
   const contentLabel  = satFilters.content  === 'all' ? '전체 콘텐츠'    : satFilters.content === 'lineup' ? 'Line-up Guide' : 'Feature Library';
   const categoryLabel = satFilters.category === 'all' ? '전체 카테고리'  : satFilters.category;
   const filterText    = `현재 조회 조건: ${p} · ${countryLabel} · ${contentLabel} · ${categoryLabel}`;
-  const commentCount  = responses.filter(r => r.comment?.trim()).length;
+
+  const withComment   = responses.filter(r => r.comment?.trim());
+  const countAll      = withComment.length;
+  const countPos      = withComment.filter(r => r.helpful === 'Yes').length;
+  const countNeg      = withComment.filter(r => r.helpful === 'No').length;
+  const displayCount  = satCommentFilter === 'positive' ? countPos : satCommentFilter === 'negative' ? countNeg : countAll;
+
+  const chip = (val, label, count) =>
+    `<span class="sat-filter-chip sat-comment-filter-chip${satCommentFilter===val?' active':''}" data-val="${val}" onclick="satSetCommentFilter('${val}')">${label} <span style="opacity:.6;font-weight:400;">${count}</span></span>`;
 
   return `
     <div class="sat-section-card" style="margin-top:14px;" id="satCommentSection">
       <div class="sat-section-header" style="margin-bottom:6px;"><span class="sat-section-num">5</span> Customer Comments</div>
       <div style="font-size:11px;color:var(--text2);margin-bottom:12px;">선택한 조건에서 작성된 주관식 응답 원문 확인</div>
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:7px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:7px 12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;margin-bottom:10px;">
         <span style="font-size:11px;color:var(--text2);">${filterText}</span>
-        <span style="font-size:11px;color:var(--text2);flex-shrink:0;margin-left:12px;">주관식 응답 ${commentCount}건</span>
+        <span id="satCommentCount" style="font-size:11px;color:var(--text2);flex-shrink:0;">주관식 응답 ${displayCount}건</span>
+      </div>
+      <div class="sat-filter-bar" style="margin-bottom:10px;">
+        ${chip('all','전체',countAll)}
+        ${chip('positive','Positive',countPos)}
+        ${chip('negative','Negative',countNeg)}
       </div>
       <div id="satCommentsTable">${satBuildCommentsTable(responses)}</div>
     </div>
@@ -8100,7 +8114,12 @@ function satRenderCommentsExplorer(responses) {
 }
 
 function satBuildCommentsTable(responses) {
-  const withComment = responses.filter(r => r.comment?.trim());
+  const withComment = responses.filter(r => {
+    if (!r.comment?.trim()) return false;
+    if (satCommentFilter === 'positive' && r.helpful !== 'Yes') return false;
+    if (satCommentFilter === 'negative' && r.helpful !== 'No') return false;
+    return true;
+  });
   const start = (satCommentPage-1)*SAT_PER_PAGE;
   const pageItems = withComment.slice(start, start+SAT_PER_PAGE);
   const totalPages = Math.ceil(withComment.length/SAT_PER_PAGE);
@@ -8152,6 +8171,25 @@ function satSetFilter(key, val) {
   satFilters[key] = val;
   satCommentPage = 1;
   renderSatisfactionTab();
+}
+
+function satSetCommentFilter(val) {
+  satCommentFilter = val;
+  satCommentPage = 1;
+  const responses = satFilteredResponses();
+  const tableEl = document.getElementById('satCommentsTable');
+  if (tableEl) tableEl.innerHTML = satBuildCommentsTable(responses);
+  // update count
+  const withComment = responses.filter(r => r.comment?.trim());
+  const displayCount = val === 'positive' ? withComment.filter(r=>r.helpful==='Yes').length
+                     : val === 'negative' ? withComment.filter(r=>r.helpful==='No').length
+                     : withComment.length;
+  const countEl = document.getElementById('satCommentCount');
+  if (countEl) countEl.textContent = `주관식 응답 ${displayCount}건`;
+  // update chip active state
+  document.querySelectorAll('.sat-comment-filter-chip').forEach(c => {
+    c.classList.toggle('active', c.dataset.val === val);
+  });
 }
 
 function satPageNav(dir) {
