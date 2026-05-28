@@ -2,7 +2,7 @@
     "meta":  {
                  "reportingMonth":  "2026-04",
                  "comparisonMonth":  "2026-03",
-                 "generatedAt":  "2026-05-27T19:35:03",
+                 "generatedAt":  "2026-05-28T10:15:17",
                  "generatedBy":  "Codex monthly pilot analysis",
                  "dataStatus":  {
                                     "ga":  "ACTUAL",
@@ -18,7 +18,50 @@
                  "dataQualityNotes":  [
                                           "Line-up Guide / Monitor_DE 시트는 Apr 열이 없어 4월 분석에서 제외됨.",
                                           "설문 데이터는 실응답 수집 전 UI 검증용 SAMPLE이며 운영 판단에 사용하지 않음."
-                                      ]
+                                      ],
+                 "signalCriteriaIntro":  {
+                                             "title":  "신호 감지 조건",
+                                             "description":  "아래 조건은 KPI 목표치나 평가 기준이 아니라, 이번 달 우선 확인할 페이지를 찾기 위한 파일럿 판정 규칙입니다.",
+                                             "sampleFilterNote":  "최소 세션 기준은 세션 5에서 3으로 줄어드는 것처럼 작은 모수에서 비율만 크게 보이는 변동을 핵심 신호에서 제외하기 위한 안정성 필터입니다."
+                                         },
+                 "signalCriteria":  [
+                                        {
+                                            "code":  "traffic-drop",
+                                            "label":  "Traffic Drop",
+                                            "criteria":  "전월 세션 50 이상이면서, 전월 대비 세션 -10% 이상 하락하고, 절대 감소량이 10세션 이상인 경우",
+                                            "why":  "작은 모수의 일시적 등락을 제외하고, 실제 유입 감소로 볼 수 있는 페이지를 우선 표시합니다."
+                                        },
+                                        {
+                                            "code":  "seo-weak",
+                                            "label":  "SEO Weak",
+                                            "criteria":  "세션 50 이상 페이지 중 Organic Share가 10% 이하이거나, 전환 성과는 양호하지만 Organic Share가 낮아 검색 유입 확장 여지가 있는 경우",
+                                            "why":  "전환 구조를 바꾸기보다 검색 진입 문구, 메타 정보, 내부 링크 확장을 먼저 검토할 페이지를 찾습니다."
+                                        },
+                                        {
+                                            "code":  "conversion-gap",
+                                            "label":  "Conversion Gap",
+                                            "criteria":  "세션 50 이상 페이지 중 PLP 전환율이 20% 미만이거나, 유입 대비 제품 탐색 이동이 낮은 경우",
+                                            "why":  "유입 자체보다 CTA, 제품 연결, 설명 이후 이동 흐름에 개선 여지가 있는 페이지를 분리합니다."
+                                        },
+                                        {
+                                            "code":  "satisfaction-risk",
+                                            "label":  "Satisfaction Risk",
+                                            "criteria":  "응답 수가 충분한 구간에서 부정 응답률이 높거나, 특정 부정 사유가 반복되는 경우",
+                                            "why":  "GA 수치만으로 보이지 않는 정보 부족, 설명 난이도, 이미지/영상 이해도 문제를 확인합니다. 2026-04는 SAMPLE 데이터입니다."
+                                        },
+                                        {
+                                            "code":  "growth-signal",
+                                            "label":  "Growth Signal",
+                                            "criteria":  "세션 또는 전환 지표가 전월 대비 의미 있게 개선된 경우",
+                                            "why":  "바로 조치할 문제라기보다 이번 달 성과가 좋아진 페이지를 확인하는 신호입니다."
+                                        },
+                                        {
+                                            "code":  "performance-highlight",
+                                            "label":  "Performance Highlight",
+                                            "criteria":  "PLP 전환율, Purchase Intent, 만족도 등 핵심 성과가 상위권인 경우",
+                                            "why":  "문제 해결 과제가 아니라 성과가 좋은 페이지를 파악해 참고 기준으로 활용하기 위한 신호입니다."
+                                        }
+                                    ]
              },
     "kpi":  {
                 "performance":  {
@@ -68,7 +111,7 @@
                                "label":  "Traffic Drop",
                                "type":  "improvement",
                                "count":  3,
-                               "headline":  "세션 감소 페이지 3건",
+                               "headline":  "세션 감소 3건 · 최대 하락 BR TV Line-up -15.9% · UK Monitor Line-up -14.5%",
                                "anchorTaskIds":  [
                                                      "T01",
                                                      "T02",
@@ -81,7 +124,7 @@
                                "type":  "improvement",
                                "count":  1,
                                "relatedCount":  1,
-                               "headline":  "검색 유입 확장 점검 1건",
+                               "headline":  "Organic 취약/확장 1건 · PL TV Line-up Organic Share 8.0% · PLP 69.8%",
                                "anchorTaskIds":  [
                                                      "T04",
                                                      "T01"
@@ -93,7 +136,7 @@
                                "type":  "improvement",
                                "count":  1,
                                "relatedCount":  1,
-                               "headline":  "PLP 이동 점검 1건",
+                               "headline":  "PLP 전환 저하 1건 · UK Monitor Feature PLP 17.9% · 관련 UK TV Feature 15.0%",
                                "anchorTaskIds":  [
                                                      "T05",
                                                      "T01"
@@ -105,7 +148,7 @@
                                "type":  "improvement",
                                "count":  1,
                                "isSample":  true,
-                               "headline":  "부정 응답 패턴 예시 1건 (SAMPLE)",
+                               "headline":  "SAMPLE 부정 응답 패턴 1건 · 실데이터 수집 후 운영 판단",
                                "anchorTaskIds":  [
                                                      "SAMPLE-S01"
                                                  ]
@@ -148,20 +191,16 @@
                                                                   "contentLabel":  "피쳐 라이브러리"
                                                               },
                                                    "detectedSignal":  "Session -13.3%, Organic Share 6.7%, PLP 15.0%",
-                                                   "assessment":  "유입 감소와 낮은 검색 유입 비중, 낮은 PLP 전환이 동시에 확인되어 진입 경로와 제품 연결 흐름을 함께 점검할 필요가 있습니다.",
-                                                   "taskTitle":  "UK TV 피쳐 페이지의 검색 진입 및 PLP 연결 흐름 점검",
+                                                   "assessment":  "유입 감소, 낮은 Organic Share, 낮은 PLP 전환이 함께 나타나는 복합 저하 구간입니다. 검색 진입 품질과 제품 연결 흐름을 동시에 확인할 필요가 있습니다.",
+                                                   "taskTitle":  "UK TV 피쳐 페이지 검색 진입 품질과 PLP 이동 흐름 개선",
                                                    "checklist":  [
-                                                                     "Organic 유입 랜딩 문구와 내부 링크 경로 확인",
-                                                                     "기능 설명에서 PLP 이동 CTA 노출 및 링크 정상 여부 점검",
-                                                                     "문제가 확인되면 콘텐츠 수정안을 작성"
+                                                                     "GA에서 채널별 세션 하락 폭과 Organic 랜딩 비중 확인",
+                                                                     "검색 의도와 페이지 상단 설명/기능 문구의 연결성 검토",
+                                                                     "PLP CTA와 제품 연결 링크의 노출 위치 및 정상 작동 여부 확인",
+                                                                     "콘텐츠나 링크 문제가 확인되면 문구, 내부 링크, CTA 위치 수정안 작성"
                                                                  ],
                                                    "status":  "진행 전",
-                                                   "requestCandidate":  {
-                                                                            "target":  "D2C",
-                                                                            "type":  "데이터 확인",
-                                                                            "detail":  "UK TV 피쳐 페이지의 검색어/랜딩별 Organic 유입 및 PLP 클릭 데이터 확인",
-                                                                            "status":  "요청 전"
-                                                                        }
+                                                   "requestCandidate":  null
                                                },
                                                {
                                                    "id":  "T02",
@@ -177,20 +216,16 @@
                                                                   "contentLabel":  "라인업 가이드"
                                                               },
                                                    "detectedSignal":  "Session -14.5%, Organic Share 6.8%, PLP 26.5%",
-                                                   "assessment":  "세션이 하락했고 Organic 비중도 낮아, 페이지 레이아웃보다 유입 경로의 감소 원인을 우선 확인해야 합니다.",
-                                                   "taskTitle":  "UK Monitor 라인업 페이지 유입 하락 경로 점검",
+                                                   "assessment":  "세션 하락과 낮은 Organic Share가 함께 보이는 유입 약화 구간입니다. PLP는 일정 수준 유지되고 있어 전환 구조보다 유입 경로 회복이 우선입니다.",
+                                                   "taskTitle":  "UK Monitor 라인업 페이지 유입 회복 포인트 정리",
                                                    "checklist":  [
-                                                                     "전월 대비 Organic 및 내부 유입 변화 확인",
-                                                                     "검색 제목/메타/내부 링크의 노출 상태 점검",
-                                                                     "유입 회복이 필요한 콘텐츠 보완안 정리"
+                                                                     "GA에서 Organic, Referral, 내부 유입의 전월 대비 변화 확인",
+                                                                     "검색 제목/메타 설명과 페이지 상단 문구가 Monitor 구매 의도와 맞는지 검토",
+                                                                     "관련 구매가이드와 제품 페이지에서 해당 라인업으로 이어지는 내부 링크 위치 확인",
+                                                                     "유입 보강이 필요한 문구/링크 수정안을 정리"
                                                                  ],
                                                    "status":  "진행 전",
-                                                   "requestCandidate":  {
-                                                                            "target":  "D2C",
-                                                                            "type":  "데이터 확인",
-                                                                            "detail":  "UK Monitor 라인업의 채널별 세션 변화 및 검색 유입 상세값 확인",
-                                                                            "status":  "요청 전"
-                                                                        }
+                                                   "requestCandidate":  null
                                                },
                                                {
                                                    "id":  "T03",
@@ -206,20 +241,16 @@
                                                                   "contentLabel":  "라인업 가이드"
                                                               },
                                                    "detectedSignal":  "Session -15.9%, Organic Share 59.5%, PLP 데이터 미확인",
-                                                   "assessment":  "세션 감소가 확인되지만 PLP 전환 값이 없어 원인 판단이 제한됩니다. 콘텐츠 조치 전에 전환 데이터 가용성을 확인해야 합니다.",
-                                                   "taskTitle":  "BR TV 라인업 세션 감소 및 PLP 데이터 가용성 확인",
+                                                   "assessment":  "Organic Share는 높지만 전체 세션이 하락했고 PLP 값이 비어 있어 성과 저하 원인을 끝까지 해석하기 어려운 구간입니다. 먼저 지표 수집 상태를 확인한 뒤 콘텐츠 조치 여부를 판단해야 합니다.",
+                                                   "taskTitle":  "BR TV 라인업 세션 하락 원인과 PLP 지표 수집 상태 확인",
                                                    "checklist":  [
-                                                                     "페이지 PLP 이벤트 태깅/수집 여부 확인",
-                                                                     "채널별 세션 감소 구간 확인",
-                                                                     "데이터 확보 후 콘텐츠 보완 필요성 재판단"
+                                                                     "GA에서 채널별 세션 감소 구간과 Organic 의존도 확인",
+                                                                     "PLP 전환 지표가 비어 있는 원인이 이벤트 미수집인지, 실제 클릭 없음인지 확인",
+                                                                     "지표 수집 문제가 아니면 상단 문구와 제품 연결 흐름을 검토",
+                                                                     "태깅/CMS/제품 연결 오류가 확인될 때만 협조 요청으로 전환"
                                                                  ],
                                                    "status":  "진행 전",
-                                                   "requestCandidate":  {
-                                                                            "target":  "D2C",
-                                                                            "type":  "데이터 확인",
-                                                                            "detail":  "BR TV 라인업 PLP 전환 지표 미노출 원인과 채널별 세션 데이터 확인",
-                                                                            "status":  "요청 전"
-                                                                        }
+                                                   "requestCandidate":  null
                                                },
                                                {
                                                    "id":  "T04",
@@ -235,12 +266,12 @@
                                                                   "contentLabel":  "라인업 가이드"
                                                               },
                                                    "detectedSignal":  "Organic Share 8.0%, PLP 69.8%",
-                                                   "assessment":  "PLP 전환은 높지만 Organic 비중이 낮습니다. 전환 구조를 바꾸기보다 검색 유입을 확장할 여지가 있는 페이지입니다.",
-                                                   "taskTitle":  "PL TV 라인업 고전환 페이지의 검색 유입 확장 가능성 확인",
+                                                   "assessment":  "PLP 전환은 매우 높지만 Organic Share가 낮아, 들어온 사용자는 잘 이동하지만 검색을 통한 유입 확장 여지가 남아 있는 페이지입니다.",
+                                                   "taskTitle":  "PL TV 라인업 고전환 페이지의 검색 노출 확장안 검토",
                                                    "checklist":  [
-                                                                     "고전환 페이지의 검색 제목/메타 문구 점검",
-                                                                     "관련 구매가이드 내부 링크 확대 가능 위치 확인",
-                                                                     "현지 검색 표현 보완 필요 시 요청 작성"
+                                                                     "검색 제목/메타 설명에 현지 구매 의도 키워드가 반영되어 있는지 확인",
+                                                                     "관련 구매가이드와 제품 페이지에서 PL TV 라인업으로 이어지는 내부 링크 확대 가능 위치 확인",
+                                                                     "로컬 검색 표현 또는 제품 용어 확인이 필요하면 법인 협조 요청 작성"
                                                                  ],
                                                    "status":  "진행 전",
                                                    "requestCandidate":  {
@@ -264,12 +295,12 @@
                                                                   "contentLabel":  "피쳐 라이브러리"
                                                               },
                                                    "detectedSignal":  "Session -1.7%, PLP 17.9%",
-                                                   "assessment":  "유입은 크게 줄지 않았으나 PLP 이동률이 낮아, 기능 설명 이후 제품 탐색으로 이어지는 연결 요소를 확인할 필요가 있습니다.",
-                                                   "taskTitle":  "UK Monitor 피쳐 페이지의 PLP 이동 저해 요소 점검",
+                                                   "assessment":  "유입 규모는 유지되지만 PLP 이동률이 낮아, 기능 이해 이후 제품 탐색으로 넘어가는 연결 장치가 약한 구간입니다.",
+                                                   "taskTitle":  "UK Monitor 피쳐 페이지의 제품 탐색 전환 흐름 개선",
                                                    "checklist":  [
-                                                                     "기능별 제품 연결 링크와 CTA 가시성 확인",
-                                                                     "설명 이후 추천 제품 노출 흐름 검토",
-                                                                     "보완이 필요한 콘텐츠 블록 정의"
+                                                                     "기능 설명 하단의 제품 연결 링크와 CTA 노출 위치 확인",
+                                                                     "사용자가 다음 행동을 이해할 수 있도록 추천 제품/PLP 연결 문구 검토",
+                                                                     "CTA 또는 제품 연결이 약하면 문구, 배치, 내부 링크 수정안 작성"
                                                                  ],
                                                    "status":  "진행 전",
                                                    "requestCandidate":  null
@@ -299,6 +330,49 @@
                                                          "trackingEnabled":  false
                                                      }
                                                  ],
+                          "signalCriteriaIntro":  {
+                                                      "title":  "신호 감지 조건",
+                                                      "description":  "아래 조건은 KPI 목표치나 평가 기준이 아니라, 이번 달 우선 확인할 페이지를 찾기 위한 파일럿 판정 규칙입니다.",
+                                                      "sampleFilterNote":  "최소 세션 기준은 세션 5에서 3으로 줄어드는 것처럼 작은 모수에서 비율만 크게 보이는 변동을 핵심 신호에서 제외하기 위한 안정성 필터입니다."
+                                                  },
+                          "signalCriteria":  [
+                                                 {
+                                                     "code":  "traffic-drop",
+                                                     "label":  "Traffic Drop",
+                                                     "criteria":  "전월 세션 50 이상이면서, 전월 대비 세션 -10% 이상 하락하고, 절대 감소량이 10세션 이상인 경우",
+                                                     "why":  "작은 모수의 일시적 등락을 제외하고, 실제 유입 감소로 볼 수 있는 페이지를 우선 표시합니다."
+                                                 },
+                                                 {
+                                                     "code":  "seo-weak",
+                                                     "label":  "SEO Weak",
+                                                     "criteria":  "세션 50 이상 페이지 중 Organic Share가 10% 이하이거나, 전환 성과는 양호하지만 Organic Share가 낮아 검색 유입 확장 여지가 있는 경우",
+                                                     "why":  "전환 구조를 바꾸기보다 검색 진입 문구, 메타 정보, 내부 링크 확장을 먼저 검토할 페이지를 찾습니다."
+                                                 },
+                                                 {
+                                                     "code":  "conversion-gap",
+                                                     "label":  "Conversion Gap",
+                                                     "criteria":  "세션 50 이상 페이지 중 PLP 전환율이 20% 미만이거나, 유입 대비 제품 탐색 이동이 낮은 경우",
+                                                     "why":  "유입 자체보다 CTA, 제품 연결, 설명 이후 이동 흐름에 개선 여지가 있는 페이지를 분리합니다."
+                                                 },
+                                                 {
+                                                     "code":  "satisfaction-risk",
+                                                     "label":  "Satisfaction Risk",
+                                                     "criteria":  "응답 수가 충분한 구간에서 부정 응답률이 높거나, 특정 부정 사유가 반복되는 경우",
+                                                     "why":  "GA 수치만으로 보이지 않는 정보 부족, 설명 난이도, 이미지/영상 이해도 문제를 확인합니다. 2026-04는 SAMPLE 데이터입니다."
+                                                 },
+                                                 {
+                                                     "code":  "growth-signal",
+                                                     "label":  "Growth Signal",
+                                                     "criteria":  "세션 또는 전환 지표가 전월 대비 의미 있게 개선된 경우",
+                                                     "why":  "바로 조치할 문제라기보다 이번 달 성과가 좋아진 페이지를 확인하는 신호입니다."
+                                                 },
+                                                 {
+                                                     "code":  "performance-highlight",
+                                                     "label":  "Performance Highlight",
+                                                     "criteria":  "PLP 전환율, Purchase Intent, 만족도 등 핵심 성과가 상위권인 경우",
+                                                     "why":  "문제 해결 과제가 아니라 성과가 좋은 페이지를 파악해 참고 기준으로 활용하기 위한 신호입니다."
+                                                 }
+                                             ],
                           "statusValues":  [
                                                "진행 전",
                                                "진행 중",

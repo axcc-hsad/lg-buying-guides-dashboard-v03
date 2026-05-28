@@ -2193,6 +2193,22 @@ body {
 .v03-dq-notice span { background:rgba(251,191,36,.06); border:1px solid rgba(251,191,36,.15); border-radius:5px; padding:2px 8px; }
 .v03-signal-block-sample { opacity:.85; }
 .v03-sample-notice { font-size:11px; }
+/* ── 신호 감지 조건 ── */
+.v03-criteria-wrap { margin:16px 0 0; border:1px solid rgba(255,255,255,.08); border-radius:10px; background:rgba(255,255,255,.02); overflow:hidden; }
+.v03-criteria-toggle { display:flex; align-items:center; gap:8px; width:100%; background:none; border:none; cursor:pointer; padding:12px 16px; text-align:left; }
+.v03-criteria-toggle-label { font-size:12px; font-weight:700; color:var(--text2); letter-spacing:.04em; text-transform:uppercase; flex:1; }
+.v03-criteria-chevron { font-size:10px; color:var(--text2); transition:transform .2s; display:inline-block; }
+.v03-criteria-body { padding:0 16px 16px; display:none; }
+.v03-criteria-intro { font-size:11.5px; color:var(--text2); line-height:1.6; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,.06); }
+.v03-criteria-filter-note { font-size:11px; color:rgba(255,255,255,.4); margin-top:6px; line-height:1.5; }
+.v03-criteria-row { display:grid; grid-template-columns:120px 1fr 1fr; gap:10px 16px; padding:8px 0; border-bottom:1px solid rgba(255,255,255,.04); align-items:start; }
+.v03-criteria-row:last-child { border-bottom:none; }
+.v03-criteria-sig-label { display:inline-block; font-size:10px; font-weight:700; padding:2px 7px; border-radius:5px; white-space:nowrap; }
+.v03-criteria-field-label { font-size:9px; font-weight:800; color:rgba(255,255,255,.3); letter-spacing:.04em; text-transform:uppercase; margin-bottom:3px; }
+.v03-criteria-field-val { font-size:11.5px; color:var(--text2); line-height:1.5; }
+@media(max-width:600px){
+  .v03-criteria-row { grid-template-columns:1fr; }
+}
 /* ── 담당별 조치 (legacy, 하위 호환) ── */
 .v03-status-select {
   width: 100%;
@@ -6470,6 +6486,38 @@ function renderMainInsights() {
         <div class="v03-cluster-grid">${clusterCardsHtml}</div>
         ${dataQualityNotes.length ? `<div class="v03-dq-notice">${dataQualityNotes.map(n=>`<span>⚠ ${n}</span>`).join('')}</div>` : ''}
       </div>
+      ${(() => {
+        const ci = DASHBOARD_DATA && DASHBOARD_DATA.meta && DASHBOARD_DATA.meta.signalCriteriaIntro;
+        const cl = (DASHBOARD_DATA && DASHBOARD_DATA.meta && DASHBOARD_DATA.meta.signalCriteria) || [];
+        if (!ci && !cl.length) return '';
+        const rowsHtml = cl.map(c => {
+          const tone = SIGNAL_TONE[c.code] || 'watch';
+          return `<div class="v03-criteria-row">
+            <div><span class="v03-tag ${tone} v03-criteria-sig-label">${c.label}</span></div>
+            <div>
+              <div class="v03-criteria-field-label">감지 조건</div>
+              <div class="v03-criteria-field-val">${c.criteria}</div>
+            </div>
+            <div>
+              <div class="v03-criteria-field-label">기준을 둔 이유</div>
+              <div class="v03-criteria-field-val">${c.why}</div>
+            </div>
+          </div>`;
+        }).join('');
+        return `<div class="v03-criteria-wrap" id="v03-criteria-section">
+          <button class="v03-criteria-toggle" onclick="(function(btn){var body=btn.closest('.v03-criteria-wrap').querySelector('.v03-criteria-body');var chev=btn.querySelector('.v03-criteria-chevron');if(body.style.display===''){body.style.display='none';chev.style.transform='';}else{body.style.display='';chev.style.transform='rotate(180deg)';}})(this)">
+            <span class="v03-criteria-toggle-label">신호 감지 조건</span>
+            <span class="v03-criteria-chevron">▼</span>
+          </button>
+          <div class="v03-criteria-body" style="display:none;">
+            ${ci ? `<div class="v03-criteria-intro">
+              ${ci.description}
+              ${ci.sampleFilterNote ? `<div class="v03-criteria-filter-note">* ${ci.sampleFilterNote}</div>` : ''}
+            </div>` : ''}
+            ${rowsHtml}
+          </div>
+        </div>`;
+      })()}
       <div class="v03-panels-2">
         <div class="v03-panel">
           <div class="v03-panel-title">라인업 가이드</div>
@@ -7587,7 +7635,7 @@ function renderActionTodosNew() {
           <div class="v03-signal-field-text">${v03Esc(task.detectedSignal)}</div>
         </div>
         <div class="v03-signal-field">
-          <div class="v03-signal-field-label">판단</div>
+          <div class="v03-signal-field-label">AI 인사이트</div>
           <div class="v03-signal-field-text">${v03Esc(task.assessment)}</div>
         </div>
         <div class="v03-signal-field">
@@ -7619,7 +7667,7 @@ function renderActionTodosNew() {
     <div class="v03-section-head">
       <div>
         <div class="v03-title">3. Insight &amp; Action Summary</div>
-        <div class="v03-subtitle">신호 유형별 감지 내용 · 판단 · HSAD 대응 과제 — 진행 중 ${totalDoing}건 · 완료 ${totalDone}건 (${period})</div>
+        <div class="v03-subtitle">신호 유형별 감지 내용 · AI 인사이트 · HSAD 대응 과제 — 진행 중 ${totalDoing}건 · 완료 ${totalDone}건 (${period})</div>
       </div>
     </div>
     <div class="v03-signal-block-list">
