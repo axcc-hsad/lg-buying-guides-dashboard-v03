@@ -2169,6 +2169,30 @@ body {
 }
 .v03-signal-group-label.perf { color: rgba(34,197,94,.6); margin-top: 10px; }
 .v03-cluster-task-status { font-size: 10px; color: var(--text2); margin-top: 2px; }
+/* ── 읽기 전용 task card (dashboard_data.json 기반) ── */
+.v03-task-status-badge { font-size: 10px; font-weight: 700; border-radius: 5px; padding: 2px 9px; flex-shrink: 0; white-space: nowrap; }
+.v03-task-status-badge.pending { background: rgba(255,255,255,.07); color: var(--text2); }
+.v03-task-status-badge.doing   { background: rgba(251,191,36,.13); color: #fbbf24; }
+.v03-task-status-badge.done    { background: rgba(34,197,94,.12); color: var(--green); }
+.v03-task-status-badge.hold    { background: rgba(239,68,68,.1); color: var(--red); }
+.v03-task-notes-static {
+  font-size: 11px; color: var(--text2); line-height: 1.55; padding: 6px 8px;
+  background: rgba(0,0,0,.15); border-radius: 5px; border: 1px solid rgba(255,255,255,.06);
+}
+.v03-aff-section-static {
+  background: rgba(99,102,241,.05); border: 1px solid rgba(99,102,241,.15);
+  border-radius: 6px; padding: 8px 10px; display: flex; flex-direction: column; gap: 3px;
+}
+.v03-aff-static-header { font-size: 10px; font-weight: 800; color: var(--accent2); text-transform: uppercase; letter-spacing: .04em; }
+.v03-aff-static-row { font-size: 11px; color: var(--text); }
+.v03-aff-static-sub { font-size: 11px; color: var(--text2); line-height: 1.5; }
+.v03-dd-source { font-size: 9px; color: rgba(99,102,241,.5); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; margin-left: 5px; }
+.v03-sample-badge { display:inline-block; background:rgba(251,191,36,.15); color:#fbbf24; font-size:9px; font-weight:800; border-radius:4px; padding:1px 5px; letter-spacing:.04em; vertical-align:middle; white-space:nowrap; }
+.v03-sample-group { border:1px solid rgba(251,191,36,.15) !important; }
+.v03-dq-notice { font-size:10px; color:rgba(251,191,36,.7); margin-top:8px; display:flex; flex-wrap:wrap; gap:6px; }
+.v03-dq-notice span { background:rgba(251,191,36,.06); border:1px solid rgba(251,191,36,.15); border-radius:5px; padding:2px 8px; }
+.v03-signal-block-sample { opacity:.85; }
+.v03-sample-notice { font-size:11px; }
 /* ── 담당별 조치 (legacy, 하위 호환) ── */
 .v03-status-select {
   width: 100%;
@@ -4093,6 +4117,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   setupTabs();
   loadData();
+  loadDashboardData();
 });
 
 document.addEventListener('click', e => {
@@ -6224,15 +6249,33 @@ function v03MetricItem(label, value, delta, positiveIsGood = true, unit = '%') {
 }
 
 function v03GetSatisfactionSummary() {
+  if (DASHBOARD_DATA && DASHBOARD_DATA.kpi && DASHBOARD_DATA.kpi.satisfaction) {
+    const s = DASHBOARD_DATA.kpi.satisfaction;
+    return {
+      score: Math.round((s.overall.value || 0) * 100),
+      scoreMom: null,
+      responses: s.responses.value || 0,
+      responsesMom: null,
+      negativeRate: Math.round((s.negativeRate.value || 0) * 100),
+      negativeMom: null,
+      positiveRate: Math.round((s.overall.value || 0) * 100),
+      positiveMom: null,
+      negativeShare: Math.round((s.negativeRate.value || 0) * 100),
+      negativeShareMom: null,
+      mobileShare: 0,
+      mobileShareMom: null,
+      isSample: s.isSample === true
+    };
+  }
   if (!SAT_DATA) {
-    return { score:78, scoreMom:5, responses:126, responsesMom:18, negativeRate:22,
-             negativeMom:-3, positiveRate:64, positiveMom:4, negativeShare:36,
-             negativeShareMom:-4, mobileShare:58, mobileShareMom:7 };
+    return { score:0, scoreMom:null, responses:0, responsesMom:null, negativeRate:0, negativeMom:null,
+             positiveRate:0, positiveMom:null, negativeShare:0, negativeShareMom:null,
+             mobileShare:0, mobileShareMom:null, isSample: false };
   }
   const p  = SAT_DATA.meta.latest_period;
   const pp = SAT_DATA.meta.prev_period;
   const m  = SAT_DATA.monthly[p]  || {};
-  const pm = SAT_DATA.prev_monthly[pp] || {};
+  const pm = pp && SAT_DATA.prev_monthly ? (SAT_DATA.prev_monthly[pp] || {}) : {};
   const score       = m.satisfaction_pct != null ? Math.round(m.satisfaction_pct) : 0;
   const pScore      = pm.satisfaction_pct != null ? Math.round(pm.satisfaction_pct) : score;
   const responses   = m.total || 0;
@@ -6246,12 +6289,13 @@ function v03GetSatisfactionSummary() {
   const mobilePct   = m.mobile_pct != null ? Math.round(m.mobile_pct) : 0;
   const pMobilePct  = pm.mobile_pct != null ? Math.round(pm.mobile_pct) : mobilePct;
   return {
-    score, scoreMom: score - pScore,
-    responses, responsesMom: pResponses ? Math.round((responses - pResponses) / pResponses * 100) : 0,
-    negativeRate: negRate, negativeMom: negRate - pNegRate,
-    positiveRate: posRate, positiveMom: posRate - pPosRate,
-    negativeShare: negShare, negativeShareMom: negShare - pNegShare,
-    mobileShare: mobilePct, mobileShareMom: mobilePct - pMobilePct,
+    score, scoreMom: pp ? score - pScore : null,
+    responses, responsesMom: (pp && pResponses) ? Math.round((responses - pResponses) / pResponses * 100) : null,
+    negativeRate: negRate, negativeMom: pp ? negRate - pNegRate : null,
+    positiveRate: posRate, positiveMom: pp ? posRate - pPosRate : null,
+    negativeShare: negShare, negativeShareMom: pp ? negShare - pNegShare : null,
+    mobileShare: mobilePct, mobileShareMom: pp ? mobilePct - pMobilePct : null,
+    isSample: SAT_DATA.isSample === true
   };
 }
 
@@ -6288,74 +6332,99 @@ function renderMainInsights() {
   const ex = activeExpert.executive || {};
   const sat = v03GetSatisfactionSummary();
 
-  const sessions = v03SumMetric(sheets, latest, v03Session);
-  const prevSessions = prev ? v03SumMetric(sheets, prev, v03Session) : null;
-  const plp = v03AvgMetric(sheets, latest, 'plp_conversion') || ex.avg_plp_conv || 0;
-  const prevPlp = prev ? v03AvgMetric(sheets, prev, 'plp_conversion') : null;
-  const purchase = v03AvgMetric(sheets, latest, 'purchase_intent') || ex.avg_purchase_intent_conv || ex.avg_purchase_conv || 0;
-  const prevPurchase = prev ? v03AvgMetric(sheets, prev, 'purchase_intent') : null;
-  const organic = v03SumMetric(sheets, latest, (item, month) => v03MetricValue(item, month, 'organic') || 0);
-  const prevOrganic = prev ? v03SumMetric(sheets, prev, (item, month) => v03MetricValue(item, month, 'organic') || 0) : null;
+  let sessions = v03SumMetric(sheets, latest, v03Session);
+  let prevSessions = prev ? v03SumMetric(sheets, prev, v03Session) : null;
+  let plp = v03AvgMetric(sheets, latest, 'plp_conversion') || ex.avg_plp_conv || 0;
+  let prevPlp = prev ? v03AvgMetric(sheets, prev, 'plp_conversion') : null;
+  let purchase = v03AvgMetric(sheets, latest, 'purchase_intent') || ex.avg_purchase_intent_conv || ex.avg_purchase_conv || 0;
+  let prevPurchase = prev ? v03AvgMetric(sheets, prev, 'purchase_intent') : null;
+  let organic = v03SumMetric(sheets, latest, (item, month) => v03MetricValue(item, month, 'organic') || 0);
+  let prevOrganic = prev ? v03SumMetric(sheets, prev, (item, month) => v03MetricValue(item, month, 'organic') || 0) : null;
   const external = v03SumMetric(sheets, latest, (item, month) => v03MetricValue(item, month, 'external') || v03MetricValue(item, month, 'external_entrance') || 0);
-  const aiReferral = v03SumMetric(sheets, latest, (item, month) => v03MetricValue(item, month, 'ai_referral_traffic') || 0);
-  const prevAiReferral = prev ? v03SumMetric(sheets, prev, (item, month) => v03MetricValue(item, month, 'ai_referral_traffic') || 0) : null;
-  const organicShare = external ? organic / external : null;
-  const prevOrganicShare = prev ? (() => {
+  let aiReferral = v03SumMetric(sheets, latest, (item, month) => v03MetricValue(item, month, 'ai_referral_traffic') || 0);
+  let prevAiReferral = prev ? v03SumMetric(sheets, prev, (item, month) => v03MetricValue(item, month, 'ai_referral_traffic') || 0) : null;
+  let organicShare = external ? organic / external : null;
+  let prevOrganicShare = prev ? (() => {
     const po = v03SumMetric(sheets, prev, (item, month) => v03MetricValue(item, month, 'organic') || 0);
     const pe = v03SumMetric(sheets, prev, (item, month) => v03MetricValue(item, month, 'external') || v03MetricValue(item, month, 'external_entrance') || 0);
     return pe ? po / pe : null;
   })() : null;
 
-  // ── 6 고정 슬롯 신호 카드 데이터 ──
-  const clusterData = v03GetClusterData() || {
-    typeCounts: {},
-    signalSlots: [
-      { type:'Traffic Drop',      tone:'risk',  count:3, empty:false, repPage:'FR / Monitor',  repMetric:'Session -21% MoM', repMetricClass:'down', countries:['FR','NL','IT'], nextCheck:'PLP 유지 여부 · 유입 경로 확인', detailFn:"switchToPrimaryTab('rawdata')" },
-      { type:'SEO Weak',          tone:'watch', count:5, empty:false, repPage:'NL / TV',       repMetric:'Organic 14%',      repMetricClass:'warn', countries:['NL','PL','IT'], nextCheck:'Organic 개선 · 검색 의도 점검',   detailFn:"switchToPrimaryTab('rawdata')" },
-      { type:'Conversion Gap',    tone:'watch', count:2, empty:false, repPage:'MX / Feature',  repMetric:'PLP 18%',          repMetricClass:'warn', countries:['MX','CA-FR'],  nextCheck:'CTA 흐름 · PLP 진입 구조 확인', detailFn:"switchToPrimaryTab('rawdata')" },
-      { type:'Satisfaction Risk', tone:'risk',  count:2, empty:false, repPage:'BR',            repMetric:'만족도 62% · 부정 32%', repMetricClass:'down', countries:['BR','MX'],  nextCheck:'부정 응답 원문 확인 → Comments 탭', detailFn:'switchToSatisfaction({})' },
-      { type:'Growth Signal',     tone:'good',  count:0, empty:true,  detailFn:"switchToPrimaryTab('rawdata')" },
-      { type:'Performance Highlight', tone:'good',  count:1, empty:false, repPage:'ES / Monitor',  repMetric:'PLP 41%',          repMetricClass:'up',   countries:['ES','UK'],     nextCheck:'확산 검토 후보 — 타 국가 적용 가능성', detailFn:"switchToPrimaryTab('categories')" },
-    ],
-  };
+  // Override with JSON KPI if available
+  if (DASHBOARD_DATA && DASHBOARD_DATA.kpi) {
+    const jkpi = DASHBOARD_DATA.kpi;
+    if (jkpi.performance.sessions.value != null) {
+      sessions = jkpi.performance.sessions.value;
+      prevSessions = sessions / (1 + (jkpi.performance.sessions.mom || 0));
+    }
+    if (jkpi.performance.plpConversion.value != null) { plp = jkpi.performance.plpConversion.value; prevPlp = null; }
+    if (jkpi.performance.purchaseIntent.value != null) { purchase = jkpi.performance.purchaseIntent.value; prevPurchase = null; }
+    if (jkpi.acquisition.organic.value != null) {
+      organic = jkpi.acquisition.organic.value;
+      prevOrganic = organic / (1 + (jkpi.acquisition.organic.mom || 0));
+    }
+    if (jkpi.acquisition.aiReferral.value != null) {
+      aiReferral = jkpi.acquisition.aiReferral.value;
+      prevAiReferral = jkpi.acquisition.aiReferral.mom != null ? aiReferral / (1 + jkpi.acquisition.aiReferral.mom) : prevAiReferral;
+    }
+    if (jkpi.acquisition.organicShare.value != null) { organicShare = jkpi.acquisition.organicShare.value; prevOrganicShare = null; }
+  }
 
-  const SLOT_TONE = { 'Traffic Drop':'risk','SEO Weak':'watch','Conversion Gap':'watch','Satisfaction Risk':'risk','Growth Signal':'good','Performance Highlight':'good' };
+  // ── Signal cards from DASHBOARD_DATA.monthlySignals ──
+  const SIGNAL_TONE = { 'traffic-drop':'risk','seo-weak':'watch','conversion-gap':'watch','satisfaction-risk':'risk','growth-signal':'good','performance-highlight':'good' };
+  const SIGNAL_LABEL = { 'traffic-drop':'Traffic Drop','seo-weak':'SEO Weak','conversion-gap':'Conversion Gap','satisfaction-risk':'Satisfaction Risk','growth-signal':'Growth Signal','performance-highlight':'Performance Highlight' };
 
-  const pillsHtml = clusterData.signalSlots.map(s =>
-    `<span class="v03-signal-pill ${s.tone}" style="${s.count===0?'opacity:.4':''}">
-      ${s.type}${s.count > 0 ? ` <strong>${s.count}</strong>건` : ' <strong>0</strong>건'}
-    </span>`
-  ).join('');
+  const signals = (DASHBOARD_DATA && DASHBOARD_DATA.monthlySignals) ? DASHBOARD_DATA.monthlySignals : [];
 
-  const clusterCardsHtml = clusterData.signalSlots.map(s => {
-    if (s.empty) {
-      return `<div class="v03-cluster-card ${s.tone} empty">
+  const pillsHtml = signals.map(sig => {
+    const tone = SIGNAL_TONE[sig.code] || 'watch';
+    const sampleBadge = sig.isSample ? ' <span class="v03-sample-badge" style="font-size:8px;padding:1px 4px;">S</span>' : '';
+    return `<span class="v03-signal-pill ${tone}" style="${sig.count===0?'opacity:.4':''}">
+      ${sig.label}${sampleBadge} <strong>${sig.count}</strong>건
+    </span>`;
+  }).join('');
+
+  const dataQualityNotes = (DASHBOARD_DATA && DASHBOARD_DATA.meta && DASHBOARD_DATA.meta.dataQualityNotes) || [];
+
+  const clusterCardsHtml = signals.map(sig => {
+    const tone = SIGNAL_TONE[sig.code] || 'watch';
+    const isPerf = sig.type === 'performance';
+    const isEmpty = sig.count === 0;
+    const sampleBadge = sig.isSample ? '<span class="v03-sample-badge" style="margin-left:6px;">SAMPLE</span>' : '';
+
+    // Aggregate status for improvement signals from trackedTasks
+    let aggHtml = '';
+    if (!isPerf && !sig.isSample && DASHBOARD_DATA) {
+      const relatedTasks = (DASHBOARD_DATA.actionSummary.trackedTasks || []).filter(t => sig.anchorTaskIds.includes(t.id));
+      const doing = relatedTasks.filter(t => t.status === '진행 중').length;
+      const done  = relatedTasks.filter(t => t.status === '완료').length;
+      const parts = [];
+      if (doing) parts.push(`진행 중 ${doing}`);
+      if (done)  parts.push(`완료 ${done}`);
+      if (parts.length) aggHtml = `<div class="v03-cluster-task-status">${parts.join(' · ')}</div>`;
+    }
+
+    const anchorFn = sig.anchorTaskIds && sig.anchorTaskIds.length
+      ? `v03ScrollToJsonTask('${sig.anchorTaskIds[0]}')`
+      : `v03ScrollToSignal('${sig.label}')`;
+
+    if (isEmpty) {
+      return `<div class="v03-cluster-card ${tone} empty">
         <div class="v03-cluster-top">
-          <span class="v03-tag ${s.tone}">${s.type}</span>
+          <span class="v03-tag ${tone}">${sig.label}</span>
           <span class="v03-cluster-count">0건</span>
         </div>
         <div class="v03-cluster-empty-msg">이번 달 감지된 신호 없음</div>
       </div>`;
     }
-    const IMPROVE_SET = new Set(['Traffic Drop','SEO Weak','Conversion Gap','Satisfaction Risk']);
-    let taskAggHtml = '';
-    if (IMPROVE_SET.has(s.type) && (s.tasks || []).length) {
-      const agg = v03GetTaskAggregate(s.slug, s.tasks);
-      const aggParts = [];
-      if (agg.doing) aggParts.push(`진행 중 ${agg.doing}`);
-      if (agg.done)  aggParts.push(`완료 ${agg.done}`);
-      if (aggParts.length) taskAggHtml = `<div class="v03-cluster-task-status">${aggParts.join(' · ')}</div>`;
-    }
-    return `<div class="v03-cluster-card ${s.tone}">
+    return `<div class="v03-cluster-card ${tone}">
       <div class="v03-cluster-top">
-        <span class="v03-tag ${s.tone}">${s.type}</span>
-        <span class="v03-cluster-count">${s.count}건</span>
+        <span class="v03-tag ${tone}">${sig.label}${sampleBadge}</span>
+        <span class="v03-cluster-count">${sig.count}건</span>
       </div>
-      <div class="v03-cluster-check" style="font-size:11px;color:var(--text2);margin-bottom:2px;">${s.countryLabel || ''}</div>
-      <div class="v03-cluster-symptom">${s.symptomSummary || ''}</div>
-      <div class="v03-cluster-diag">${s.diagnosis || ''}</div>
-      ${taskAggHtml}
-      <button class="v03-cluster-anchor-btn" onclick="v03ScrollToSignal('${s.type.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}')">상세 확인 ↓</button>
+      <div class="v03-cluster-symptom">${sig.headline || ''}</div>
+      ${aggHtml}
+      <button class="v03-cluster-anchor-btn" onclick="${anchorFn}">상세 확인 ↓</button>
     </div>`;
   }).join('');
 
@@ -6386,8 +6455,8 @@ function renderMainInsights() {
             ${v03MetricItem('Organic Share', organicShare != null ? `${(organicShare * 100).toFixed(0)}%` : '-', calcChange(organicShare, prevOrganicShare))}
           </div>
         </div>
-        <div class="v03-metric-group">
-          <div class="v03-group-title">${iconSvg('notes', 'ui-icon tiny')} 만족도</div>
+        <div class="v03-metric-group${sat.isSample ? ' v03-sample-group' : ''}">
+          <div class="v03-group-title">${iconSvg('notes', 'ui-icon tiny')} 만족도${sat.isSample ? ' <span class="v03-sample-badge">SAMPLE</span>' : ''}</div>
           <div class="v03-metric-strip">
             ${v03MetricItem('만족도', `${sat.score}%`, sat.scoreMom, true, '%p')}
             ${v03MetricItem('응답 수', formatNum(sat.responses), sat.responsesMom)}
@@ -6399,6 +6468,7 @@ function renderMainInsights() {
         <div class="v03-board-title" style="margin-bottom:12px;">이번 달 핵심 신호</div>
         <div class="v03-signal-pill-row">${pillsHtml}</div>
         <div class="v03-cluster-grid">${clusterCardsHtml}</div>
+        ${dataQualityNotes.length ? `<div class="v03-dq-notice">${dataQualityNotes.map(n=>`<span>⚠ ${n}</span>`).join('')}</div>` : ''}
       </div>
       <div class="v03-panels-2">
         <div class="v03-panel">
@@ -6493,12 +6563,29 @@ function v03ShowAffSection(slug, taskIdx) {
 }
 function v03GetTaskAggregate(slug, tasks) {
   let doing = 0, done = 0;
-  tasks.forEach((_, i) => {
-    const st = v03GetTaskStatus(slug, i);
+  tasks.forEach((task, i) => {
+    const st = (task && task.status) ? task.status : v03GetTaskStatus(slug, i);
     if (st === '진행 중') doing++;
     else if (st === '완료') done++;
   });
   return { doing, done, total: tasks.length };
+}
+function v03GetDdTasks(signalType, fallback) {
+  if (!DASHBOARD_DATA) return fallback || [];
+  const sig = DASHBOARD_DATA.insight_summary && DASHBOARD_DATA.insight_summary[signalType];
+  if (!sig) return fallback || [];
+  return sig.tasks && sig.tasks.length ? sig.tasks : (fallback || []);
+}
+function v03GetDdJudgement(signalType, fallback) {
+  if (!DASHBOARD_DATA) return fallback || '';
+  const sig = DASHBOARD_DATA.insight_summary && DASHBOARD_DATA.insight_summary[signalType];
+  if (!sig || !sig.judgement) return fallback || '';
+  return sig.judgement;
+}
+function v03GetDdPerfNote(signalType) {
+  if (!DASHBOARD_DATA) return '';
+  const perf = DASHBOARD_DATA.performance_notes && DASHBOARD_DATA.performance_notes[signalType];
+  return (perf && perf.note) ? perf.note : '';
 }
 function v03Esc(s) {
   return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -6520,6 +6607,17 @@ function v03ScrollToSignal(type) {
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   const body = el.querySelector('.v03-signal-block-body');
   if (body && body.style.display === 'none') v03ToggleSignalBlock(slug);
+}
+function v03ScrollToJsonTask(taskId) {
+  const el = document.getElementById('v03-json-task-' + taskId);
+  if (!el) { v03ScrollToSignal(taskId); return; }
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const body = el.querySelector('.v03-signal-block-body');
+  if (body && body.style.display === 'none') {
+    body.style.display = '';
+    const icon = el.querySelector('.v03-chevron-icon');
+    if (icon) icon.style.transform = 'rotate(180deg)';
+  }
 }
 function v03ToggleSignalBlock(slug) {
   const el = document.getElementById('v03-signal-block-' + slug);
@@ -7414,290 +7512,139 @@ function renderActionTodosNew() {
   const el = document.getElementById('actionTodosPanel');
   if (!el) return;
 
-  const clusterData = v03GetClusterData() || { signalSlots: [] };
-  const slots = clusterData.signalSlots || [];
+  // Fall back to old GA-based rendering if JSON not loaded
+  if (!DASHBOARD_DATA || !DASHBOARD_DATA.actionSummary) {
+    // keep old rendering: use clusterData
+    const clusterData = v03GetClusterData() || { signalSlots: [] };
+    const slots = clusterData.signalSlots || [];
+    const IMPROVE_TYPES = new Set(['Traffic Drop', 'SEO Weak', 'Conversion Gap', 'Satisfaction Risk']);
+    const PERF_TYPES    = new Set(['Growth Signal', 'Performance Highlight']);
+    const PRIORITY_LABEL = { high: '우선순위 높음', watch: '검토 필요' };
+    let totalDoing = 0, totalDone = 0;
+    slots.forEach(s => {
+      if (!IMPROVE_TYPES.has(s.type)) return;
+      v03GetDdTasks(s.type, s.tasks).forEach((task, i) => {
+        const st = (task && task.status) ? task.status : v03GetTaskStatus(s.slug, i);
+        if (st === '진행 중') totalDoing++;
+        if (st === '완료')    totalDone++;
+      });
+    });
+    el.innerHTML = `<div class="v03-section"><div class="v03-section-head"><div>
+      <div class="v03-title">3. Insight &amp; Action Summary</div>
+      <div class="v03-subtitle">데이터 로딩 중… — 진행 중 ${totalDoing}건 · 완료 ${totalDone}건</div>
+    </div></div></div>`;
+    return;
+  }
 
-  const IMPROVE_TYPES = new Set(['Traffic Drop', 'SEO Weak', 'Conversion Gap', 'Satisfaction Risk']);
-  const PERF_TYPES    = new Set(['Growth Signal', 'Performance Highlight']);
-  const PRIORITY_LABEL = { high: '우선순위 높음', watch: '검토 필요' };
-  const VISIBLE_ROWS   = 3;
-  const COMBO_DEFS = {
-    'Traffic Drop':          [{ sec: 'SEO Weak',              label: '세션↓ + Organic↓' }, { sec: 'Conversion Gap',    label: '세션↓ + 전환↓' }],
-    'SEO Weak':              [{ sec: 'Traffic Drop',          label: 'Organic↓ + 세션↓' }, { sec: 'Conversion Gap',    label: 'Organic↓ + 전환↓' }],
-    'Conversion Gap':        [{ sec: 'Traffic Drop',          label: '전환↓ + 세션↓' },    { sec: 'SEO Weak',          label: '전환↓ + Organic↓' }],
-    'Satisfaction Risk':     [{ sec: 'Traffic Drop',          label: '만족도↓ + 세션↓' }],
-    'Growth Signal':         [{ sec: 'Performance Highlight', label: '성장 + 전환우수' }],
-    'Performance Highlight': [{ sec: 'Growth Signal',         label: '전환우수 + 성장' }],
+  const trackedTasks = DASHBOARD_DATA.actionSummary.trackedTasks || [];
+  const sampleTasks  = DASHBOARD_DATA.actionSummary.sampleDisplayTasks || [];
+  const period = DASHBOARD_DATA.meta.reportingMonth || '';
+
+  const totalDoing = trackedTasks.filter(t => t.status === '진행 중').length;
+  const totalDone  = trackedTasks.filter(t => t.status === '완료').length;
+
+  const SIGNAL_TONE_MAP = { 'Traffic Drop':'risk','SEO Weak':'watch','Conversion Gap':'watch','Satisfaction Risk':'risk','Growth Signal':'good','Performance Highlight':'good' };
+
+  const buildRequestHtml = (req) => {
+    if (!req) return '';
+    return `<div class="v03-aff-section-static" style="margin-top:8px;">
+      <div class="v03-aff-static-header">협조 요청</div>
+      <div class="v03-aff-static-row"><span style="opacity:.6;margin-right:4px;">대상</span>${v03Esc(req.target)}</div>
+      <div class="v03-aff-static-row"><span style="opacity:.6;margin-right:4px;">유형</span>${v03Esc(req.type)}</div>
+      ${req.detail ? `<div class="v03-aff-static-sub">${v03Esc(req.detail)}</div>` : ''}
+      ${req.status ? `<div class="v03-aff-static-row" style="margin-top:4px;"><span style="opacity:.6;margin-right:4px;">요청 상태</span><span class="v03-task-status-badge pending" style="font-size:9px;">${v03Esc(req.status)}</span></div>` : ''}
+    </div>`;
   };
 
-  let totalDoing = 0, totalDone = 0;
-  slots.forEach(s => {
-    if (!IMPROVE_TYPES.has(s.type)) return;
-    (s.tasks || []).forEach((_, i) => {
-      const st = v03GetTaskStatus(s.slug, i);
-      if (st === '진행 중') totalDoing++;
-      if (st === '완료')    totalDone++;
-    });
-  });
+  const buildTaskBlock = (task, isSample) => {
+    const statusCls = task.status === '진행 중' ? 'doing' : task.status === '완료' ? 'done' : task.status === '보류' ? 'hold' : 'pending';
+    const tone = SIGNAL_TONE_MAP[task.signal] || 'watch';
+    const relTagsHtml = (task.relatedSignals || []).map(rs =>
+      `<span class="v03-tag ${SIGNAL_TONE_MAP[rs]||'watch'}" style="font-size:9px;padding:1px 6px;">${rs}</span>`
+    ).join('');
+    const checklistHtml = (task.checklist || []).map(c =>
+      `<div class="v03-task-action-item">• ${v03Esc(c)}</div>`
+    ).join('');
+    const targetInfo = task.target ? `${task.target.country} · ${task.target.category} · ${task.target.contentLabel || task.target.contentType}` : '';
+    const sampleBanner = isSample ? `<div class="v03-sample-notice" style="margin-bottom:8px;padding:5px 8px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.2);border-radius:6px;font-size:10px;color:#fbbf24;">⚠ SAMPLE — 실데이터 수집 전 화면 검증용 예시입니다. 운영 과제로 관리하지 않습니다.</div>` : '';
+    const sampleHeader = isSample ? '<span class="v03-sample-badge" style="margin-left:6px;">SAMPLE</span>' : '';
 
-  /* ── 영향 대상 테이블 빌더 ── */
-  function buildTableHtml(s) {
-    if (s.empty || !s.affectedItems || !s.affectedItems.length) return '';
-    const slug  = s.slug;
-    const isSat = s.type === 'Satisfaction Risk';
-    const isSeo = s.type === 'SEO Weak';
-    const rows  = s.affectedItems;
-    const isPerf = PERF_TYPES.has(s.type);
-
-    const thead = isSat
-      ? `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>만족도</th><th>부정응답률</th><th>주요 부정 이유</th><th></th></tr>`
-      : isSeo
-      ? `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Organic Share</th><th>Organic Sessions MoM</th><th>PLP Conv.</th></tr>`
-      : `<tr><th>국가</th><th>콘텐츠</th><th>카테고리</th><th>Sessions MoM</th><th>PLP Conv.</th><th>Organic Share</th></tr>`;
-
-    const tbody = rows.map((row, i) => {
-      const hidden  = i >= VISIBLE_ROWS ? ' v03-hidden-row' : '';
-      const secAttr = (row.secondary || []).length ? ` data-combosec="${(row.secondary||[]).join(',')}"` : '';
-      if (isSat) {
-        const reasonTags = (row.topNegReasons||[]).map(r =>
-          `<span style="background:rgba(239,68,68,.1);color:var(--red);border-radius:4px;padding:1px 6px;font-size:10px;font-weight:700;white-space:nowrap;">${r}</span>`
-        ).join(' ');
-        const cf = `switchToSatisfaction({country:'${row.country}',content:'${row.content_type}',category:'${row.category}',commentChip:'negative'})`;
-        return `<tr class="${hidden}"${secAttr}>
-          <td><strong>${row.country}</strong></td>
-          <td style="font-size:11px;color:var(--text2);">${row.contentType}</td>
-          <td style="color:var(--text2);">${row.category}</td>
-          <td class="v03-cell-down">${row.satPctVal}</td>
-          <td class="v03-cell-down">${row.negRateVal}</td>
-          <td style="font-size:11px;">${reasonTags||'–'}</td>
-          <td><button class="v03-mini-btn" onclick="${cf}">확인</button></td>
-        </tr>`;
-      }
-      if (isSeo) {
-        const share = parseFloat(row.organicShareVal);
-        const omom  = parseFloat(row.organicMomVal);
-        const plp   = parseFloat(row.plpConvVal);
-        const shareCls = isNaN(share) ? '' : share < 20 ? 'v03-cell-down' : share < 30 ? 'v03-cell-warn' : '';
-        const omomCls  = isNaN(omom)  ? '' : omom < 0  ? 'v03-cell-down' : 'v03-cell-up';
-        const plpCls   = isNaN(plp)   ? '' : plp < 20  ? 'v03-cell-warn' : plp > 35 ? 'v03-cell-up' : '';
-        return `<tr class="${hidden}"${secAttr}><td><strong>${row.country}</strong></td><td>${row.contentType}</td><td>${row.category}</td><td class="${shareCls}">${row.organicShareVal}</td><td class="${omomCls}">${row.organicMomVal}</td><td class="${plpCls}">${row.plpConvVal}</td></tr>`;
-      }
-      const mom = parseFloat(row.sessionsMomVal);
-      const plp = parseFloat(row.plpConvVal);
-      const org = parseFloat(row.organicShareVal);
-      const momCls = isNaN(mom) ? '' : mom < 0 ? 'v03-cell-down' : mom > 5 ? 'v03-cell-up' : 'v03-cell-warn';
-      const plpCls = isNaN(plp) ? '' : plp < 20 ? 'v03-cell-warn' : plp > 35 ? 'v03-cell-up' : '';
-      const orgCls = isNaN(org) ? '' : org < 20 ? 'v03-cell-warn' : '';
-      return `<tr class="${hidden}"${secAttr}><td><strong>${row.country}</strong></td><td>${row.contentType}</td><td>${row.category}</td><td class="${momCls}">${row.sessionsMomVal}</td><td class="${plpCls}">${row.plpConvVal}</td><td class="${orgCls}">${row.organicShareVal}</td></tr>`;
-    }).join('');
-
-    const comboDefs = COMBO_DEFS[s.type] || [];
-    const comboChipItems = comboDefs.map(def => {
-      const cnt = rows.filter(r => (r.secondary || []).includes(def.sec)).length;
-      if (!cnt) return '';
-      return `<button class="v03-combo-chip" onclick="v03ToggleComboChip(this,'${slug}','${def.sec}')"><span class="v03-chip-count">${cnt}건</span> ${def.label}</button>`;
-    }).filter(Boolean).join('');
-    const comboChipsHtml = comboChipItems ? `<div class="v03-combo-chips">${comboChipItems}</div>` : '';
-
-    const extra = rows.length - VISIBLE_ROWS;
-    const expandBtn = extra > 0
-      ? `<button class="v03-expand-row-btn" onclick="v03ExpandAffectedRows('${slug}')">외 ${extra}건 더 보기 ↓</button>`
-      : '';
-
-    return `<div class="v03-signal-field">
-      <div class="v03-signal-field-label">${isPerf ? '성과 확인' : '영향 대상'} (${rows.length}건)</div>
-      ${comboChipsHtml}
-      <div class="v03-affected-table-wrap" id="v03-affected-${slug}">
-        <table class="v03-affected-table"><thead>${thead}</thead><tbody>${tbody}</tbody></table>
-        ${expandBtn}
-      </div>
-    </div>`;
-  }
-
-  /* ── HSAD 대응 과제 빌더 ── */
-  function buildTasksHtml(s) {
-    const tasks = s.tasks || [];
-    if (!tasks.length) return '';
-    const slug = s.slug;
-
-    const taskCardsHtml = tasks.map((task, i) => {
-      const status = v03GetTaskStatus(slug, i);
-      const sCls   = v03StatusClass(status);
-      const notes  = v03GetTaskNotes(slug, i);
-      const opts   = ['진행 전','진행 중','완료','보류']
-        .map(st => `<option value="${st}"${st === status ? ' selected' : ''}>${st}</option>`).join('');
-      const actionsHtml = (task.actions || []).map(a =>
-        `<div class="v03-task-action-item">• ${a}</div>`
-      ).join('');
-      const affCountry = v03GetAffField(slug, i, 'country');
-      const affType    = v03GetAffField(slug, i, 'type') || '콘텐츠 업데이트';
-      const affContent = v03GetAffField(slug, i, 'content');
-      const hasAff     = !!(affCountry || affContent);
-      const affTypes   = ['콘텐츠 업데이트','이미지/영상 교체','스펙 보완','기타'];
-      const affSectionHtml = `<div class="v03-aff-section" id="v03-aff-section-${slug}-${i}"${hasAff ? '' : ' style="display:none"'}>
-          <div class="v03-aff-header">법인 요청</div>
-          <div class="v03-aff-row"><label>요청 법인</label><input type="text" value="${v03Esc(affCountry)}" placeholder="예: FR, DE, IT" oninput="v03SetAffField('${slug}',${i},'country',this.value)"></div>
-          <div class="v03-aff-row"><label>요청 유형</label><select onchange="v03SetAffField('${slug}',${i},'type',this.value)">${affTypes.map(o=>`<option value="${o}"${affType===o?' selected':''}>${o}</option>`).join('')}</select></div>
-          <div class="v03-aff-row"><label>요청 내용</label><textarea oninput="v03SetAffField('${slug}',${i},'content',this.value)">${v03Esc(affContent)}</textarea></div>
-        </div>`;
-      return `<div class="v03-task-card">
-        <div class="v03-task-header">
-          <div class="v03-task-left">
-            <span class="v03-task-num">${i + 1}.</span>
-            <span class="v03-task-name">${task.name}</span>
-          </div>
-          <select class="v03-status-select ${sCls}" onclick="event.stopPropagation()" onchange="v03SetTaskStatus('${slug}',${i},this.value)">${opts}</select>
-        </div>
-        <div class="v03-task-action-list">${actionsHtml}</div>
-        <div class="v03-task-notes-wrap">
-          <div class="v03-task-notes-label">메모</div>
-          <textarea class="v03-task-notes-input" placeholder="메모 입력…" oninput="v03SaveTaskNotes('${slug}',${i},this.value)">${v03Esc(notes)}</textarea>
-        </div>
-        <div class="v03-aff-wrap">
-          ${hasAff ? '' : `<button class="v03-aff-toggle-btn" id="v03-aff-btn-${slug}-${i}" onclick="v03ShowAffSection('${slug}',${i})">+ 법인 요청</button>`}
-          ${affSectionHtml}
-        </div>
-      </div>`;
-    }).join('');
-
-    return `<div class="v03-signal-field">
-      <div class="v03-signal-field-label">HSAD 대응 과제</div>
-      <div class="v03-tasks-list">${taskCardsHtml}</div>
-    </div>`;
-  }
-
-  /* ── 개선 신호 블록 빌더 ── */
-  function buildImproveBlock(s) {
-    const slug     = s.slug;
-    const isEmpty  = s.empty || s.count === 0;
-    const priLabel = PRIORITY_LABEL[s.priority] || s.priority;
-    const chevron  = `<span class="v03-chevron-icon" style="transition:transform .2s;transform:rotate(180deg)">${iconSvg('chevron_down','ui-icon tiny')}</span>`;
-
-    const tasks = s.tasks || [];
-    let aggHtml = '';
-    if (!isEmpty && tasks.length) {
-      const agg = v03GetTaskAggregate(slug, tasks);
-      const parts = [];
-      if (agg.doing) parts.push(`진행 중 ${agg.doing}`);
-      if (agg.done)  parts.push(`완료 ${agg.done}`);
-      if (parts.length) aggHtml = `<span class="v03-cluster-task-status" style="margin-left:6px;">${parts.join(' · ')}</span>`;
-    }
-
-    const tableHtml  = buildTableHtml(s);
-    const tasksHtml  = isEmpty ? '' : buildTasksHtml(s);
-    const footerHtml = (s.links || []).map(lk => `<button class="v03-mini-btn" onclick="${lk.fn}">${lk.label} →</button>`).join('');
-
-    const bodyContent = isEmpty
-      ? `<div class="v03-signal-block-body"><div style="color:var(--text2);font-size:12px;font-style:italic;padding:4px 0;">이번 달 감지된 신호 없음</div></div>`
-      : `<div class="v03-signal-block-body">
-          <div class="v03-signal-field">
-            <div class="v03-signal-field-label">감지된 신호</div>
-            <div class="v03-signal-field-text">${s.signalText}</div>
-          </div>
-          <div class="v03-signal-field">
-            <div class="v03-signal-field-label">판단</div>
-            <div class="v03-signal-field-text">${s.judgement}</div>
-          </div>
-          ${tableHtml}
-          ${tasksHtml}
-          ${footerHtml ? `<div class="v03-block-footer">${footerHtml}</div>` : ''}
-        </div>`;
-
-    return `<div class="v03-signal-block" id="v03-signal-block-${slug}">
-      <div class="v03-signal-block-header" onclick="v03ToggleSignalBlock('${slug}')">
+    return `<div class="v03-signal-block${isSample?' v03-signal-block-sample':''}" id="v03-json-task-${task.id}" style="margin-bottom:10px;">
+      <div class="v03-signal-block-header">
         <div class="v03-signal-block-title">
-          <span class="v03-tag ${s.tone}">${s.type}</span>
-          <span class="v03-priority-badge ${s.priority}">${priLabel}</span>
-          <span style="font-size:12px;color:var(--text2);font-weight:500;">${isEmpty ? '0건' : s.count + '건'}</span>
-          ${aggHtml}
+          <span class="v03-tag ${tone}">${task.signal}${sampleHeader}</span>
+          ${relTagsHtml}
+          <span style="font-size:11px;color:var(--text2);font-weight:600;margin-left:4px;">${task.id}</span>
+          ${isSample ? '' : `<span class="v03-task-status-badge ${statusCls}" style="margin-left:6px;">${task.status || '진행 전'}</span>`}
         </div>
-        <span class="v03-signal-block-meta">${isEmpty ? '' : (s.countryLabel || '')}</span>
-        ${chevron}
+        <span class="v03-signal-block-meta" style="font-size:11px;color:var(--text2);">${targetInfo}</span>
+        <span class="v03-chevron-icon" style="transition:transform .2s;transform:rotate(180deg)">${iconSvg('chevron_down','ui-icon tiny')}</span>
       </div>
-      ${bodyContent}
-    </div>`;
-  }
-
-  /* ── 성과 신호 블록 빌더 ── */
-  function buildPerfBlock(s) {
-    const slug    = s.slug;
-    const isEmpty = s.empty || s.count === 0;
-    const chevron = `<span class="v03-chevron-icon" style="transition:transform .2s;transform:rotate(180deg)">${iconSvg('chevron_down','ui-icon tiny')}</span>`;
-
-    const tableHtml  = buildTableHtml(s);
-    const footerHtml = (s.links || []).map(lk => `<button class="v03-mini-btn" onclick="${lk.fn}">${lk.label} →</button>`).join('');
-
-    const bodyContent = isEmpty
-      ? `<div class="v03-signal-block-body"><div style="color:var(--text2);font-size:12px;font-style:italic;padding:4px 0;">이번 달 감지된 신호 없음</div></div>`
-      : `<div class="v03-signal-block-body">
-          <div class="v03-signal-field">
-            <div class="v03-signal-field-label">감지된 신호</div>
-            <div class="v03-signal-field-text">${s.signalText}</div>
-          </div>
-          <div class="v03-signal-field">
-            <div class="v03-signal-field-label">활용 포인트</div>
-            <div class="v03-signal-field-text">${s.judgement}</div>
-          </div>
-          ${tableHtml}
-          ${footerHtml ? `<div class="v03-block-footer">${footerHtml}</div>` : ''}
-        </div>`;
-
-    return `<div class="v03-signal-block green" id="v03-signal-block-${slug}">
-      <div class="v03-signal-block-header" onclick="v03ToggleSignalBlock('${slug}')">
-        <div class="v03-signal-block-title">
-          <span class="v03-tag ${s.tone}">${s.type}</span>
-          <span class="v03-priority-badge good">양호</span>
-          <span style="font-size:12px;color:var(--text2);font-weight:500;">${isEmpty ? '0건' : s.count + '건'}</span>
+      <div class="v03-signal-block-body">
+        ${sampleBanner}
+        <div class="v03-signal-field">
+          <div class="v03-signal-field-label">감지된 신호</div>
+          <div class="v03-signal-field-text">${v03Esc(task.detectedSignal)}</div>
         </div>
-        <span class="v03-signal-block-meta">${isEmpty ? '' : (s.countryLabel || '')}</span>
-        ${chevron}
+        <div class="v03-signal-field">
+          <div class="v03-signal-field-label">판단</div>
+          <div class="v03-signal-field-text">${v03Esc(task.assessment)}</div>
+        </div>
+        <div class="v03-signal-field">
+          <div class="v03-signal-field-label">HSAD 대응 과제</div>
+          <div class="v03-tasks-list">
+            <div class="v03-task-card">
+              <div class="v03-task-header">
+                <div class="v03-task-left">
+                  <span class="v03-task-name">${v03Esc(task.taskTitle)}</span>
+                </div>
+                ${isSample ? '' : `<span class="v03-task-status-badge ${statusCls}">${task.status || '진행 전'}</span>`}
+              </div>
+              <div class="v03-task-action-list">${checklistHtml}</div>
+              ${buildRequestHtml(task.requestCandidate)}
+            </div>
+          </div>
+        </div>
       </div>
-      ${bodyContent}
     </div>`;
-  }
+  };
 
-  const improveSlots = slots.filter(s => IMPROVE_TYPES.has(s.type));
-  const perfSlots    = slots.filter(s => PERF_TYPES.has(s.type));
-
-  const improveBlocksHtml = improveSlots.map(buildImproveBlock).join('');
-  const perfBlocksHtml    = perfSlots.map(buildPerfBlock).join('');
-
-  const T = V03_SIGNAL_THRESHOLDS;
-  const criteriaHtml = `<div class="v03-criteria-wrap">
-    <button class="v03-criteria-toggle" onclick="v03ToggleCriteria()">
-      ${iconSvg('info','ui-icon tiny')} 감지 기준 안내
-      <span id="v03-criteria-icon" style="margin-left:auto;transition:transform .2s;">${iconSvg('chevron_down','ui-icon tiny')}</span>
-    </button>
-    <div id="v03-criteria-body" style="display:none" class="v03-criteria-body">
-      <table class="v03-criteria-table">
-        <thead><tr><th>신호</th><th>감지 기준</th></tr></thead>
-        <tbody>
-          <tr><td><span class="v03-tag risk">Traffic Drop</span></td><td>Sessions MoM ≤${T.sessionsMomDown}% · 최소 세션 ${T.sessionsMinVol} 이상 페이지 대상</td></tr>
-          <tr><td><span class="v03-tag watch">SEO Weak</span></td><td>Organic Share &lt;${T.organicShareWeak * 100}% AND Organic Sessions MoM 감소 · 동종 콘텐츠+카테고리 내 하위 25% 추가 확증 (peer 4개 이상)</td></tr>
-          <tr><td><span class="v03-tag watch">Conversion Gap</span></td><td>PLP Conv. &lt;${T.convGapThreshold * 100}% · 최소 세션 ${T.convGapMinSessions} 이상 페이지 대상</td></tr>
-          <tr><td><span class="v03-tag risk">Satisfaction Risk</span></td><td>만족도 &lt;75% 또는 부정 응답률 &gt;20% · 응답 수 3건 이상 국가 대상</td></tr>
-          <tr><td><span class="v03-tag good">Growth Signal</span></td><td>Sessions MoM ≥+${T.sessionsMomUp}% AND PLP MoM ≥+${T.plpConvMomUp}%p · 두 조건 동시 충족</td></tr>
-          <tr><td><span class="v03-tag good">Performance Highlight</span></td><td>PLP Conv. ≥${T.replicationConv * 100}% AND Sessions MoM ≥${T.replicationMomFloor}%</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>`;
+  const trackedHtml = trackedTasks.map(t => buildTaskBlock(t, false)).join('');
+  const sampleHtml  = sampleTasks.length ? `
+    <div class="v03-signal-group-label" style="margin-top:16px;">디자인 검증 예시 <span class="v03-sample-badge">SAMPLE</span></div>
+    ${sampleTasks.map(t => buildTaskBlock(t, true)).join('')}
+  ` : '';
 
   el.innerHTML = `<div class="v03-section">
     <div class="v03-section-head">
       <div>
         <div class="v03-title">3. Insight &amp; Action Summary</div>
-        <div class="v03-subtitle">신호 유형별 감지 내용 · 판단 · HSAD 대응 과제 — 진행 중 ${totalDoing}건 · 완료 ${totalDone}건</div>
+        <div class="v03-subtitle">신호 유형별 감지 내용 · 판단 · HSAD 대응 과제 — 진행 중 ${totalDoing}건 · 완료 ${totalDone}건 (${period})</div>
       </div>
     </div>
-    ${criteriaHtml}
     <div class="v03-signal-block-list">
       <div class="v03-signal-group-label">점검 필요</div>
-      ${improveBlocksHtml}
-      <div class="v03-signal-group-label perf">성과 확인</div>
-      ${perfBlocksHtml}
+      ${trackedHtml}
+      ${sampleHtml}
     </div>
   </div>`;
+
+  // Wire up toggle handlers for each block
+  trackedTasks.concat(sampleTasks).forEach(task => {
+    const taskEl = document.getElementById('v03-json-task-' + task.id);
+    if (!taskEl) return;
+    const header = taskEl.querySelector('.v03-signal-block-header');
+    if (header) {
+      header.onclick = () => {
+        const body = taskEl.querySelector('.v03-signal-block-body');
+        const icon = taskEl.querySelector('.v03-chevron-icon');
+        if (!body) return;
+        const isOpen = body.style.display !== 'none';
+        body.style.display = isOpen ? 'none' : '';
+        if (icon) icon.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+      };
+    }
+  });
 }
 
 function renderContentDirectionNew() {
@@ -7778,6 +7725,7 @@ function renderContentDirectionNew() {
 // ============================================================
 // SATISFACTION TAB
 // ============================================================
+let DASHBOARD_DATA = null;
 let SAT_DATA = null;
 let satFilters = {
   period: null, country: 'all', category: 'all', highlightNeg: false
@@ -7797,6 +7745,107 @@ async function loadSatisfactionData() {
     renderContentDirectionNew();
   } catch(e) {
     if (el) el.innerHTML = `<div style="padding:60px;text-align:center;color:var(--text2);font-size:14px;">만족도 데이터를 불러올 수 없습니다.<br><span style="font-size:11px;opacity:.6">${e.message}</span></div>`;
+  }
+}
+
+async function loadDashboardData() {
+  try {
+    const r = await fetch('data/dashboard_data.json');
+    DASHBOARD_DATA = await r.json();
+    // Synthesize SAT_DATA from satisfactionSummary
+    if (DASHBOARD_DATA.satisfactionSummary && DASHBOARD_DATA.satisfactionSummary.responses) {
+      const period = DASHBOARD_DATA.meta.reportingMonth;
+      const rawRecs = DASHBOARD_DATA.satisfactionSummary.responses;
+      // Build normalized response rows
+      const responses = rawRecs.map(rec => ({
+        period,
+        country: rec.country,
+        category: rec.category,
+        content_type: rec.contentType,
+        helpful: rec.helpful,
+        reasons: rec.reasons || [],
+        reason: Array.isArray(rec.reasons) ? rec.reasons[0] || '' : '',
+        comment: rec.comment || '',
+        device: rec.device || '',
+        isSample: true
+      }));
+      // Compute monthly aggregation
+      const pos  = responses.filter(rec => rec.helpful === 'Yes');
+      const neg  = responses.filter(rec => rec.helpful === 'No');
+      const total = responses.length;
+      const satPct = total ? +(pos.length / total * 100).toFixed(1) : 0;
+      const negRate = total ? +(neg.length / total * 100).toFixed(1) : 0;
+      const mobilePct = total ? +(responses.filter(rec => /Mobile/i.test(rec.device)).length / total * 100).toFixed(1) : 0;
+      // by_country
+      const byCountry = {};
+      responses.forEach(rec => {
+        if (!byCountry[rec.country]) byCountry[rec.country] = { pos:0, total:0 };
+        byCountry[rec.country].total++;
+        if (rec.helpful === 'Yes') byCountry[rec.country].pos++;
+      });
+      const by_country = {};
+      Object.entries(byCountry).forEach(([c, d]) => {
+        by_country[c] = { satisfaction_pct: +(d.pos/d.total*100).toFixed(1), total: d.total };
+      });
+      // by_category
+      const byCat = {};
+      responses.forEach(rec => {
+        const cat = canonicalCategory(rec.category);
+        if (!byCat[cat]) byCat[cat] = { pos:0, total:0 };
+        byCat[cat].total++;
+        if (rec.helpful === 'Yes') byCat[cat].pos++;
+      });
+      const by_category = {};
+      Object.entries(byCat).forEach(([c, d]) => {
+        by_category[c] = { satisfaction_pct: +(d.pos/d.total*100).toFixed(1), total: d.total };
+      });
+      // by_content_type
+      const byCt = {};
+      responses.forEach(rec => {
+        if (!byCt[rec.content_type]) byCt[rec.content_type] = { pos:0, total:0 };
+        byCt[rec.content_type].total++;
+        if (rec.helpful === 'Yes') byCt[rec.content_type].pos++;
+      });
+      const by_content_type = {};
+      Object.entries(byCt).forEach(([ct, d]) => {
+        by_content_type[ct] = { satisfaction_pct: +(d.pos/d.total*100).toFixed(1), total: d.total };
+      });
+      // reasons by content_type
+      const reasonsByCt = { lineup: { positive:{}, negative:{} }, feature: { positive:{}, negative:{} } };
+      responses.forEach(rec => {
+        const ct = rec.content_type === 'lineup' ? 'lineup' : 'feature';
+        const polarity = rec.helpful === 'Yes' ? 'positive' : 'negative';
+        (rec.reasons || []).forEach(rsn => {
+          reasonsByCt[ct][polarity][rsn] = (reasonsByCt[ct][polarity][rsn] || 0) + 1;
+        });
+      });
+      const monthly = {
+        satisfaction_pct: satPct,
+        total,
+        negative_rate: negRate,
+        positive_rate: satPct,
+        mobile_pct: mobilePct,
+        by_country,
+        by_category,
+        by_content_type,
+        reasons: reasonsByCt,
+        isSample: true
+      };
+      const countries = [...new Set(responses.map(rec => rec.country))].sort();
+      const categories = sortCategories([...new Set(responses.map(rec => canonicalCategory(rec.category)))]);
+      SAT_DATA = {
+        meta: { latest_period: period, prev_period: null, categories, countries, isSample: true },
+        monthly: { [period]: monthly },
+        prev_monthly: {},
+        responses,
+        isSample: true
+      };
+      if (!satFilters.period) satFilters.period = period;
+    }
+    renderActionTodosNew();
+    renderMainInsights();
+  } catch(e) {
+    console.warn('dashboard_data.json load failed:', e.message);
   }
 }
 
@@ -7944,8 +7993,15 @@ function renderSatisfactionTab() {
   const responses = satFilteredResponses();
   const periodAll = SAT_DATA.responses.filter(r => r.period === (satFilters.period || SAT_DATA.meta.latest_period));
 
+  const sampleNotice = (SAT_DATA && SAT_DATA.isSample)
+    ? `<div class="v03-sample-notice" style="background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);border-radius:10px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#fbbf24;">
+        <strong>SAMPLE DATA</strong> — 실제 설문 응답이 아직 없습니다. 화면·분석 흐름 검증용 샘플이며 운영 판단에 사용하지 않습니다.
+      </div>`
+    : '';
+
   el.innerHTML = `
     <div style="padding:0 0 40px;">
+      ${sampleNotice}
       ${satRenderTopFilter()}
       <div style="display:grid;grid-template-columns:2fr 3fr;gap:14px;margin-top:14px;">
         ${satRenderOverview(monthly, prev)}
@@ -7982,8 +8038,8 @@ function satRenderTopFilter() {
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:14px;">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;">
         <div>
-          <div style="font-size:15px;font-weight:800;color:var(--text);">Satisfaction Analysis</div>
-          <div style="font-size:11px;color:var(--text2);margin-top:2px;">콘텐츠 범위: <strong>${contentLabel}</strong> — 페이지 상단 필터 기준</div>
+          <div style="font-size:15px;font-weight:800;color:var(--text);">Satisfaction Analysis${SAT_DATA && SAT_DATA.isSample ? ' <span class="v03-sample-badge">SAMPLE</span>' : ''}</div>
+          <div style="font-size:11px;color:var(--text2);margin-top:2px;">콘텐츠 범위: <strong>${contentLabel}</strong> — 페이지 상단 필터 기준${SAT_DATA && SAT_DATA.isSample ? ' · <span style="color:#fbbf24;">실응답 없음, UI 검증용 샘플 데이터</span>' : ''}</div>
         </div>
         <button class="sat-download-btn" onclick="satExportCSV()" title="현재 조회 조건과 관계없이 전체 객관식 및 주관식 응답 데이터를 다운로드합니다.">⬇ 전체 설문 응답 다운로드</button>
       </div>
@@ -8085,7 +8141,7 @@ function satRenderOverview(monthly, prev) {
 
   return `
     <div class="sat-section-card" style="display:flex;flex-direction:column;justify-content:space-between;">
-      <div class="sat-section-header"><span class="sat-section-num">1</span> Satisfaction Overview</div>
+      <div class="sat-section-header"><span class="sat-section-num">1</span> Satisfaction Overview${SAT_DATA && SAT_DATA.isSample ? ' <span class="v03-sample-badge">SAMPLE</span>' : ''}</div>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
         ${bigKpi(icoSmiley,'전체 만족도',monthly.satisfaction_pct.toFixed(0)+'%',momArrow(satDiff,false))}
         ${bigKpi(icoPeople,'응답 수',monthly.total,momArrowCount(totalDiff))}
