@@ -6402,6 +6402,15 @@ function renderMainInsights() {
 
   const dataQualityNotes = (DASHBOARD_DATA && DASHBOARD_DATA.meta && DASHBOARD_DATA.meta.dataQualityNotes) || [];
 
+  const criteriaTooltipHtml = (() => {
+    const cl = (DASHBOARD_DATA && DASHBOARD_DATA.meta && DASHBOARD_DATA.meta.signalCriteria) || [];
+    if (!cl.length) return '';
+    const rows = cl.map(c =>
+      `<div style='margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.07)'><b style='color:#fff;font-size:10px;font-weight:700'>${c.label}</b><br><span style='color:rgba(255,255,255,.55)'>${c.criteria}</span></div>`
+    ).join('');
+    return `<div style='color:rgba(255,255,255,.45);margin-bottom:2px;line-height:1.5'>KPI 목표치가 아니라, 이번 달 우선 확인할 신호를 찾기 위한 판정 조건입니다.</div>${rows}`;
+  })();
+
   const clusterCardsHtml = signals.map(sig => {
     const tone = SIGNAL_TONE[sig.code] || 'watch';
     const isPerf = sig.type === 'performance';
@@ -6481,43 +6490,11 @@ function renderMainInsights() {
         </div>
       </div>
       <div class="v03-signal-board">
-        <div class="v03-board-title" style="margin-bottom:12px;">이번 달 핵심 신호</div>
+        <div class="v03-board-title" style="margin-bottom:12px;">이번 달 핵심 신호${criteriaTooltipHtml ? `<span class="v03-info-btn" data-tiphtml="${criteriaTooltipHtml}" data-tipwidth="300px" onmouseenter="v03ShowTip(this)" onmouseleave="v03HideTip()" style="margin-left:6px;vertical-align:middle;">i</span>` : ''}</div>
         <div class="v03-signal-pill-row">${pillsHtml}</div>
         <div class="v03-cluster-grid">${clusterCardsHtml}</div>
         ${dataQualityNotes.length ? `<div class="v03-dq-notice">${dataQualityNotes.map(n=>`<span>⚠ ${n}</span>`).join('')}</div>` : ''}
       </div>
-      ${(() => {
-        const ci = DASHBOARD_DATA && DASHBOARD_DATA.meta && DASHBOARD_DATA.meta.signalCriteriaIntro;
-        const cl = (DASHBOARD_DATA && DASHBOARD_DATA.meta && DASHBOARD_DATA.meta.signalCriteria) || [];
-        if (!ci && !cl.length) return '';
-        const rowsHtml = cl.map(c => {
-          const tone = SIGNAL_TONE[c.code] || 'watch';
-          return `<div class="v03-criteria-row">
-            <div><span class="v03-tag ${tone} v03-criteria-sig-label">${c.label}</span></div>
-            <div>
-              <div class="v03-criteria-field-label">감지 조건</div>
-              <div class="v03-criteria-field-val">${c.criteria}</div>
-            </div>
-            <div>
-              <div class="v03-criteria-field-label">기준을 둔 이유</div>
-              <div class="v03-criteria-field-val">${c.why}</div>
-            </div>
-          </div>`;
-        }).join('');
-        return `<div class="v03-criteria-wrap" id="v03-criteria-section">
-          <button class="v03-criteria-toggle" onclick="(function(btn){var body=btn.closest('.v03-criteria-wrap').querySelector('.v03-criteria-body');var chev=btn.querySelector('.v03-criteria-chevron');if(body.style.display===''){body.style.display='none';chev.style.transform='';}else{body.style.display='';chev.style.transform='rotate(180deg)';}})(this)">
-            <span class="v03-criteria-toggle-label">신호 감지 조건</span>
-            <span class="v03-criteria-chevron">▼</span>
-          </button>
-          <div class="v03-criteria-body" style="display:none;">
-            ${ci ? `<div class="v03-criteria-intro">
-              ${ci.description}
-              ${ci.sampleFilterNote ? `<div class="v03-criteria-filter-note">* ${ci.sampleFilterNote}</div>` : ''}
-            </div>` : ''}
-            ${rowsHtml}
-          </div>
-        </div>`;
-      })()}
       <div class="v03-panels-2">
         <div class="v03-panel">
           <div class="v03-panel-title">라인업 가이드</div>
@@ -6696,6 +6673,7 @@ function v03ExpandAffectedRows(slug) {
 function v03ShowTip(el) {
   const tip = document.getElementById('v03-global-tip');
   tip.innerHTML = el.dataset.tiphtml || '';
+  tip.style.maxWidth = el.dataset.tipwidth || '240px';
   tip.style.display = 'block';
   const rect = el.getBoundingClientRect();
   const tipW = tip.offsetWidth;
