@@ -4498,6 +4498,9 @@ function getFilteredSheets(options = {}) {
 }
 
 function getAvailablePeriods() {
+  if (MONTH_INDEX && MONTH_INDEX.availableMonths && MONTH_INDEX.availableMonths.length) {
+    return MONTH_INDEX.availableMonths.map(m => m.value);
+  }
   return DATA?.meta?.periods_available || (DATA?.meta?.months_available || []).map(month => `2026-${month}`);
 }
 function getMonths() { return getAvailablePeriods(); }
@@ -4743,6 +4746,16 @@ function toggleMonthPicker(forceOpen) {
 function selectGlobalMonth(month) {
   selectedMonth = month;
   toggleMonthPicker(false);
+  if (MONTH_INDEX && MONTH_INDEX.availableMonths) {
+    const entry = MONTH_INDEX.availableMonths.find(m => m.value === month);
+    if (entry) {
+      loadMonthlyDashboardData(entry.dataFile).then(() => render()).catch(e => {
+        console.warn('Monthly data load failed:', e.message);
+        render();
+      });
+      return;
+    }
+  }
   render();
 }
 
@@ -7753,12 +7766,81 @@ function renderContentDirectionNew() {
 // ============================================================
 let DASHBOARD_DATA = null;
 let SAT_DATA = null;
+let MONTH_INDEX = null;
 let satFilters = {
   period: null, country: 'all', category: 'all', highlightNeg: false
 };
 let satCommentPage = 1;
 let satNavBanner = null; // { text } | null — only set when navigating from Satisfaction Risk
 const SAT_PER_PAGE = 20;
+
+function synthesizeSatData(dashData) {
+  if (!dashData || !dashData.satisfactionSummary || !dashData.satisfactionSummary.responses) return null;
+  const period = dashData.meta.reportingMonth;
+  const rawRecs = dashData.satisfactionSummary.responses;
+  const responses = rawRecs.map(rec => ({
+    period,
+    country: rec.country,
+    category: rec.category,
+    content_type: rec.contentType,
+    helpful: rec.helpful,
+    reasons: rec.reasons || [],
+    reason: Array.isArray(rec.reasons) ? rec.reasons[0] || '' : '',
+    comment: rec.comment || '',
+    device: rec.device || '',
+    isSample: true
+  }));
+  const pos = responses.filter(r => r.helpful === 'Yes');
+  const neg = responses.filter(r => r.helpful === 'No');
+  const total = responses.length;
+  const satPct = total ? +(pos.length / total * 100).toFixed(1) : 0;
+  const negRate = total ? +(neg.length / total * 100).toFixed(1) : 0;
+  const mobilePct = total ? +(responses.filter(r => /Mobile/i.test(r.device)).length / total * 100).toFixed(1) : 0;
+  const byCountry = {};
+  responses.forEach(r => {
+    if (!byCountry[r.country]) byCountry[r.country] = { pos:0, total:0 };
+    byCountry[r.country].total++;
+    if (r.helpful === 'Yes') byCountry[r.country].pos++;
+  });
+  const by_country = {};
+  Object.entries(byCountry).forEach(([c, d]) => { by_country[c] = { satisfaction_pct: +(d.pos/d.total*100).toFixed(1), total: d.total }; });
+  const byCat = {};
+  responses.forEach(r => {
+    const cat = canonicalCategory(r.category);
+    if (!byCat[cat]) byCat[cat] = { pos:0, total:0 };
+    byCat[cat].total++;
+    if (r.helpful === 'Yes') byCat[cat].pos++;
+  });
+  const by_category = {};
+  Object.entries(byCat).forEach(([c, d]) => { by_category[c] = { satisfaction_pct: +(d.pos/d.total*100).toFixed(1), total: d.total }; });
+  const byCt = {};
+  responses.forEach(r => {
+    if (!byCt[r.content_type]) byCt[r.content_type] = { pos:0, total:0 };
+    byCt[r.content_type].total++;
+    if (r.helpful === 'Yes') byCt[r.content_type].pos++;
+  });
+  const by_content_type = {};
+  Object.entries(byCt).forEach(([ct, d]) => { by_content_type[ct] = { satisfaction_pct: +(d.pos/d.total*100).toFixed(1), total: d.total }; });
+  const reasonsByCt = { lineup: { positive:{}, negative:{} }, feature: { positive:{}, negative:{} } };
+  responses.forEach(r => {
+    const ct = r.content_type === 'lineup' ? 'lineup' : 'feature';
+    const polarity = r.helpful === 'Yes' ? 'positive' : 'negative';
+    (r.reasons || []).forEach(rsn => { reasonsByCt[ct][polarity][rsn] = (reasonsByCt[ct][polarity][rsn] || 0) + 1; });
+  });
+  const monthly = {
+    satisfaction_pct: satPct, total, negative_rate: negRate, positive_rate: satPct,
+    mobile_pct: mobilePct, by_country, by_category, by_content_type, reasons: reasonsByCt, isSample: true
+  };
+  const countries = [...new Set(responses.map(r => r.country))].sort();
+  const categories = sortCategories([...new Set(responses.map(r => canonicalCategory(r.category)))]);
+  return {
+    meta: { latest_period: period, prev_period: null, categories, countries, isSample: true },
+    monthly: { [period]: monthly },
+    prev_monthly: {},
+    responses,
+    isSample: true
+  };
+}
 
 async function loadSatisfactionData() {
   const el = document.getElementById('satisfactionPanel');
@@ -7775,103 +7857,43 @@ async function loadSatisfactionData() {
 }
 
 async function loadDashboardData() {
+  // Load month_index first
   try {
-    const r = await fetch('data/dashboard_data.json');
-    DASHBOARD_DATA = await r.json();
-    // Synthesize SAT_DATA from satisfactionSummary
-    if (DASHBOARD_DATA.satisfactionSummary && DASHBOARD_DATA.satisfactionSummary.responses) {
-      const period = DASHBOARD_DATA.meta.reportingMonth;
-      const rawRecs = DASHBOARD_DATA.satisfactionSummary.responses;
-      // Build normalized response rows
-      const responses = rawRecs.map(rec => ({
-        period,
-        country: rec.country,
-        category: rec.category,
-        content_type: rec.contentType,
-        helpful: rec.helpful,
-        reasons: rec.reasons || [],
-        reason: Array.isArray(rec.reasons) ? rec.reasons[0] || '' : '',
-        comment: rec.comment || '',
-        device: rec.device || '',
-        isSample: true
-      }));
-      // Compute monthly aggregation
-      const pos  = responses.filter(rec => rec.helpful === 'Yes');
-      const neg  = responses.filter(rec => rec.helpful === 'No');
-      const total = responses.length;
-      const satPct = total ? +(pos.length / total * 100).toFixed(1) : 0;
-      const negRate = total ? +(neg.length / total * 100).toFixed(1) : 0;
-      const mobilePct = total ? +(responses.filter(rec => /Mobile/i.test(rec.device)).length / total * 100).toFixed(1) : 0;
-      // by_country
-      const byCountry = {};
-      responses.forEach(rec => {
-        if (!byCountry[rec.country]) byCountry[rec.country] = { pos:0, total:0 };
-        byCountry[rec.country].total++;
-        if (rec.helpful === 'Yes') byCountry[rec.country].pos++;
-      });
-      const by_country = {};
-      Object.entries(byCountry).forEach(([c, d]) => {
-        by_country[c] = { satisfaction_pct: +(d.pos/d.total*100).toFixed(1), total: d.total };
-      });
-      // by_category
-      const byCat = {};
-      responses.forEach(rec => {
-        const cat = canonicalCategory(rec.category);
-        if (!byCat[cat]) byCat[cat] = { pos:0, total:0 };
-        byCat[cat].total++;
-        if (rec.helpful === 'Yes') byCat[cat].pos++;
-      });
-      const by_category = {};
-      Object.entries(byCat).forEach(([c, d]) => {
-        by_category[c] = { satisfaction_pct: +(d.pos/d.total*100).toFixed(1), total: d.total };
-      });
-      // by_content_type
-      const byCt = {};
-      responses.forEach(rec => {
-        if (!byCt[rec.content_type]) byCt[rec.content_type] = { pos:0, total:0 };
-        byCt[rec.content_type].total++;
-        if (rec.helpful === 'Yes') byCt[rec.content_type].pos++;
-      });
-      const by_content_type = {};
-      Object.entries(byCt).forEach(([ct, d]) => {
-        by_content_type[ct] = { satisfaction_pct: +(d.pos/d.total*100).toFixed(1), total: d.total };
-      });
-      // reasons by content_type
-      const reasonsByCt = { lineup: { positive:{}, negative:{} }, feature: { positive:{}, negative:{} } };
-      responses.forEach(rec => {
-        const ct = rec.content_type === 'lineup' ? 'lineup' : 'feature';
-        const polarity = rec.helpful === 'Yes' ? 'positive' : 'negative';
-        (rec.reasons || []).forEach(rsn => {
-          reasonsByCt[ct][polarity][rsn] = (reasonsByCt[ct][polarity][rsn] || 0) + 1;
-        });
-      });
-      const monthly = {
-        satisfaction_pct: satPct,
-        total,
-        negative_rate: negRate,
-        positive_rate: satPct,
-        mobile_pct: mobilePct,
-        by_country,
-        by_category,
-        by_content_type,
-        reasons: reasonsByCt,
-        isSample: true
-      };
-      const countries = [...new Set(responses.map(rec => rec.country))].sort();
-      const categories = sortCategories([...new Set(responses.map(rec => canonicalCategory(rec.category)))]);
-      SAT_DATA = {
-        meta: { latest_period: period, prev_period: null, categories, countries, isSample: true },
-        monthly: { [period]: monthly },
-        prev_monthly: {},
-        responses,
-        isSample: true
-      };
-      if (!satFilters.period) satFilters.period = period;
+    const idxResp = await fetch('data/month_index.json');
+    if (idxResp.ok) {
+      MONTH_INDEX = await idxResp.json();
+      // Sync selectedMonth to defaultMonth so the picker shows the right entry
+      if (MONTH_INDEX.defaultMonth) selectedMonth = MONTH_INDEX.defaultMonth;
     }
+  } catch(e) {
+    console.warn('month_index.json load failed:', e.message);
+  }
+
+  // Determine which data file to load
+  const dataFile = MONTH_INDEX ? `data/${MONTH_INDEX.defaultDataFile}` : 'data/dashboard_data.json';
+  try {
+    const r = await fetch(dataFile);
+    DASHBOARD_DATA = await r.json();
+    const synth = synthesizeSatData(DASHBOARD_DATA);
+    if (synth) {
+      SAT_DATA = synth;
+      if (!satFilters.period) satFilters.period = synth.meta.latest_period;
+    }
+    renderGlobalMonthPicker();
     renderActionTodosNew();
     renderMainInsights();
   } catch(e) {
-    console.warn('dashboard_data.json load failed:', e.message);
+    console.warn('dashboard_data load failed:', e.message);
+  }
+}
+
+async function loadMonthlyDashboardData(dataFile) {
+  const r = await fetch(`data/${dataFile}`);
+  DASHBOARD_DATA = await r.json();
+  const synth = synthesizeSatData(DASHBOARD_DATA);
+  if (synth) {
+    SAT_DATA = synth;
+    satFilters.period = synth.meta.latest_period;
   }
 }
 

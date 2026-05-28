@@ -1,0 +1,3153 @@
+{
+  "meta": {
+    "reportingMonth": "2026-01",
+    "comparisonMonth": null,
+    "generatedAt": "2026-05-28T01:52:48.116Z",
+    "generatedBy": "Codex monthly pilot analysis",
+    "dataStatus": {
+      "ga": "ACTUAL",
+      "satisfaction": "SAMPLE",
+      "satisfactionNotice": "SAMPLE DATA - 실제 만족도 데이터가 없어 화면 검증용으로 생성한 값입니다."
+    },
+    "categoryOrder": [
+      "TV",
+      "Monitor",
+      "Fridge",
+      "Laundry"
+    ],
+    "dataQualityNotes": [
+      "monthly_ga_lineupguide.xlsx / Monitor_DE: Missing month column",
+      "설문 데이터는 실응답 수집 전 UI 검증용 SAMPLE이며 운영 판단에 사용하지 않음."
+    ],
+    "signalCriteriaIntro": {
+      "title": "신호 감지 조건",
+      "description": "KPI 목표치가 아니라, 이번 달 우선 확인할 신호를 찾기 위한 판정 조건입니다.",
+      "sampleFilterNote": "최소 세션 기준은 작은 모수에서 비율만 크게 보이는 변동을 핵심 신호에서 제외하기 위한 안정성 필터입니다."
+    },
+    "signalCriteria": [
+      {
+        "code": "traffic-drop",
+        "label": "Traffic Drop",
+        "criteria": "전월 세션 50 이상 + 세션 -10% 이상 하락 + 절대 감소 10세션 이상",
+        "why": "작은 모수의 일시적 등락을 제외합니다."
+      },
+      {
+        "code": "seo-weak",
+        "label": "SEO Weak",
+        "criteria": "세션 50 이상 + Organic Share 10% 이하 또는 검색 유입 확장 여지",
+        "why": "검색 진입 문구, 메타 정보, 내부 링크 확장 대상을 찾습니다."
+      },
+      {
+        "code": "conversion-gap",
+        "label": "Conversion Gap",
+        "criteria": "세션 50 이상 + PLP 전환율 20% 미만",
+        "why": "제품 탐색 이동 흐름에 개선 여지가 있는 페이지를 찾습니다."
+      },
+      {
+        "code": "satisfaction-risk",
+        "label": "Satisfaction Risk",
+        "criteria": "부정 응답률이 높거나 특정 부정 사유가 반복되는 경우",
+        "why": "GA만으로 보이지 않는 정보 부족/설명 난이도 이슈를 확인합니다."
+      },
+      {
+        "code": "growth-signal",
+        "label": "Growth Signal",
+        "criteria": "세션 또는 전환 지표가 전월 대비 개선된 경우",
+        "why": "성과가 좋아진 페이지를 확인합니다."
+      },
+      {
+        "code": "performance-highlight",
+        "label": "Performance Highlight",
+        "criteria": "PLP, Purchase Intent, 만족도 등 핵심 성과가 상위권인 경우",
+        "why": "성과가 좋은 페이지를 참고 기준으로 활용합니다."
+      }
+    ]
+  },
+  "kpi": {
+    "performance": {
+      "sessions": {
+        "value": 2953,
+        "mom": null
+      },
+      "plpConversion": {
+        "value": 0.4337960921975213,
+        "aggregation": "session-weighted page rate"
+      },
+      "purchaseIntent": {
+        "value": 0.10242721235497221,
+        "aggregation": "session-weighted page rate"
+      }
+    },
+    "acquisition": {
+      "organic": {
+        "value": 455,
+        "mom": null
+      },
+      "aiReferral": {
+        "value": 21,
+        "mom": null
+      },
+      "organicShare": {
+        "value": 0.15408059600406365,
+        "aggregation": "organic / sessions"
+      }
+    },
+    "satisfaction": {
+      "isSample": true,
+      "overall": {
+        "value": 0.5925925925925926
+      },
+      "responses": {
+        "value": 27
+      },
+      "negativeRate": {
+        "value": 0.4074074074074074
+      }
+    }
+  },
+  "monthlySignals": [
+    {
+      "code": "traffic-drop",
+      "label": "Traffic Drop",
+      "type": "improvement",
+      "count": 0,
+      "headline": "세션 급락 감지 없음",
+      "anchorTaskIds": []
+    },
+    {
+      "code": "seo-weak",
+      "label": "SEO Weak",
+      "type": "improvement",
+      "count": 1,
+      "headline": "Organic 취약/확장 1건 · UK Monitor Feature Organic Share 9.1% · PLP 8.1%",
+      "anchorTaskIds": [
+        "T01"
+      ]
+    },
+    {
+      "code": "conversion-gap",
+      "label": "Conversion Gap",
+      "type": "improvement",
+      "count": 1,
+      "headline": "PLP 전환 저하 1건 · UK Monitor Feature PLP 8.1%",
+      "anchorTaskIds": [
+        "T01"
+      ]
+    },
+    {
+      "code": "satisfaction-risk",
+      "label": "Satisfaction Risk",
+      "type": "improvement",
+      "count": 1,
+      "isSample": true,
+      "headline": "SAMPLE 부정 응답 패턴 1건 · 실데이터 수집 후 운영 판단",
+      "anchorTaskIds": [
+        "SAMPLE-S01"
+      ]
+    },
+    {
+      "code": "growth-signal",
+      "label": "Growth Signal",
+      "type": "performance",
+      "count": 0,
+      "headline": "유의미한 성장 신호 없음",
+      "anchorTaskIds": []
+    },
+    {
+      "code": "performance-highlight",
+      "label": "Performance Highlight",
+      "type": "performance",
+      "count": 1,
+      "headline": "ES Monitor Line-up: PLP 61.1%, Purchase 22.2%",
+      "anchorTaskIds": []
+    }
+  ],
+  "actionSummary": {
+    "trackedTasks": [
+      {
+        "id": "T01",
+        "signal": "SEO Weak",
+        "relatedSignals": [
+          "Conversion Gap"
+        ],
+        "priority": "보통",
+        "target": {
+          "country": "UK",
+          "category": "Monitor",
+          "contentType": "feature",
+          "contentLabel": "피쳐 라이브러리"
+        },
+        "detectedSignal": "Session -, Organic Share 9.1%, PLP 8.1%",
+        "assessment": "Organic Share가 낮아 검색 진입 기반이 약한 구간입니다. 페이지 구조보다 검색 노출 문구와 내부 연결을 먼저 확인할 필요가 있습니다.",
+        "taskTitle": "UK Monitor Feature 검색 유입 확장안 검토",
+        "checklist": [
+          "검색 제목/메타 설명에 현지 구매 의도 키워드가 반영되어 있는지 확인",
+          "관련 구매가이드와 제품 페이지에서 내부 링크 확대 가능 위치 확인",
+          "로컬 검색 표현 또는 제품 용어 확인이 필요하면 법인 협조 요청 작성"
+        ],
+        "status": "진행 전",
+        "requestCandidate": null
+      }
+    ],
+    "sampleDisplayTasks": [
+      {
+        "id": "SAMPLE-S01",
+        "signal": "Satisfaction Risk",
+        "relatedSignals": [],
+        "priority": "SAMPLE",
+        "target": {
+          "country": "BR",
+          "category": "Monitor",
+          "contentType": "lineup",
+          "contentLabel": "라인업 가이드"
+        },
+        "detectedSignal": "샘플 응답에서 Missing information / Unclear model differences 부정 이유가 반복됨",
+        "assessment": "실제 설문 응답 수집 전 화면과 분석 흐름을 검증하기 위한 예시입니다. 운영 과제로 관리하지 않습니다.",
+        "taskTitle": "BR Monitor 정보 부족 응답 점검 (SAMPLE)",
+        "checklist": [
+          "실데이터 수집 후 재분석"
+        ],
+        "status": null,
+        "trackingEnabled": false
+      }
+    ],
+    "signalCriteriaIntro": {
+      "title": "신호 감지 조건",
+      "description": "KPI 목표치가 아니라, 이번 달 우선 확인할 신호를 찾기 위한 판정 조건입니다.",
+      "sampleFilterNote": "최소 세션 기준은 작은 모수에서 비율만 크게 보이는 변동을 핵심 신호에서 제외하기 위한 안정성 필터입니다."
+    },
+    "signalCriteria": [
+      {
+        "code": "traffic-drop",
+        "label": "Traffic Drop",
+        "criteria": "전월 세션 50 이상 + 세션 -10% 이상 하락 + 절대 감소 10세션 이상",
+        "why": "작은 모수의 일시적 등락을 제외합니다."
+      },
+      {
+        "code": "seo-weak",
+        "label": "SEO Weak",
+        "criteria": "세션 50 이상 + Organic Share 10% 이하 또는 검색 유입 확장 여지",
+        "why": "검색 진입 문구, 메타 정보, 내부 링크 확장 대상을 찾습니다."
+      },
+      {
+        "code": "conversion-gap",
+        "label": "Conversion Gap",
+        "criteria": "세션 50 이상 + PLP 전환율 20% 미만",
+        "why": "제품 탐색 이동 흐름에 개선 여지가 있는 페이지를 찾습니다."
+      },
+      {
+        "code": "satisfaction-risk",
+        "label": "Satisfaction Risk",
+        "criteria": "부정 응답률이 높거나 특정 부정 사유가 반복되는 경우",
+        "why": "GA만으로 보이지 않는 정보 부족/설명 난이도 이슈를 확인합니다."
+      },
+      {
+        "code": "growth-signal",
+        "label": "Growth Signal",
+        "criteria": "세션 또는 전환 지표가 전월 대비 개선된 경우",
+        "why": "성과가 좋아진 페이지를 확인합니다."
+      },
+      {
+        "code": "performance-highlight",
+        "label": "Performance Highlight",
+        "criteria": "PLP, Purchase Intent, 만족도 등 핵심 성과가 상위권인 경우",
+        "why": "성과가 좋은 페이지를 참고 기준으로 활용합니다."
+      }
+    ],
+    "statusValues": [
+      "진행 전",
+      "진행 중",
+      "완료",
+      "보류"
+    ],
+    "requestTargets": [
+      "D2C",
+      "법인",
+      "기타"
+    ],
+    "requestStatusValues": [
+      "요청 전",
+      "회신 대기",
+      "완료",
+      "보류"
+    ]
+  },
+  "satisfactionSummary": {
+    "isSample": true,
+    "notice": "SAMPLE DATA - 실제 만족도 데이터가 없어 화면 검증용으로 생성한 값입니다.",
+    "totalResponses": 27,
+    "satisfactionRate": 0.5925925925925926,
+    "negativeRate": 0.4074074074074074,
+    "positiveTop": [
+      {
+        "reason": "Clear lineup overview",
+        "count": 5,
+        "share": 0.3125
+      },
+      {
+        "reason": "Simple spec comparison",
+        "count": 4,
+        "share": 0.25
+      },
+      {
+        "reason": "Tailored recommendations",
+        "count": 4,
+        "share": 0.25
+      }
+    ],
+    "negativeTop": [
+      {
+        "reason": "Missing information",
+        "count": 6,
+        "share": 0.5454545454545454
+      },
+      {
+        "reason": "Unclear model differences",
+        "count": 2,
+        "share": 0.18181818181818182
+      },
+      {
+        "reason": "Complex terminology",
+        "count": 2,
+        "share": 0.18181818181818182
+      }
+    ],
+    "responses": [
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-02 09:10",
+        "category": "TV",
+        "helpful": "Yes",
+        "reasons": [
+          "Clear lineup overview",
+          "Simple spec comparison"
+        ],
+        "comment": "Easy to compare the TV options.",
+        "country": "UK",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-03 12:25",
+        "category": "TV",
+        "helpful": "Yes",
+        "reasons": [
+          "Clear lineup overview",
+          "Tailored recommendations"
+        ],
+        "comment": "Recommended models were useful.",
+        "country": "UK",
+        "device": "Mobile / iOS",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-04 10:40",
+        "category": "TV",
+        "helpful": "Yes",
+        "reasons": [
+          "Easy-to-understand terms (tooltip)"
+        ],
+        "comment": "Terms were clear enough.",
+        "country": "UK",
+        "device": "PC / Mac",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-05 15:00",
+        "category": "Monitor",
+        "helpful": "Yes",
+        "reasons": [
+          "Simple spec comparison",
+          "Tailored recommendations"
+        ],
+        "comment": "Comparison helped me decide.",
+        "country": "ES",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-06 11:13",
+        "category": "Monitor",
+        "helpful": "Yes",
+        "reasons": [
+          "Clear lineup overview"
+        ],
+        "comment": "The range is easy to scan.",
+        "country": "ES",
+        "device": "Mobile / Android",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-07 13:51",
+        "category": "Monitor",
+        "helpful": "Yes",
+        "reasons": [
+          "Simple spec comparison"
+        ],
+        "comment": "Good specifications overview.",
+        "country": "ES",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-08 08:34",
+        "category": "Monitor",
+        "helpful": "No",
+        "reasons": [
+          "Missing information",
+          "Unclear model differences"
+        ],
+        "comment": "Need more details about model differences.",
+        "country": "BR",
+        "device": "Mobile / Android",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-09 16:20",
+        "category": "Monitor",
+        "helpful": "No",
+        "reasons": [
+          "Missing information"
+        ],
+        "comment": "I could not find enough information.",
+        "country": "BR",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-10 18:11",
+        "category": "Monitor",
+        "helpful": "No",
+        "reasons": [
+          "Unclear model differences",
+          "Complex terminology"
+        ],
+        "comment": "Models look similar and terms are difficult.",
+        "country": "BR",
+        "device": "Mobile / Android",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-11 09:02",
+        "category": "Monitor",
+        "helpful": "No",
+        "reasons": [
+          "Missing information"
+        ],
+        "comment": "More specifications would help.",
+        "country": "BR",
+        "device": "Mobile / iOS",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-12 14:48",
+        "category": "Monitor",
+        "helpful": "Yes",
+        "reasons": [
+          "Clear lineup overview"
+        ],
+        "comment": "Layout was clear.",
+        "country": "BR",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-13 10:26",
+        "category": "TV",
+        "helpful": "No",
+        "reasons": [
+          "Hard to find a product"
+        ],
+        "comment": "It took time to reach a product page.",
+        "country": "FR",
+        "device": "Mobile / iOS",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-14 11:45",
+        "category": "TV",
+        "helpful": "Yes",
+        "reasons": [
+          "Simple spec comparison"
+        ],
+        "comment": "Comparison is useful.",
+        "country": "FR",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-15 09:21",
+        "category": "Fridge",
+        "helpful": "Yes",
+        "reasons": [
+          "Clear lineup overview"
+        ],
+        "comment": "Good product grouping.",
+        "country": "PL",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "lineup",
+        "timestampUtc": "2026-01-16 12:39",
+        "category": "Laundry",
+        "helpful": "No",
+        "reasons": [
+          "Complex terminology"
+        ],
+        "comment": "Some terminology is unclear.",
+        "country": "IT",
+        "device": "Mobile / Android",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-17 10:10",
+        "category": "TV",
+        "helpful": "Yes",
+        "reasons": [
+          "Easy-to-understand explanations",
+          "Helpful images and videos"
+        ],
+        "comment": "The feature video made it clear.",
+        "country": "UK",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-18 09:35",
+        "category": "TV",
+        "helpful": "Yes",
+        "reasons": [
+          "Tailored recommendations"
+        ],
+        "comment": "Useful feature recommendations.",
+        "country": "UK",
+        "device": "Mobile / iOS",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-19 17:24",
+        "category": "TV",
+        "helpful": "No",
+        "reasons": [
+          "Missing information"
+        ],
+        "comment": "I need more detail on compatibility.",
+        "country": "UK",
+        "device": "PC / Mac",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-20 13:07",
+        "category": "Monitor",
+        "helpful": "No",
+        "reasons": [
+          "Unclear images or videos",
+          "Missing information"
+        ],
+        "comment": "The images do not show the difference.",
+        "country": "MX",
+        "device": "Mobile / Android",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-21 08:56",
+        "category": "Monitor",
+        "helpful": "No",
+        "reasons": [
+          "Complex explanations"
+        ],
+        "comment": "Explanation is difficult to understand.",
+        "country": "MX",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-22 14:22",
+        "category": "Monitor",
+        "helpful": "No",
+        "reasons": [
+          "Missing information"
+        ],
+        "comment": "Please add feature details.",
+        "country": "MX",
+        "device": "Mobile / Android",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-23 11:19",
+        "category": "Monitor",
+        "helpful": "Yes",
+        "reasons": [
+          "Helpful images and videos"
+        ],
+        "comment": "The visual example was useful.",
+        "country": "MX",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-24 09:43",
+        "category": "TV",
+        "helpful": "Yes",
+        "reasons": [
+          "Easy-to-understand explanations"
+        ],
+        "comment": "Explanation was clear.",
+        "country": "ES",
+        "device": "Mobile / iOS",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-25 12:17",
+        "category": "TV",
+        "helpful": "Yes",
+        "reasons": [
+          "Helpful images and videos"
+        ],
+        "comment": "Good image guide.",
+        "country": "ES",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-02 16:58",
+        "category": "Fridge",
+        "helpful": "No",
+        "reasons": [
+          "Unclear images or videos"
+        ],
+        "comment": "Image detail could be improved.",
+        "country": "FR",
+        "device": "Mobile / Android",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-03 15:03",
+        "category": "Fridge",
+        "helpful": "Yes",
+        "reasons": [
+          "Easy-to-understand explanations"
+        ],
+        "comment": "Helpful explanation.",
+        "country": "FR",
+        "device": "PC / Windows",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      },
+      {
+        "contentType": "feature",
+        "timestampUtc": "2026-01-04 10:06",
+        "category": "Laundry",
+        "helpful": "Yes",
+        "reasons": [
+          "Tailored recommendations"
+        ],
+        "comment": "Recommendations are relevant.",
+        "country": "NL",
+        "device": "Mobile / iOS",
+        "dataStatus": "SAMPLE DATA - actual satisfaction data not available"
+      }
+    ]
+  },
+  "gaPages": [
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "UK",
+      "category": "TV",
+      "sourceSheet": "TV_UK",
+      "metrics": {
+        "aiReferral": {
+          "current": 9,
+          "previous": null
+        },
+        "sessions": {
+          "current": 412,
+          "previous": null
+        },
+        "external": {
+          "current": 157,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.41479099678456594,
+          "previous": null
+        },
+        "organic": {
+          "current": 46,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.08681672025723473,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "UK",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_UK",
+      "metrics": {
+        "aiReferral": {
+          "current": 9,
+          "previous": null
+        },
+        "sessions": {
+          "current": 161,
+          "previous": null
+        },
+        "external": {
+          "current": 55,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.3969465648854962,
+          "previous": null
+        },
+        "organic": {
+          "current": 10,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.06870229007633588,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "UK",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_UK",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "UK",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_UK",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "FR",
+      "category": "TV",
+      "sourceSheet": "TV_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 214,
+          "previous": null
+        },
+        "external": {
+          "current": 102,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.4564102564102564,
+          "previous": null
+        },
+        "organic": {
+          "current": 47,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.09743589743589744,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "FR",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 25,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.6842105263157895,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.05263157894736842,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "FR",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "FR",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "PL",
+      "category": "TV",
+      "sourceSheet": "TV_PL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 67,
+          "previous": null
+        },
+        "external": {
+          "current": 28,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.4482758620689655,
+          "previous": null
+        },
+        "organic": {
+          "current": 15,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.10344827586206896,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "PL",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_PL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 22,
+          "previous": null
+        },
+        "external": {
+          "current": 13,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.16666666666666666,
+          "previous": null
+        },
+        "organic": {
+          "current": 1,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "ES",
+      "category": "TV",
+      "sourceSheet": "TV_ES",
+      "metrics": {
+        "aiReferral": {
+          "current": 3,
+          "previous": null
+        },
+        "sessions": {
+          "current": 482,
+          "previous": null
+        },
+        "external": {
+          "current": 141,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.5758293838862559,
+          "previous": null
+        },
+        "organic": {
+          "current": 107,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.15402843601895735,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "ES",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_ES",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 57,
+          "previous": null
+        },
+        "external": {
+          "current": 3,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.6111111111111112,
+          "previous": null
+        },
+        "organic": {
+          "current": 3,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.2222222222222222,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "ES",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_ES",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "ES",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_ES",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "BR",
+      "category": "TV",
+      "sourceSheet": "TV_BR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 144,
+          "previous": null
+        },
+        "external": {
+          "current": 55,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.452991452991453,
+          "previous": null
+        },
+        "organic": {
+          "current": 26,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.09401709401709402,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "BR",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_BR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 35,
+          "previous": null
+        },
+        "external": {
+          "current": 17,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.4482758620689655,
+          "previous": null
+        },
+        "organic": {
+          "current": 3,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.1724137931034483,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "BR",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_BR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "BR",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_BR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "CA-EN",
+      "category": "TV",
+      "sourceSheet": "TV_CA-EN",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 107,
+          "previous": null
+        },
+        "external": {
+          "current": 56,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.4186046511627907,
+          "previous": null
+        },
+        "organic": {
+          "current": 43,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.03488372093023256,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "CA-EN",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_CA-EN",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 25,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.6666666666666666,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.08333333333333333,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "CA-FR",
+      "category": "TV",
+      "sourceSheet": "TV_CA-FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 40,
+          "previous": null
+        },
+        "external": {
+          "current": 21,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.28125,
+          "previous": null
+        },
+        "organic": {
+          "current": 8,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.03125,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "CA-FR",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_CA-FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 5,
+          "previous": null
+        },
+        "external": {
+          "current": 1,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.2,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.01,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "MX",
+      "category": "TV",
+      "sourceSheet": "TV_MX",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 82,
+          "previous": null
+        },
+        "external": {
+          "current": 44,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.3561643835616438,
+          "previous": null
+        },
+        "organic": {
+          "current": 31,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.0136986301369863,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "MX",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_MX",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 24,
+          "previous": null
+        },
+        "external": {
+          "current": 10,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.19047619047619047,
+          "previous": null
+        },
+        "organic": {
+          "current": 3,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.047619047619047616,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "MX",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_MX",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "MX",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_MX",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "NL",
+      "category": "TV",
+      "sourceSheet": "TV_NL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 28,
+          "previous": null
+        },
+        "external": {
+          "current": 12,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.32,
+          "previous": null
+        },
+        "organic": {
+          "current": 3,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.04,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "NL",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_NL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 13,
+          "previous": null
+        },
+        "external": {
+          "current": 5,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.15384615384615385,
+          "previous": null
+        },
+        "organic": {
+          "current": 1,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.07692307692307693,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "NL",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_NL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "NL",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_NL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "IT",
+      "category": "TV",
+      "sourceSheet": "TV_IT",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 124,
+          "previous": null
+        },
+        "external": {
+          "current": 38,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.5918367346938775,
+          "previous": null
+        },
+        "organic": {
+          "current": 25,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.1836734693877551,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "IT",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_IT",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 12,
+          "previous": null
+        },
+        "external": {
+          "current": 3,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.45454545454545453,
+          "previous": null
+        },
+        "organic": {
+          "current": 2,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.18181818181818182,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "IT",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_IT",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "IT",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_IT",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "lineup",
+      "contentLabel": "Line-up Guide",
+      "country": "DE",
+      "category": "TV",
+      "sourceSheet": "TV_DE",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 412,
+          "previous": null
+        },
+        "external": {
+          "current": 157,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.41479099678456594,
+          "previous": null
+        },
+        "organic": {
+          "current": 46,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.08681672025723473,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "UK",
+      "category": "TV",
+      "sourceSheet": "TV_UK",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 143,
+          "previous": null
+        },
+        "external": {
+          "current": 64,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.25773195876288657,
+          "previous": null
+        },
+        "organic": {
+          "current": 8,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.08247422680412371,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "UK",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_UK",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 78,
+          "previous": null
+        },
+        "external": {
+          "current": 66,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.08108108108108109,
+          "previous": null
+        },
+        "organic": {
+          "current": 6,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "UK",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_UK",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "UK",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_UK",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "FR",
+      "category": "TV",
+      "sourceSheet": "TV_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 22,
+          "previous": null
+        },
+        "external": {
+          "current": 3,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.47619047619047616,
+          "previous": null
+        },
+        "organic": {
+          "current": 2,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "FR",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 6,
+          "previous": null
+        },
+        "external": {
+          "current": 1,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.6666666666666666,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.16666666666666666,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "FR",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "FR",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "PL",
+      "category": "TV",
+      "sourceSheet": "TV_PL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 15,
+          "previous": null
+        },
+        "external": {
+          "current": 5,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.14285714285714285,
+          "previous": null
+        },
+        "organic": {
+          "current": 4,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "PL",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_PL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 16,
+          "previous": null
+        },
+        "external": {
+          "current": 8,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.09090909090909091,
+          "previous": null
+        },
+        "organic": {
+          "current": 2,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "PL",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_PL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "PL",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_PL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "ES",
+      "category": "TV",
+      "sourceSheet": "TV_ES",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 19,
+          "previous": null
+        },
+        "external": {
+          "current": 3,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.2777777777777778,
+          "previous": null
+        },
+        "organic": {
+          "current": 1,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.2777777777777778,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "ES",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_ES",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 19,
+          "previous": null
+        },
+        "external": {
+          "current": 3,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.6666666666666666,
+          "previous": null
+        },
+        "organic": {
+          "current": 1,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.05555555555555555,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "ES",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_ES",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "ES",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_ES",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "BR",
+      "category": "TV",
+      "sourceSheet": "TV_BR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 31,
+          "previous": null
+        },
+        "external": {
+          "current": 9,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.5714285714285714,
+          "previous": null
+        },
+        "organic": {
+          "current": 3,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.10714285714285714,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "BR",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_BR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 16,
+          "previous": null
+        },
+        "external": {
+          "current": 3,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.5,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "BR",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_BR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "BR",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_BR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "CA-EN",
+      "category": "TV",
+      "sourceSheet": "TV_CA_EN",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 4,
+          "previous": null
+        },
+        "external": {
+          "current": 2,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": 1,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "CA-EN",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_CA_EN",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 10,
+          "previous": null
+        },
+        "external": {
+          "current": 1,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.75,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.125,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "CA-EN",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_CA_EN",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "CA-EN",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_CA_EN",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "CA-FR",
+      "category": "TV",
+      "sourceSheet": "TV_CA_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 4,
+          "previous": null
+        },
+        "external": {
+          "current": 3,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.25,
+          "previous": null
+        },
+        "organic": {
+          "current": 1,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "CA-FR",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_CA_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 3,
+          "previous": null
+        },
+        "external": {
+          "current": 1,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.6666666666666666,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "CA-FR",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_CA_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "CA-FR",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_CA_FR",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "MX",
+      "category": "TV",
+      "sourceSheet": "TV_MX",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 26,
+          "previous": null
+        },
+        "external": {
+          "current": 7,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.36363636363636365,
+          "previous": null
+        },
+        "organic": {
+          "current": 3,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.045454545454545456,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "MX",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_MX",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 17,
+          "previous": null
+        },
+        "external": {
+          "current": 7,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.06666666666666667,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": 0.06666666666666667,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "MX",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_MX",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "MX",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_MX",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "NL",
+      "category": "TV",
+      "sourceSheet": "TV_NL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 15,
+          "previous": null
+        },
+        "external": {
+          "current": 6,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.16666666666666666,
+          "previous": null
+        },
+        "organic": {
+          "current": 1,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "NL",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_NL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 3,
+          "previous": null
+        },
+        "external": {
+          "current": 2,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.3333333333333333,
+          "previous": null
+        },
+        "organic": {
+          "current": 1,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "NL",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_NL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "NL",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_NL",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "IT",
+      "category": "TV",
+      "sourceSheet": "TV_IT",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": 15,
+          "previous": null
+        },
+        "external": {
+          "current": 2,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": 0.3333333333333333,
+          "previous": null
+        },
+        "organic": {
+          "current": 1,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "IT",
+      "category": "Monitor",
+      "sourceSheet": "Monitor_IT",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "IT",
+      "category": "Fridge",
+      "sourceSheet": "Fridge_IT",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    },
+    {
+      "contentType": "feature",
+      "contentLabel": "Feature Library",
+      "country": "IT",
+      "category": "Laundry",
+      "sourceSheet": "Laundry_IT",
+      "metrics": {
+        "aiReferral": {
+          "current": null,
+          "previous": null
+        },
+        "sessions": {
+          "current": null,
+          "previous": null
+        },
+        "external": {
+          "current": null,
+          "previous": null
+        },
+        "plpConversion": {
+          "current": null,
+          "previous": null
+        },
+        "organic": {
+          "current": null,
+          "previous": null
+        },
+        "purchaseIntentConversion": {
+          "current": null,
+          "previous": null
+        }
+      }
+    }
+  ]
+}

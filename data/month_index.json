@@ -1,0 +1,28 @@
+{
+  "availableMonths": [
+    {
+      "value": "2026-01",
+      "label": "2026.01",
+      "dataFile": "dashboard_data_2026-01.json"
+    },
+    {
+      "value": "2026-02",
+      "label": "2026.02",
+      "dataFile": "dashboard_data_2026-02.json"
+    },
+    {
+      "value": "2026-03",
+      "label": "2026.03",
+      "dataFile": "dashboard_data_2026-03.json"
+    },
+    {
+      "value": "2026-04",
+      "label": "2026.04",
+      "dataFile": "dashboard_data_2026-04.json"
+    }
+  ],
+  "latestMonth": "2026-04",
+  "defaultMonth": "2026-04",
+  "defaultDataFile": "dashboard_data_2026-04.json",
+  "generatedAt": "2026-05-28T01:52:48.272Z"
+}
