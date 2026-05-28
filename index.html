@@ -3815,6 +3815,23 @@ const MONTH_TO_NUMBER = {
   Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6,
   Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12
 };
+const NUMBER_TO_MONTH = {
+  '01':'Jan','1':'Jan','02':'Feb','2':'Feb','03':'Mar','3':'Mar','04':'Apr','4':'Apr',
+  '05':'May','5':'May','06':'Jun','6':'Jun','07':'Jul','7':'Jul','08':'Aug','8':'Aug',
+  '09':'Sep','9':'Sep','10':'Oct','11':'Nov','12':'Dec'
+};
+// "2026-04" → "2026-Apr"  (no-op if already "2026-Apr" format)
+function monthKeyToLegacy(periodKey) {
+  const parts = String(periodKey || '').split('-');
+  if (parts.length < 2) return periodKey;
+  const year = parts[0];
+  const mon  = parts.slice(1).join('-'); // handles "2026-Oct" having one dash
+  if (/^\d+$/.test(mon)) {
+    const abbr = NUMBER_TO_MONTH[mon];
+    return abbr ? `${year}-${abbr}` : periodKey;
+  }
+  return periodKey;
+}
 
 function countryName(code) {
   return (COUNTRY_NAMES_MAP[currentLang] && COUNTRY_NAMES_MAP[currentLang][code]) || code;
@@ -4510,7 +4527,11 @@ function getPeriodParts(periodKey) {
   return { year, month };
 }
 function getPeriodMonth(periodKey) {
-  return getPeriodParts(periodKey).month;
+  const { month } = getPeriodParts(periodKey);
+  if (!month) return null;
+  // "04" → "Apr" so ai_data records (using Jan/Feb/Mar/Apr) match correctly
+  if (/^\d+$/.test(month)) return NUMBER_TO_MONTH[month] || month;
+  return month;
 }
 function getPeriodYear(periodKey) {
   const year = getPeriodParts(periodKey).year;
@@ -4571,8 +4592,12 @@ function getMetricValue(metrics, month, ...keywords) {
     });
     if (alt.join() !== keywords.join()) m = findMetric(metrics, ...alt);
   }
-  if (!m || !m.monthly || m.monthly[month] == null) return null;
-  return m.monthly[month];
+  if (!m || !m.monthly) return null;
+  if (m.monthly[month] != null) return m.monthly[month];
+  // Fallback: try legacy "2026-Apr" format when given "2026-04"
+  const legacy = monthKeyToLegacy(month);
+  if (legacy !== month && m.monthly[legacy] != null) return m.monthly[legacy];
+  return null;
 }
 
 function formatNum(n, decimals = 0) {
