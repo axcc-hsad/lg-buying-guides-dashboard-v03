@@ -5714,7 +5714,7 @@ function renderCountrySignalCards() {
       notesHtml += `<div class="analyst-note" style="margin-bottom:6px;"><strong>${an.page}</strong>${an.notes.map(n=>'<div style="margin-top:3px;">'+n+'</div>').join('')}</div>`;
     });
 
-    const topCategory = selectedCategory !== 'ALL' ? selectedCategory : getTopCategoryName(r.per_product || {});
+    const topCategory = selectedCategory !== 'ALL' ? selectedCategory : t('all_categories');
 
     html += `<div class="signal-card ${sig}" onclick="toggleSignalCard(event, this)">
       <div class="signal-card-top">
@@ -6404,8 +6404,8 @@ function renderMainInsights() {
     return pe ? po / pe : null;
   })() : null;
 
-  // Override with JSON KPI if available
-  if (DASHBOARD_DATA && DASHBOARD_DATA.kpi) {
+  // Override with JSON KPI if available — only for ALL-category view
+  if (DASHBOARD_DATA && DASHBOARD_DATA.kpi && selectedCategory === 'ALL') {
     const jkpi = DASHBOARD_DATA.kpi;
     if (jkpi.performance.sessions.value != null) {
       sessions = jkpi.performance.sessions.value;
